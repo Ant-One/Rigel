@@ -4,6 +4,10 @@ import ch.epfl.rigel.Preconditions;
 
 import java.util.Locale;
 
+/**
+ * @author Adrien Rey (313388
+ */
+
 public class RightOpenInterval extends Interval {
     /**
      * Basic Interval constructor
@@ -45,10 +49,19 @@ public class RightOpenInterval extends Interval {
         return ( (v>=low()) && (v<high() ));
     }
 
+    /**
+     * reduce the value on the interval
+     * @param v the value to reduce
+     * @return the reduced value
+     */
     public double reduce(double v){
         return low()+floorMod(v-low(),high()-low());
     }
 
+    /**
+     * Mathemical floorMod
+     * @return floorMod
+     */
     private double floorMod(double x,double y){
         return x-y*Math.floor(x/y);
     }
