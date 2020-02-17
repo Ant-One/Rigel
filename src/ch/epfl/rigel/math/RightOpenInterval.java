@@ -45,10 +45,19 @@ public class RightOpenInterval extends Interval {
         return ( (v>=low()) && (v<high() ));
     }
 
+    /**
+     * reduce the value on the interval
+     * @param v the value to reduce
+     * @return the reduced value
+     */
     public double reduce(double v){
         return low()+floorMod(v-low(),high()-low());
     }
 
+    /**
+     * Mathemical floorMod
+     * @return floorMod
+     */
     private double floorMod(double x,double y){
         return x-y*Math.floor(x/y);
     }
