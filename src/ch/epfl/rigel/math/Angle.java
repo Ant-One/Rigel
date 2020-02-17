@@ -22,7 +22,7 @@ public final class Angle {
      * @param rad value to normalize on the interval
      * @return the normalized value
      */
-    double normalizePositive(double rad){
+   public static double normalizePositive(double rad){
         RightOpenInterval interval = RightOpenInterval.of(0, TAU);
         return interval.reduce(rad);
     }
@@ -32,7 +32,7 @@ public final class Angle {
      * @param sec angle in seconds
      * @return the same angle in radians
      */
-    double ofArcsec(double sec){
+    public static double ofArcsec(double sec){
         return ofDeg(sec * DEGREES_PER_SECOND);
     }
 
@@ -43,7 +43,7 @@ public final class Angle {
      * @param sec secondes of the angle to convert
      * @return the angle in radians
      */
-    double ofDMS(int deg, int min, double sec){
+    public static double ofDMS(int deg, int min, double sec){
         Preconditions.checkArgument(min >= 0 && min < 60);
         Preconditions.checkArgument(sec >= 0 && sec < 60);
 
@@ -59,7 +59,7 @@ public final class Angle {
      * @param deg the angle in degrees to be converted
      * @return the corresponding in radians
      */
-    double ofDeg(double deg){
+    public static double ofDeg(double deg){
         return Math.toRadians(deg);
     }
 
@@ -68,7 +68,7 @@ public final class Angle {
      * @param rad angle in radians to convert
      * @return the given angle in degrees
      */
-    double toDeg(double rad){
+    public static double toDeg(double rad){
         return Math.toDegrees(rad);
     }
 
@@ -77,7 +77,7 @@ public final class Angle {
      * @param hr the angle in hours to convert in radians
      * @return the same angle in radians
      */
-    double ofHr(double hr){
+    public static double ofHr(double hr){
         return hr * RAD_PER_HOUR;
     }
 
@@ -86,7 +86,7 @@ public final class Angle {
      * @param rad the angle to convert
      * @return the angle in radian
      */
-    double toHr(double rad){
+    public static double toHr(double rad){
         return rad * HOUR_PER_RAD;
     }
 
