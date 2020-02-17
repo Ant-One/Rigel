@@ -1,5 +1,7 @@
 package ch.epfl.rigel.math;
 
+import ch.epfl.rigel.Preconditions;
+
 /**
  * Utilitary class for angles
  * @author Antoine Moix (310052)
@@ -7,7 +9,10 @@ package ch.epfl.rigel.math;
 public final class Angle {
 
     public final static double TAU = Math.PI * 2.0; //We define here the Tau constant
-    public final static double HOUR_PER_RAD = 24/TAU; //Radians per hour
+    public final static double HOUR_PER_RAD = 24.0/TAU; //Hours per radian
+    public final static double RAD_PER_HOUR = TAU/24.0; //Radians per hour
+    public final static double DEGREES_PER_SECOND = 1.0/3600.0; //Hours per second
+    private static final int DEGREES_PER_MINUTE = 60;
 
     private Angle(){
     }
@@ -22,12 +27,31 @@ public final class Angle {
         return interval.reduce(rad);
     }
 
+    /**
+     * Convert a given angle from seconds to radians
+     * @param sec angle in seconds
+     * @return the same angle in radians
+     */
     double ofArcsec(double sec){
-        return 0;
+        return ofDeg(sec * DEGREES_PER_SECOND);
     }
 
+    /**
+     * Convert an angle from DMS to radians
+     * @param deg degrees of the angle to convert
+     * @param min minutes of the angle to convert
+     * @param sec secondes of the angle to convert
+     * @return the angle in radians
+     */
     double ofDMS(int deg, int min, double sec){
-        return 0;
+        Preconditions.checkArgument(min >= 0 && min < 60);
+        Preconditions.checkArgument(sec >= 0 && sec < 60);
+
+        double result = ofDeg(deg);
+        result += ofDeg(min * DEGREES_PER_MINUTE);
+        result += ofArcsec(sec);
+
+        return result;
     }
 
     /**
@@ -48,8 +72,13 @@ public final class Angle {
         return Math.toDegrees(rad);
     }
 
+    /**
+     * Convert an angle from hours to radians
+     * @param hr the angle in hours to convert in radians
+     * @return the same angle in radians
+     */
     double ofHr(double hr){
-        return 0;
+        return hr * RAD_PER_HOUR;
     }
 
     /**
