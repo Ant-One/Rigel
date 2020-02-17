@@ -6,6 +6,8 @@
 
 package ch.epfl.rigel;
 
+import ch.epfl.rigel.math.Interval;
+
 public final class Preconditions {
 
     /**
@@ -19,12 +21,19 @@ public final class Preconditions {
      *
      * @throws IllegalArgumentException if isTrue is false
      */
-    void checkArgument(boolean isTrue) throws IllegalArgumentException{
+    public static void checkArgument(boolean isTrue){
         if(!isTrue){
             throw new IllegalArgumentException();
         }
 
     }
-    double checkInInterval(Interval interval, double value){ //TODO Class Interval
+    public static double checkInInterval(Interval interval, double value){
+        if(interval.contains(value)){
+            return value;
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
+
     }
 }
