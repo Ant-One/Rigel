@@ -1,11 +1,12 @@
+package ch.epfl.rigel;
+
+import ch.epfl.rigel.math.Interval;
+
 /**
  * Utilitary Class used to check things
  *
  * @author Antoine Moix (310052)
  */
-
-package ch.epfl.rigel;
-
 public final class Preconditions {
 
     /**
@@ -19,12 +20,27 @@ public final class Preconditions {
      *
      * @throws IllegalArgumentException if isTrue is false
      */
-    void checkArgument(boolean isTrue) throws IllegalArgumentException{
+    public static void checkArgument(boolean isTrue) throws IllegalArgumentException{
         if(!isTrue){
             throw new IllegalArgumentException();
         }
 
     }
-    double checkInInterval(Interval interval, double value){ //TODO Class Interval
+
+    /**
+     * Method that checks if a value is in an interval object
+     * @param interval interval in which the value may be
+     * @param value value to check if it is in the interval
+     * @return value if the value is in the interval
+     * @throws IllegalArgumentException if the value is not in the interval
+     */
+    public static double checkInInterval(Interval interval, double value) throws IllegalArgumentException{
+        if(interval.contains(value)){
+            return value;
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
+
     }
 }
