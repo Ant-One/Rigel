@@ -11,8 +11,14 @@ public final class Angle {
     private Angle(){
     }
 
+    /**
+     * Normalize the value on a postive interval between 0 and TAU
+     * @param rad value to normalize on the interval
+     * @return the normalized value
+     */
     double normalizePositive(double rad){
-        return 0;
+        RightOpenInterval interval = RightOpenInterval.of(0, TAU);
+        return interval.reduce(rad);
     }
 
     double ofArcsec(double sec){
