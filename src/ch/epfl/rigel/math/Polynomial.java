@@ -43,10 +43,26 @@ public final class Polynomial {
     @Override
     public String toString() {
         StringBuilder str=new StringBuilder(polynom.length*3);
-        for (int i = 0; i <polynom.length ; i++) {
-            str.append(polynom[0]);
-            str.append(", ");
+
+        for (int i = 0; i <polynom.length-1 ; i++) {
+            if(polynom[i]!=0) {
+                if (Math.abs(polynom[i]) != 1) {
+                    str.append(polynom[i]);
+                } else if (polynom[i] == -1) {
+                    str.append('-');
+                }
+                str.append('x');
+
+                if (polynom.length - i > 2) {
+                    str.append('^');
+                    str.append(polynom.length - i - 1);
+                }
+                if (polynom[i + 1] > 0) {
+                    str.append('+');
+                }
+            }
         }
+        str.append(polynom[polynom.length-1]);
         return str.toString();
     }
 
