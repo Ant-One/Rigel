@@ -19,7 +19,7 @@ public final class Polynomial {
      */
     public static Polynomial of(double coefficientN, double... coefficients){
 
-        Preconditions.checkArgument(coefficientN!=0);
+        Preconditions.checkArgument(coefficientN != 0);
 
         double[] polynom =new double[1+coefficients.length];
         polynom[0]=coefficientN;
