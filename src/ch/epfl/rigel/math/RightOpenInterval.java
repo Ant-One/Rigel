@@ -26,7 +26,7 @@ public class RightOpenInterval extends Interval {
      * @return the new interval
      */
     static public RightOpenInterval of(double lowerBound, double upperBound){
-        Preconditions.checkArgument(!(lowerBound<upperBound));
+        Preconditions.checkArgument(lowerBound<upperBound);
         RightOpenInterval  interval = new RightOpenInterval(lowerBound,upperBound) ;
         return interval;
     }
@@ -37,7 +37,7 @@ public class RightOpenInterval extends Interval {
      * @return the new interval
      */
     static public RightOpenInterval  symmetric(double size){
-        Preconditions.checkArgument(!(size>0));
+        Preconditions.checkArgument(size>0);
 
         RightOpenInterval  interval = new RightOpenInterval(-size/2,size/2) ;
         return interval;

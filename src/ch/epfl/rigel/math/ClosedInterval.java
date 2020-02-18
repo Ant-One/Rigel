@@ -27,7 +27,7 @@ public final class ClosedInterval extends Interval{
      * @return the new interval
      */
     static public ClosedInterval of(double lowerBound, double upperBound){
-        Preconditions.checkArgument(!(lowerBound<upperBound));
+        Preconditions.checkArgument(lowerBound<upperBound);
         ClosedInterval interval=new ClosedInterval(lowerBound,upperBound);
         return interval;
     }
@@ -38,7 +38,7 @@ public final class ClosedInterval extends Interval{
      * @return the new interval
      */
     static public ClosedInterval symmetric(double size){
-        Preconditions.checkArgument(!(size>0));
+        Preconditions.checkArgument(size>0);
 
         ClosedInterval interval=new ClosedInterval(-size/2,size/2);
         return interval;
