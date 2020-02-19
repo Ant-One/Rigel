@@ -100,21 +100,38 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
         return result;
     }
 
+    /**
+     * Returns the altitude in radians
+     * @return the altitude in radians
+     */
     public double alt() {
         return lat();
 
     }
 
+    /**
+     * Returns the altitude in degrees
+     * @return the altitude in degrees
+     */
     public double altDeg() {
         return Angle.toDeg(lat());
     }
 
+    /**
+     * Computes the angular distance between theses HorizontalCoordinates and those passed as argument
+     * @param that the HorizontalCoordinates to which compute the angular distance
+     * @return the angular distance between this and the parameter
+     */
     public double angularDistanceTo(HorizontalCoordinates that) {
         double computeValue = sin(alt()) * sin(that.alt()) + cos(alt()) * cos(that.alt()) * cos(az() - that.az());
 
         return acos(computeValue);
     }
 
+    /**
+     * Returns the azimuth and altitude as a formatted String
+     * @return the azimuth and altitude as a formatted String
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "(az=%.4f°, alt=%.4f°)", azDeg(), altDeg());
