@@ -55,7 +55,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @return the HorizontalCoordinates object created
      */
     public static HorizontalCoordinates ofDeg(double azDeg, double altDeg) {
-        return new HorizontalCoordinates(Angle.ofDeg(azDeg), Angle.ofDeg(altDeg));
+        return HorizontalCoordinates.of(Angle.ofDeg(azDeg), Angle.ofDeg(altDeg));
     }
 
     /**
