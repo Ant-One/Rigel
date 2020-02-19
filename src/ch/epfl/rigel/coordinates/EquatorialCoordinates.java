@@ -13,8 +13,8 @@ import java.util.Locale;
  */
 public final class EquatorialCoordinates extends SphericalCoordinates{
 
-    private static final RightOpenInterval raInterval= RightOpenInterval.of(0,360);
-    private static final ClosedInterval decInterval= ClosedInterval.symmetric(90);
+    private static final RightOpenInterval raInterval= RightOpenInterval.of(0,Angle.TAU);
+    private static final ClosedInterval decInterval= ClosedInterval.symmetric(Angle.TAU/2);
 
 
     /**
@@ -29,8 +29,8 @@ public final class EquatorialCoordinates extends SphericalCoordinates{
 
     /**
      *  Constructor of Equatorial coordinates
-     * @param ra right ascension in degree
-     * @param dec declination in degree
+     * @param ra right ascension in rad
+     * @param dec declination in rad
      * @return the new coordinates
      */
     public static EquatorialCoordinates of(double ra, double dec){
@@ -83,6 +83,6 @@ public final class EquatorialCoordinates extends SphericalCoordinates{
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT,"(ra=%.4f°h, dec=%.4f°)",raHr(),dec());
+        return String.format(Locale.ROOT,"(ra=%.4fh, dec=%.4f°)",raHr(),decDeg());
     }
 }
