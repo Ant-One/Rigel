@@ -5,7 +5,8 @@ import ch.epfl.rigel.Preconditions;
 import java.util.Locale;
 
 /**
- * @author Adrien Rey (313388
+ * Interval open right
+ * @author Adrien Rey (313388)
  */
 
 public class RightOpenInterval extends Interval {

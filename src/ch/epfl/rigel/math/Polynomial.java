@@ -4,6 +4,10 @@ import ch.epfl.rigel.Preconditions;
 
 import java.util.Arrays;
 
+/**
+ * Polynomial equation
+ * @author Adrien Rey (313388)
+ */
 public final class Polynomial {
     private final double[] polynom;
 
