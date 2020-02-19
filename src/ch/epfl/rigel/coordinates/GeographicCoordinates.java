@@ -34,7 +34,7 @@ public final class GeographicCoordinates extends SphericalCoordinates{
      * @param latDeg latitude in degree
      * @return the new coordinates
      */
-    GeographicCoordinates ofDeg(double longDeg,double latDeg){
+    public static GeographicCoordinates ofDeg(double longDeg, double latDeg){
 
         Preconditions.checkArgument(   isValidLonDeg(longDeg)  && isValidLatDeg(latDeg) );
 
@@ -90,6 +90,6 @@ public final class GeographicCoordinates extends SphericalCoordinates{
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT,"(lon=%.4f°, lat=%.4f°)",lon(),lat());
+        return String.format(Locale.ROOT,"(lon=%.4f°, lat=%.4f°)",lonDeg(),latDeg());
     }
 }

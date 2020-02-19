@@ -13,11 +13,11 @@ abstract class SphericalCoordinates {
     /**
      * Package private spherical coordinates constructor
      * @param longitude , longitude in rad
-     * @param lattitude , lattitude in rad
+     * @param latitude , latitude in rad
      */
-    SphericalCoordinates(double longitude, double lattitude) {
+    SphericalCoordinates(double longitude, double latitude) {
         this.longitude = Angle.normalizePositive(longitude);
-        this.latitude = Angle.normalizePositive(lattitude);
+        this.latitude = Angle.normalizePositive(latitude);
     }
 
     /**
