@@ -38,6 +38,8 @@ class HorizontalCoordinatesTest {
 
     @Test
     void angularDistanceTo() {
+        HorizontalCoordinates hc = HorizontalCoordinates.ofDeg(6.5682, 46.5183);
+        assertEquals(0.0279, hc.angularDistanceTo(HorizontalCoordinates.ofDeg(8.5479, 47.3763)), 1e-4);
     }
 
     @Test
