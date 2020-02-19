@@ -14,8 +14,8 @@ import java.util.Locale;
  */
 public final class GeographicCoordinates extends SphericalCoordinates{
 
-    private static final RightOpenInterval longitudeInterval= RightOpenInterval.symmetric(180);
-    private static final ClosedInterval latitudeInterval= ClosedInterval.symmetric(90);
+    private static final RightOpenInterval longitudeInterval= RightOpenInterval.symmetric(360);
+    private static final ClosedInterval latitudeInterval= ClosedInterval.symmetric(180);
 
 
     /**
