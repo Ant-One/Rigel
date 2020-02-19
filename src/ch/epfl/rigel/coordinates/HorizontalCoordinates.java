@@ -4,6 +4,11 @@ package ch.epfl.rigel.coordinates;
 import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
+import ch.epfl.rigel.math.Interval;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Class modelling horizontal coordinates
@@ -14,6 +19,8 @@ import ch.epfl.rigel.math.ClosedInterval;
 
      private static final ClosedInterval azimuthInterval = ClosedInterval.of(0, Angle.TAU);
      private static final ClosedInterval altitudeInterval = ClosedInterval.of(-Angle.TAU/4.0, Angle.TAU/4.0);
+
+     private static final Map<Interval, String> octantMap = Map.of();
 
      private HorizontalCoordinates(double az, double alt){
          super(az, alt);
@@ -57,6 +64,7 @@ import ch.epfl.rigel.math.ClosedInterval;
 
     @Override
     public String toString() {
-        //TODO implement this according to specs
+         return String.format(Locale.ROOT, "(az=%.4f°, alt=%.4f°)", azDeg(), altDeg());
+
     }
 }
