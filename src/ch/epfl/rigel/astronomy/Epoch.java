@@ -1,6 +1,8 @@
 package ch.epfl.rigel.astronomy;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Enum to model J2000 and J2010 Epoch
@@ -15,13 +17,15 @@ public enum Epoch {
             ZoneOffset.UTC));
 
     private ZonedDateTime beginning;
+    private static int DAY_PER_MILLIS = 1/(1000 * 60 * 60 * 24);
 
     Epoch(ZonedDateTime beginning){
         this.beginning = beginning;
     }
 
     public double daysUntil(ZonedDateTime when) {
-        return 0;
+        double tmp = beginning.until(when, ChronoUnit.MILLIS);
+        return tmp * DAY_PER_MILLIS;
     }
 
     public double julianCenturiesUntil(ZonedDateTime when){
