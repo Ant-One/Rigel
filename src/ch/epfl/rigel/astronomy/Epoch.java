@@ -1,5 +1,6 @@
 package ch.epfl.rigel.astronomy;
 
+import java.sql.Time;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
@@ -17,18 +18,18 @@ public enum Epoch {
             ZoneOffset.UTC));
 
     private ZonedDateTime beginning;
-    private static int DAY_PER_MILLIS = 1/(1000 * 60 * 60 * 24);
+    private static double DAYS_PER_MILLIS = 1/(1000 * 60 * 60 * 24);
+    private static double CENTURIES_PER_MILLIS = 1/ChronoUnit.CENTURIES.getDuration().toMillis();
 
     Epoch(ZonedDateTime beginning){
         this.beginning = beginning;
     }
 
     public double daysUntil(ZonedDateTime when) {
-        double tmp = beginning.until(when, ChronoUnit.MILLIS);
-        return tmp * DAY_PER_MILLIS;
+        return beginning.until(when, ChronoUnit.MILLIS) * DAYS_PER_MILLIS;
     }
 
     public double julianCenturiesUntil(ZonedDateTime when){
-        return 0;
+        return beginning.until(when, ChronoUnit.MILLIS) * CENTURIES_PER_MILLIS;
     }
 }
