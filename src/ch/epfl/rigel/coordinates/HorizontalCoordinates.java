@@ -23,8 +23,8 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
     private static final ClosedInterval NORTH_INTERVAL_1 = ClosedInterval.of(0, 3 * Angle.TAU / 16.0);
     private static final ClosedInterval EAST_INTERVAL = ClosedInterval.of(Angle.TAU / 16.0, 7 * Angle.TAU / 16.0);
     private static final ClosedInterval SOUTH_INTERVAL = ClosedInterval.of(5 * Angle.TAU / 16.0, 11 * Angle.TAU / 16.0);
-    private static final ClosedInterval WEST_INTERVAL = ClosedInterval.of(9 * Angle.TAU / 16.0, 15 * Angle.TAU / 16);
-    private static final ClosedInterval NORTH_INTERVAL_2 = ClosedInterval.of(13 * Angle.TAU / 16, Angle.TAU);
+    private static final ClosedInterval WEST_INTERVAL = ClosedInterval.of(9 * Angle.TAU / 16.0, 15 * Angle.TAU / 16.0);
+    private static final ClosedInterval NORTH_INTERVAL_2 = ClosedInterval.of(13 * Angle.TAU / 16.0, Angle.TAU);
 
     /**
      * Private constructor, only used by the HorizontalCoordinates of() method
