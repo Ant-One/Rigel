@@ -25,7 +25,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      * @param when ZonedDateTime of the current location
      */
     public EclipticToEquatorialConversion(ZonedDateTime when) {
-        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO;
+        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
 
         Epsylon = Angle.ofArcsec(0.00181) * T * T * T - Angle.ofArcsec(0.0006) * T * T - Angle.ofArcsec(46.815) * T + Angle.ofDMS(23, 26, 21.45);
         sinEpsylon = Math.sin(Epsylon);
@@ -51,11 +51,17 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
     }
 
 
+    /**
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     final public int hashCode() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException();
