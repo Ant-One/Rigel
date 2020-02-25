@@ -88,7 +88,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @param e String to be used as the East's E
      * @param s String to be used as the South's S
      * @param w String to be used as the West's W
-     * @return The string created corresponding to the current octal of the azimutal angle,
+     * @return The string created corresponding to the current octal of the azimuthal angle,
      * according to the strings passed as argument for respectively North, East, South, West
      */
     public String azOctantName(String n, String e, String s, String w) {

@@ -35,7 +35,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
 
     @Override
     /**
-     * Converts the given EclipticCoordinates to EclipticCoordinstes
+     * Converts the given EclipticCoordinates to EclipticCoordinates
      * @param ec1 EclipticCoordinates to convert
      * @return the converted coordinates
      */

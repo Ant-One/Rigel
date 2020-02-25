@@ -25,10 +25,10 @@ public final class Polynomial {
 
         Preconditions.checkArgument(coefficientN != 0);
 
-        double[] polynom = new double[1 + coefficients.length];
-        polynom[0] = coefficientN;
-        System.arraycopy(coefficients, 0, polynom, 1, coefficients.length);
-        return new Polynomial(polynom);
+        double[] polynomial = new double[1 + coefficients.length];
+        polynomial[0] = coefficientN;
+        System.arraycopy(coefficients, 0, polynomial, 1, coefficients.length);
+        return new Polynomial(polynomial);
     }
 
     /**
