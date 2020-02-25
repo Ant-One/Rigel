@@ -22,9 +22,6 @@ class SiderealTimeTest7 {
 
         assertEquals(Angle.ofHr(4.668120),SiderealTime.greenwich(ZDT),1e-6);
 
-
-
-
     }
 
     @Test
