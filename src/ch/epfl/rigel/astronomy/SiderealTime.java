@@ -15,7 +15,8 @@ import java.time.temporal.ChronoUnit;
  */
 public final class SiderealTime {
 
-    private final static RightOpenInterval interval = RightOpenInterval.of(0, Math.PI);
+    private final static RightOpenInterval radInterval=RightOpenInterval.of(0,Angle.TAU/2);
+    private  final static RightOpenInterval hrInterval =RightOpenInterval.of(0,24);
 
     /**
      * compute the sidereal time at greenwich
@@ -28,12 +29,13 @@ public final class SiderealTime {
         ZonedDateTime greenwichWhen = when.withZoneSameInstant(ZoneId.of("GMT+0"));
 
         double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO
-        double t = greenwichWhen.withHour(0).until(greenwichWhen, ChronoUnit.HOURS);
+        double t = (double)greenwichWhen.truncatedTo(ChronoUnit.DAYS).until(greenwichWhen, ChronoUnit.MILLIS) / (double) ChronoUnit.HOURS.getDuration().toMillis();
 
-        double S0 = 0.000025862 * T * T + 2400.051336 * T + 6.697374558;
-        double S1 = 1.002737909 * t;
-        double Sg = S0 + S1;
-        return interval.reduce(Angle.ofHr(Sg));
+
+        double S0 = hrInterval.reduce( 0.000025862 * T * T + 2400.051336 * T + 6.697374558);
+        double S1 = hrInterval.reduce(1.002737909 * t);
+        double Sg = hrInterval.reduce( S0 + S1);
+        return radInterval.reduce(Angle.ofHr(Sg));
 
     }
 
@@ -46,7 +48,7 @@ public final class SiderealTime {
      */
     public static double local(ZonedDateTime when, GeographicCoordinates where) {
 
-        return interval.reduce(greenwich(when) + where.lon());
+        return radInterval.reduce(greenwich(when) + where.lon());
     }
 
 }
