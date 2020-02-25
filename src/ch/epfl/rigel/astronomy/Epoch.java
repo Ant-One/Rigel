@@ -18,8 +18,8 @@ public enum Epoch {
             ZoneOffset.UTC));
 
     private ZonedDateTime beginning;
-    private static double DAYS_PER_MILLIS = 1/(1000 * 60 * 60 * 24);
-    private static double CENTURIES_PER_MILLIS = 1/ChronoUnit.CENTURIES.getDuration().toMillis();
+    private static double DAYS_PER_MILLIS = (double) 1/(1000 * 60 * 60 * 24);
+    private static double CENTURIES_PER_MILLIS = (double) 1/ChronoUnit.CENTURIES.getDuration().toMillis();
 
     Epoch(ZonedDateTime beginning){
         this.beginning = beginning;
