@@ -13,7 +13,7 @@ public final class Angle {
     public final static double HOUR_PER_RAD = 24.0 / TAU; //Hours per radian
     public final static double RAD_PER_HOUR = TAU / 24.0; //Radians per hour
     public final static double DEGREES_PER_SECOND = 1.0 / 3600.0; //Hours per second
-    private static final double DEGREES_PER_MINUTE = 1.0 / 60.0;
+    private static final double DEGREES_PER_MINUTE = 1/60;
 
     private Angle() {
     }

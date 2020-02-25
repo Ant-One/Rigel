@@ -20,7 +20,7 @@ class SiderealTimeTest7 {
         LocalTime time=LocalTime.of(14,36,51,670000000);
         ZonedDateTime ZDT=ZonedDateTime.of(date,time,id);
 
-        assertEquals(Angle.ofDMS(60,40,5.23),SiderealTime.greenwich(ZDT));
+        assertEquals(Angle.ofHr(4.668120),SiderealTime.greenwich(ZDT),1e-6);
 
 
 
