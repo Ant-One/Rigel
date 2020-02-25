@@ -28,7 +28,8 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Private constructor, only used by the HorizontalCoordinates of() method
-     * @param az the azimuth in radians
+     *
+     * @param az  the azimuth in radians
      * @param alt the altitude in radians
      */
     private HorizontalCoordinates(double az, double alt) {
@@ -37,8 +38,10 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Static method to create a HorizontalCoordinates object via the azimuth and elevation angles in radians
-     * @param az the azimuth angle in radians
+     *
+     * @param az  the azimuth angle in radians
      * @param alt the altitude angle in radians
+     * @throws IllegalArgumentException
      * @return the HorizontalCoordinates object created
      */
     public static HorizontalCoordinates of(double az, double alt) {
@@ -50,7 +53,8 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Similar to the of() method. It permits to create a HorizontalCoordinates object via the azimuth and elevation angles in degrees
-     * @param azDeg the azimuth angle in degrees
+     *
+     * @param azDeg  the azimuth angle in degrees
      * @param altDeg the altitude angle in degrees
      * @return the HorizontalCoordinates object created
      */
@@ -60,13 +64,16 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Returns the azimuth/longitude angle in radians
+     *
      * @return the azimuth/longitude in radians
      */
     public double az() {
         return lon();
     }
+
     /**
      * Returns the azimuth/longitude angle in degrees
+     *
      * @return the azimuth/longitude in degrees
      */
     public double azDeg() {
@@ -74,8 +81,9 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
     }
 
     /**
-     * Method used to obtain the string corresponding to the current octal of the azimutal angle,
+     * Method used to obtain the string corresponding to the current octal of the azimuthal angle,
      * according to the strings passed as argument for respectively North, East, South, West
+     *
      * @param n String to be used as the North's N
      * @param e String to be used as the East's E
      * @param s String to be used as the South's S
@@ -102,6 +110,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Returns the altitude in radians
+     *
      * @return the altitude in radians
      */
     public double alt() {
@@ -111,6 +120,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Returns the altitude in degrees
+     *
      * @return the altitude in degrees
      */
     public double altDeg() {
@@ -119,6 +129,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Computes the angular distance between theses HorizontalCoordinates and those passed as argument
+     *
      * @param that the HorizontalCoordinates to which compute the angular distance
      * @return the angular distance between this and the parameter
      */
@@ -130,6 +141,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Returns the azimuth and altitude as a formatted String
+     *
      * @return the azimuth and altitude as a formatted String
      */
     @Override

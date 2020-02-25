@@ -6,9 +6,10 @@ import java.util.Locale;
 
 /**
  * interval clod^sed on both side
+ *
  * @author Adrien Rey (313388)
  */
-public final class ClosedInterval extends Interval{
+public final class ClosedInterval extends Interval {
 
 
     /**
@@ -18,41 +19,44 @@ public final class ClosedInterval extends Interval{
      * @param upperBound
      */
     private ClosedInterval(double lowerBound, double upperBound) {
-            super(lowerBound, upperBound);
+        super(lowerBound, upperBound);
     }
 
     /**
-     * Contruct an interval between the low and upper bound
+     * Construct an interval between the low and upper bound
+     *
      * @param lowerBound lower Bound of the interval
      * @param upperBound UpperBound of the interval
      * @return the new interval
      */
-    static public ClosedInterval of(double lowerBound, double upperBound){
-        Preconditions.checkArgument(lowerBound<upperBound);
-        ClosedInterval interval=new ClosedInterval(lowerBound,upperBound);
+    static public ClosedInterval of(double lowerBound, double upperBound) {
+        Preconditions.checkArgument(lowerBound < upperBound);
+        ClosedInterval interval = new ClosedInterval(lowerBound, upperBound);
         return interval;
     }
 
     /**
-     *  Contruct an interval around 0 with a size of size
+     * Construct an interval around 0 with a size of size
+     *
      * @param size of the interval
      * @return the new interval
      */
-    static public ClosedInterval symmetric(double size){
-        Preconditions.checkArgument(size>0);
+    static public ClosedInterval symmetric(double size) {
+        Preconditions.checkArgument(size > 0);
 
-        ClosedInterval interval=new ClosedInterval(-size/2,size/2);
+        ClosedInterval interval = new ClosedInterval(-size / 2, size / 2);
         return interval;
     }
 
 
     @Override
     public boolean contains(double v) {
-        return ( (v>=low()) && (v<=high() ));
+        return ((v >= low()) && (v <= high()));
     }
 
     /**
-     *  clips the value v to the interval
+     * clips the value v to the interval
+     *
      * @param v value to clip
      * @return the clipped value
      */
@@ -68,6 +72,6 @@ public final class ClosedInterval extends Interval{
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT,"[%f,%f]",low(),high());
+        return String.format(Locale.ROOT, "[%f,%f]", low(), high());
     }
 }

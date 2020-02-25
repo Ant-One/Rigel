@@ -8,16 +8,14 @@ package ch.epfl.rigel.math;
 
 public abstract class Interval {
 
-    private final double lowerBound,upperBound;
+    private final double lowerBound, upperBound;
 
 
     /**
-     *  Basic Interval constructor
+     * Basic Interval constructor
      *
-     * @param lowerBound
-     *          Lower bound of the interval
-     * @param upperBound
-     *          Upper boud of the interval
+     * @param lowerBound Lower bound of the interval
+     * @param upperBound Upper bound of the interval
      */
     public Interval(double lowerBound, double upperBound) {
         this.lowerBound = lowerBound;
@@ -25,30 +23,30 @@ public abstract class Interval {
     }
 
     /**
-     * @return  the lower bound of the interval
+     * @return the lower bound of the interval
      */
     public double low() {
         return lowerBound;
     }
 
     /**
-     * @return  the upper bound of the interval
+     * @return the upper bound of the interval
      */
     public double high() {
         return upperBound;
     }
 
     /**
-     * @return  the size of the interval
+     * @return the size of the interval
      */
-    public double size(){
-        return upperBound-lowerBound;
+    public double size() {
+        return upperBound - lowerBound;
     }
 
     /**
-     *  return true if the interval contains the param
-     * @param v
-     *      value
+     * return true if the interval contains the param
+     *
+     * @param v value
      */
     public abstract boolean contains(double v);
 

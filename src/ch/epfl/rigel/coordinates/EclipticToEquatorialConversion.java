@@ -10,45 +10,45 @@ import java.util.function.Function;
 
 /**
  * Class used to converse Ecliptic coordinates to Equatorial coordinates
+ *
  * @author Adrien Rey (313388)
  */
 
-public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates>
-{
+public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates> {
 
-    private final double sinEpsylon,cosEpsylon,Epsylon;
+    private final double sinEpsylon, cosEpsylon, Epsylon;
 
 
     /**
      * Constructor to converse coordinates
+     *
      * @param when ZonedDateTime of the current location
      */
-    public EclipticToEquatorialConversion(ZonedDateTime when){
-        double T= Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO;
+    public EclipticToEquatorialConversion(ZonedDateTime when) {
+        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO;
 
-        Epsylon= Angle.ofArcsec(0.00181)*T*T*T-Angle.ofArcsec(0.0006)*T*T-Angle.ofArcsec(46.815)*T+Angle.ofDMS(23,26,21.45);
-        sinEpsylon=Math.sin(Epsylon);
-        cosEpsylon=Math.cos(Epsylon);
+        Epsylon = Angle.ofArcsec(0.00181) * T * T * T - Angle.ofArcsec(0.0006) * T * T - Angle.ofArcsec(46.815) * T + Angle.ofDMS(23, 26, 21.45);
+        sinEpsylon = Math.sin(Epsylon);
+        cosEpsylon = Math.cos(Epsylon);
     }
 
 
     @Override
     /**
-     * Converte the given EclipticCoordinates to EclipticCoordinstes
+     * Converts the given EclipticCoordinates to EclipticCoordinstes
      * @param ec1 EclipticCoordinates to convert
      * @return the converted coordinates
      */
     public EquatorialCoordinates apply(EclipticCoordinates ec1) {
-     double sinTheta=Math.sin(ec1.lon());
+        double sinTheta = Math.sin(ec1.lon());
 
-     double alpha=(sinTheta*cosEpsylon-Math.tan(ec1.lat())) / (Math.cos(ec1.lon()) );
-     alpha=Math.atan2(alpha,1);
-     double delta= Math.asin(Math.sin(ec1.lat())*cosEpsylon  + Math.cos(ec1.lat())*sinEpsylon*sinTheta );
+        double alpha = (sinTheta * cosEpsylon - Math.tan(ec1.lat())) / (Math.cos(ec1.lon()));
+        alpha = Math.atan2(alpha, 1);
+        double delta = Math.asin(Math.sin(ec1.lat()) * cosEpsylon + Math.cos(ec1.lat()) * sinEpsylon * sinTheta);
 
 
-     return EquatorialCoordinates.of(alpha,delta);
+        return EquatorialCoordinates.of(alpha, delta);
     }
-
 
 
     @Override

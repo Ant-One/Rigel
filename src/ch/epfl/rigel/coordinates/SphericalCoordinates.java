@@ -4,6 +4,7 @@ import ch.epfl.rigel.math.Angle;
 
 /**
  * Mother class for all Spherical coordinates
+ *
  * @author Adrien (313388)
  */
 abstract class SphericalCoordinates {
@@ -12,8 +13,9 @@ abstract class SphericalCoordinates {
 
     /**
      * Package private spherical coordinates constructor
+     *
      * @param longitude , longitude in rad
-     * @param latitude , latitude in rad
+     * @param latitude  , latitude in rad
      */
     SphericalCoordinates(double longitude, double latitude) {
         this.longitude = Angle.normalizePositive(longitude);
@@ -23,7 +25,7 @@ abstract class SphericalCoordinates {
     /**
      * @return the latitude in radian
      */
-    double lat(){
+    double lat() {
         return latitude;
     }
 
@@ -31,14 +33,14 @@ abstract class SphericalCoordinates {
      * @return the latitude in deg
      */
 
-    double latDeg(){
+    double latDeg() {
         return Angle.toDeg(latitude);
     }
 
     /**
      * @return the longitude in radian
      */
-    double lon(){
+    double lon() {
         return longitude;
     }
 
@@ -46,13 +48,13 @@ abstract class SphericalCoordinates {
      * @return the longitude in deg
      */
 
-    double lonDeg(){
+    double lonDeg() {
         return Angle.toDeg(longitude);
     }
 
     @Override
     final public boolean equals(Object o) {
-      throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
