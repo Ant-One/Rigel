@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SiderealTimeTest7 {
+class SiderealTimeTest {
 
     @Test
     void greenwich() {

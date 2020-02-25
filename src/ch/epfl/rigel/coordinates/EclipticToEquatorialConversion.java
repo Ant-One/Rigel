@@ -20,7 +20,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
 
 
     /**
-     * Constructor to converse coordinates
+     * Constructor to convert coordinates
      *
      * @param when ZonedDateTime of the current location
      */
