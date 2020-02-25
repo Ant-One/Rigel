@@ -41,7 +41,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      *
      * @param az  the azimuth angle in radians
      * @param alt the altitude angle in radians
-     * @throws IllegalArgumentException
+     * @throw IllegalArgumentException
      * @return the HorizontalCoordinates object created
      */
     public static HorizontalCoordinates of(double az, double alt) {

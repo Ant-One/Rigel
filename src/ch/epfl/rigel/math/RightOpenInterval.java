@@ -15,7 +15,7 @@ public class RightOpenInterval extends Interval {
      * Basic Interval constructor
      *
      * @param lowerBound Lower bound of the interval
-     * @param upperBound
+     * @param upperBound Upper bound of the interval
      */
     private RightOpenInterval(double lowerBound, double upperBound) {
         super(lowerBound, upperBound);
@@ -30,8 +30,7 @@ public class RightOpenInterval extends Interval {
      */
     static public RightOpenInterval of(double lowerBound, double upperBound) {
         Preconditions.checkArgument(lowerBound < upperBound);
-        RightOpenInterval interval = new RightOpenInterval(lowerBound, upperBound);
-        return interval;
+        return new RightOpenInterval(lowerBound, upperBound);
     }
 
     /**
@@ -43,8 +42,7 @@ public class RightOpenInterval extends Interval {
     static public RightOpenInterval symmetric(double size) {
         Preconditions.checkArgument(size > 0);
 
-        RightOpenInterval interval = new RightOpenInterval(-size / 2, size / 2);
-        return interval;
+        return new RightOpenInterval(-size / 2, size / 2);
     }
 
 

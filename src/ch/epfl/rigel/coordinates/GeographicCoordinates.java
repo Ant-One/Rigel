@@ -33,7 +33,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      *
      * @param longDeg longitude in degree
      * @param latDeg  latitude in degree
-     * @throws IllegalArgumentException
+     * @throw IllegalArgumentException
      * @return the new coordinates
      */
     public static GeographicCoordinates ofDeg(double longDeg, double latDeg) {

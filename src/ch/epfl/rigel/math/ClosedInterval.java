@@ -16,7 +16,7 @@ public final class ClosedInterval extends Interval {
      * Basic Interval constructor
      *
      * @param lowerBound Lower bound of the interval
-     * @param upperBound
+     * @param upperBound Upper bound of the interval
      */
     private ClosedInterval(double lowerBound, double upperBound) {
         super(lowerBound, upperBound);
@@ -31,8 +31,7 @@ public final class ClosedInterval extends Interval {
      */
     static public ClosedInterval of(double lowerBound, double upperBound) {
         Preconditions.checkArgument(lowerBound < upperBound);
-        ClosedInterval interval = new ClosedInterval(lowerBound, upperBound);
-        return interval;
+        return new ClosedInterval(lowerBound, upperBound);
     }
 
     /**
@@ -44,8 +43,7 @@ public final class ClosedInterval extends Interval {
     static public ClosedInterval symmetric(double size) {
         Preconditions.checkArgument(size > 0);
 
-        ClosedInterval interval = new ClosedInterval(-size / 2, size / 2);
-        return interval;
+        return new ClosedInterval(-size / 2, size / 2);
     }
 
 
