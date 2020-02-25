@@ -1,10 +1,17 @@
 package ch.epfl.rigel.coordinates;
 
+import ch.epfl.rigel.astronomy.Epoch;
 import ch.epfl.rigel.math.Angle;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.function.Function;
-import java.util.function.ToDoubleBiFunction;
+
+
+/**
+ * Class used to converse Ecliptic coordinates to Equatorial coordinates
+ * @author Adrien Rey (313388)
+ */
 
 public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates>
 {
@@ -12,9 +19,12 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
     private final double sinEpsylon,cosEpsylon,Epsylon;
 
 
-
+    /**
+     * Constructor to converse coordinates
+     * @param when ZonedDateTime of the current location
+     */
     public EclipticToEquatorialConversion(ZonedDateTime when){
-        double T=0;//TODO;
+        double T= Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO;
 
         Epsylon= Angle.ofArcsec(0.00181)*T*T*T-Angle.ofArcsec(0.0006)*T*T-Angle.ofArcsec(46.815)*T+Angle.ofDMS(23,26,21.45);
         sinEpsylon=Math.sin(Epsylon);
@@ -23,6 +33,11 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
 
 
     @Override
+    /**
+     * Converte the given EclipticCoordinates to EclipticCoordinstes
+     * @param ec1 EclipticCoordinates to convert
+     * @return the converted coordinates
+     */
     public EquatorialCoordinates apply(EclipticCoordinates ec1) {
      double sinTheta=Math.sin(ec1.lon());
 
