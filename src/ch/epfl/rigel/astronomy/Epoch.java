@@ -17,7 +17,7 @@ public enum Epoch {
             ZoneOffset.UTC));
 
     private static final double DAYS_PER_MILLIS = (double) 1 / (ChronoUnit.DAYS.getDuration().toMillis());
-    private static final double CENTURIES_PER_MILLIS = (double) 1 / ChronoUnit.CENTURIES.getDuration().toMillis();
+    private static final double CENTURIES_PER_MILLIS = (double) 1 / (ChronoUnit.DAYS.getDuration().toMillis() * 36525);
     private final ZonedDateTime beginning;
 
     Epoch(ZonedDateTime beginning) {
