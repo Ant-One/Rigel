@@ -27,9 +27,10 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
     public EclipticToEquatorialConversion(ZonedDateTime when) {
         double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO;
 
-        Epsylon = Angle.ofArcsec(0.00181) * T * T * T - Angle.ofArcsec(0.0006) * T * T - Angle.ofArcsec(46.815) * T + Angle.ofDMS(23, 26, 21.45);
-        sinEpsylon = Math.sin(Epsylon);
-        cosEpsylon = Math.cos(Epsylon);
+
+        Epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T)/3600+23.439292 ;
+        sinEpsylon = Math.sin(Angle.ofDeg(Epsylon));
+        cosEpsylon = Math.cos(Angle.ofDeg(Epsylon));
     }
 
 
@@ -42,9 +43,10 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
     public EquatorialCoordinates apply(EclipticCoordinates ec1) {
         double sinTheta = Math.sin(ec1.lon());
 
-        double alpha = (sinTheta * cosEpsylon - Math.tan(ec1.lat())) / (Math.cos(ec1.lon()));
-        alpha = Math.atan2(alpha, 1);
         double delta = Math.asin(Math.sin(ec1.lat()) * cosEpsylon + Math.cos(ec1.lat()) * sinEpsylon * sinTheta);
+        double alpha = Math.atan2(sinTheta * cosEpsylon - Math.tan(ec1.lat())*sinEpsylon ,Math.cos(ec1.lon()));
+
+
 
 
         return EquatorialCoordinates.of(alpha, delta);
