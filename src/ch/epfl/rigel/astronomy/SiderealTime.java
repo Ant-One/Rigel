@@ -32,9 +32,9 @@ public final class SiderealTime {
         double t = (double)greenwichWhen.truncatedTo(ChronoUnit.DAYS).until(greenwichWhen, ChronoUnit.MILLIS) / (double) ChronoUnit.HOURS.getDuration().toMillis();
 
 
-        double S0 = hrInterval.reduce( 0.000025862 * T * T + 2400.051336 * T + 6.697374558);
-        double S1 = hrInterval.reduce(1.002737909 * t);
-        double Sg = hrInterval.reduce( S0 + S1);
+        double S0 = 0.000025862 * T * T + 2400.051336 * T + 6.697374558;
+        double S1 =1.002737909 * t;
+        double Sg =S0 + S1;
         return radInterval.reduce(Angle.ofHr(Sg));
 
     }
