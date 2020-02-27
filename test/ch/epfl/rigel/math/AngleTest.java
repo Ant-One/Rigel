@@ -49,6 +49,7 @@ public class AngleTest {
         assertEquals(8.726646259971648, Angle.ofDMS(500, 0, 0), 1e-8);
         assertEquals(0.03579864221312814, Angle.ofDMS(2, 3, 4), 1e-8);
         assertEquals(0.035801391106700026, Angle.ofDMS(2, 3, 4.567), 1e-8);
+        assertEquals(4.19243659174733, Angle.normalizePositive(Angle.ofDMS(600, 12, 32.1213)), 1e-8);
     }
 
     @Test

@@ -19,9 +19,9 @@ class EpochTest {
 
     @Test
     void julianCenturiesUntil() {
-        assertEquals(10, Epoch.J2010.julianCenturiesUntil(
-                ZonedDateTime.of(LocalDate.of(3010, Month.JANUARY, 1),
+        assertEquals(1, Epoch.J2010.julianCenturiesUntil(
+                ZonedDateTime.of(LocalDate.of(2110, Month.JANUARY, 1),
                         LocalTime.MIDNIGHT,
-                        ZoneOffset.UTC)), 1e-4);
+                        ZoneOffset.UTC)), 1e-8);
     }
 }
