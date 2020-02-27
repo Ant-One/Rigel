@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SiderealTimeTest7 {
+class SiderealTimeTest {
 
     @Test
     void greenwich() {
@@ -21,9 +21,6 @@ class SiderealTimeTest7 {
         ZonedDateTime ZDT=ZonedDateTime.of(date,time,id);
 
         assertEquals(Angle.ofHr(4.668120),SiderealTime.greenwich(ZDT),1e-6);
-
-
-
 
     }
 

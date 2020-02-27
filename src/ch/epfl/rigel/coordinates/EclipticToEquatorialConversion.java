@@ -20,12 +20,12 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
 
 
     /**
-     * Constructor to converse coordinates
+     * Constructor to convert coordinates
      *
      * @param when ZonedDateTime of the current location
      */
     public EclipticToEquatorialConversion(ZonedDateTime when) {
-        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));//TODO;
+        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
 
 
         Epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T)/3600+23.439292 ;
@@ -53,11 +53,17 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
     }
 
 
+    /**
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     final public int hashCode() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException();
