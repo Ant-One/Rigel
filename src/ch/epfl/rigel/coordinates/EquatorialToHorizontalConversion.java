@@ -15,28 +15,28 @@ import java.util.function.Function;
  */
 public class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
 
-    private final double sinEpsylon, cosEpsylon, Epsylon;
+    private final double sinEpsylon, cosEpsylon, epsylon;
 
 //TODO CORRECT CODE
     /**
-     * Constructor to convert coordinates
+     * Constructs a conversion from Equatorial to Horizontal coordinates
      *
      * @param when ZonedDateTime of the current location
      */
     public EquatorialToHorizontalConversion(ZonedDateTime when) {
         double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
 
-        Epsylon = Angle.ofArcsec(0.00181) * T * T * T - Angle.ofArcsec(0.0006) * T * T - Angle.ofArcsec(46.815) * T + Angle.ofDMS(23, 26, 21.45);
-        sinEpsylon = Math.sin(Epsylon);
-        cosEpsylon = Math.cos(Epsylon);
+        epsylon = Angle.ofArcsec(0.00181) * T * T * T - Angle.ofArcsec(0.0006) * T * T - Angle.ofArcsec(46.815) * T + Angle.ofDMS(23, 26, 21.45);
+        sinEpsylon = Math.sin(epsylon);
+        cosEpsylon = Math.cos(epsylon);
     }
 
 
     @Override
     /**
-     * Converts the given EclipticCoordinates to EclipticCoordinates
-     * @param equatorialCoordinates EclipticCoordinates to convert
-     * @return the converted coordinates
+     * Converts the given EquatorialCoordinates to HorizontalCoordinates
+     * @param equatorialCoordinates EquatorialCoordinates to convert
+     * @return the converted horizontal coordinates
      */
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
         double sinTheta = Math.sin(equatorialCoordinates.lon());

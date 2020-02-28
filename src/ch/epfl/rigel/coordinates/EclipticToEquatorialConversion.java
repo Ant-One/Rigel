@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates> {
 
-    private final double sinEpsylon, cosEpsylon, Epsylon;
+    private final double sinEpsylon, cosEpsylon, epsylon;
 
 
     /**
@@ -28,15 +28,15 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
 
 
-        Epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T)/3600+23.439292 ;
-        sinEpsylon = Math.sin(Angle.ofDeg(Epsylon));
-        cosEpsylon = Math.cos(Angle.ofDeg(Epsylon));
+        epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T)/3600+23.439292 ;
+        sinEpsylon = Math.sin(Angle.ofDeg(epsylon));
+        cosEpsylon = Math.cos(Angle.ofDeg(epsylon));
     }
 
 
     @Override
     /**
-     * Converts the given EclipticCoordinates to EclipticCoordinates
+     * Converts the given EclipticCoordinates to EquatorialCoordinates
      * @param ec1 EclipticCoordinates to convert
      * @return the converted coordinates
      */
