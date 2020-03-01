@@ -36,6 +36,12 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
         cosLat = Math.cos(where.lat());
     }
 
+    /**
+     * Function to find the hour angle in hours
+     * @param LST Local Sidereal Time of the observer
+     * @param raHr the right ascension angle in hours
+     * @return the hour angle in hours
+     */
     static public double findHourAngle(double LST, double raHr){
         double hourAngle = (LST - raHr);
 
