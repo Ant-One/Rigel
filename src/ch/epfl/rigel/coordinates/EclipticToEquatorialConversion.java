@@ -16,7 +16,8 @@ import java.util.function.Function;
 
 public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates> {
 
-    private final double sinEpsylon, cosEpsylon, epsylon;
+    private final double sinEpsylon;
+    private final double cosEpsylon;
 
 
     /**
@@ -28,7 +29,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
 
 
-        epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T)/3600+23.439292 ;
+        double epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600 + 23.439292;
         sinEpsylon = Math.sin(Angle.ofDeg(epsylon));
         cosEpsylon = Math.cos(Angle.ofDeg(epsylon));
     }
@@ -41,13 +42,10 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      * @return the converted coordinates
      */
     public EquatorialCoordinates apply(EclipticCoordinates ec1) {
-        double sinTheta = Math.sin(ec1.lon());
+        double sinLambda = Math.sin(ec1.lon());
 
-        double delta = Math.asin(Math.sin(ec1.lat()) * cosEpsylon + Math.cos(ec1.lat()) * sinEpsylon * sinTheta);
-        double alpha = Math.atan2(sinTheta * cosEpsylon - Math.tan(ec1.lat())*sinEpsylon ,Math.cos(ec1.lon()));
-
-
-
+        double delta = Math.asin(Math.sin(ec1.lat()) * cosEpsylon + Math.cos(ec1.lat()) * sinEpsylon * sinLambda);
+        double alpha = Math.atan2(sinLambda * cosEpsylon - Math.tan(ec1.lat())*sinEpsylon ,Math.cos(ec1.lon()));
 
         return EquatorialCoordinates.of(alpha, delta);
     }

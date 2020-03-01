@@ -1,11 +1,13 @@
 package ch.epfl.rigel.coordinates;
 
 import ch.epfl.rigel.astronomy.Epoch;
+import ch.epfl.rigel.astronomy.SiderealTime;
 import ch.epfl.rigel.math.Angle;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.function.Function;
+
 
 
 /**
@@ -15,7 +17,11 @@ import java.util.function.Function;
  */
 public class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
 
-    private final double sinEpsylon, cosEpsylon, epsylon;
+    private final static double DEGREES_PER_HOUR = 15.0;
+
+    private double localSidrealTime;
+    private double sinLat;
+    private double cosLat;
 
 //TODO CORRECT CODE
     /**
@@ -23,12 +29,20 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      *
      * @param when ZonedDateTime of the current location
      */
-    public EquatorialToHorizontalConversion(ZonedDateTime when) {
-        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
+    public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where) {
+        localSidrealTime = (SiderealTime.local(when, where));
 
-        epsylon = Angle.ofArcsec(0.00181) * T * T * T - Angle.ofArcsec(0.0006) * T * T - Angle.ofArcsec(46.815) * T + Angle.ofDMS(23, 26, 21.45);
-        sinEpsylon = Math.sin(epsylon);
-        cosEpsylon = Math.cos(epsylon);
+        sinLat = Math.sin(where.lat());
+        cosLat = Math.cos(where.lat());
+    }
+
+    static public double findHourAngle(double LST, double raHr){
+        double hourAngle = (LST - raHr);
+
+        if (hourAngle < 0){
+            hourAngle += 24.0;
+        }
+        return hourAngle;
     }
 
 
@@ -39,14 +53,17 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      * @return the converted horizontal coordinates
      */
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
-        double sinTheta = Math.sin(equatorialCoordinates.lon());
 
-        double alpha = (sinTheta * cosEpsylon - Math.tan(equatorialCoordinates.lat())) / (Math.cos(equatorialCoordinates.lon()));
-        alpha = Math.atan2(alpha, 1);
-        double delta = Math.asin(Math.sin(equatorialCoordinates.lat()) * cosEpsylon + Math.cos(equatorialCoordinates.lat()) * sinEpsylon * sinTheta);
+        double hourAngle = Angle.ofHr(findHourAngle(localSidrealTime, equatorialCoordinates.raHr()));
 
+        double sinDec = Math.sin(equatorialCoordinates.dec());
+        double cosDec = Math.cos(equatorialCoordinates.dec());
 
-        return HorizontalCoordinates.of(alpha, delta);
+        double altitude = Math.asin((sinDec * sinLat) + (cosDec * cosLat * Math.cos(hourAngle)));
+
+        double azimuth = Math.atan2(-cosDec * cosLat * Math.sin(hourAngle), sinDec - sinLat * Math.sin(altitude));
+
+        return HorizontalCoordinates.of(Angle.normalizePositive(azimuth), altitude);
     }
 
     /**
