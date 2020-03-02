@@ -18,8 +18,8 @@ abstract class SphericalCoordinates {
      * @param latitude  , latitude in rad
      */
     SphericalCoordinates(double longitude, double latitude) {
-        this.longitude = Angle.normalizePositive(longitude);
-        this.latitude = Angle.normalizePositive(latitude);
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     /**
