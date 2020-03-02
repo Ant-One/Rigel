@@ -3,6 +3,8 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 
+import java.util.Objects;
+
 public abstract class CelestialObject {
 
     private final String name;
@@ -13,9 +15,8 @@ public abstract class CelestialObject {
 
         //TODO Tests avec angularSize négative et name, equatorialPos non-définis
         Preconditions.checkArgument(angularSize >= 0);
-        if(name == null || equatorialPos == null){
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(equatorialPos);
 
         this.name = name;
         this.equatorialPos = equatorialPos;
@@ -37,5 +38,14 @@ public abstract class CelestialObject {
 
     public EquatorialCoordinates equatorialPos(){
         return equatorialPos;
+    }
+
+    public String info(){
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return info();
     }
 }
