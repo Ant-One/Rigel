@@ -15,7 +15,7 @@ import java.util.function.Function;
  */
 public class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
 
-    private double localSidrealTime;
+    private double localSiderealTime;
     private double sinLat;
     private double cosLat;
 
@@ -26,7 +26,7 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      * @param when ZonedDateTime of the current location
      */
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where) {
-        localSidrealTime = (SiderealTime.local(when, where));
+        localSiderealTime = (SiderealTime.local(when, where));
 
         sinLat = Math.sin(where.lat());
         cosLat = Math.cos(where.lat());
@@ -56,7 +56,7 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      */
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
 
-        double hourAngle = Angle.ofHr(findHourAngle(localSidrealTime, equatorialCoordinates.raHr()));
+        double hourAngle = Angle.ofHr(findHourAngle(localSiderealTime, equatorialCoordinates.raHr()));
 
         double sinDec = Math.sin(equatorialCoordinates.dec());
         double cosDec = Math.cos(equatorialCoordinates.dec());
