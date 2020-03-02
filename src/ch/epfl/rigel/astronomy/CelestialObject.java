@@ -19,7 +19,7 @@ public abstract class CelestialObject {
     /**
      * Construct a celestial object
      * @param name non-null String ; name of the celestial object
-     * @param equatorialPos non-null EquatorialCoordinates ; coodrinates of the celestial object
+     * @param equatorialPos non-null EquatorialCoordinates ; coordinates of the celestial object
      * @param angularSize size of the object
      * @param magnitude magnitude of the object. Cannot be negative
      * @throws NullPointerException if equatorialPos or name non-defined
