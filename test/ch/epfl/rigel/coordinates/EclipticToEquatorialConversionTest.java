@@ -21,7 +21,7 @@ class EclipticToEquatorialConversionTest {
         ZonedDateTime ZDT=ZonedDateTime.of(date,time,id);
 
         EclipticToEquatorialConversion ETEC=new EclipticToEquatorialConversion(ZDT);
-        EclipticCoordinates ec=EclipticCoordinates.of(Angle.ofDeg(139.686111),Angle.ofDeg(4.875278));
+        EclipticCoordinates ec=EclipticCoordinates.of(Angle.ofDMS(139,41,10),Angle.ofDMS(4,52,31));
 
         EquatorialCoordinates eq=EquatorialCoordinates.of(Angle.ofHr(9+34.0/60.0+53.32/3600),Angle.ofDMS(19,32,6.01));
         assertEquals(eq.ra(),ETEC.apply(ec).ra(),1e-6);
@@ -34,8 +34,8 @@ class EclipticToEquatorialConversionTest {
         ZonedDateTime ZDT=ZonedDateTime.of(date,time,id);
 
         EclipticToEquatorialConversion ETEC=new EclipticToEquatorialConversion(ZDT);
-        EclipticCoordinates ec=EclipticCoordinates.of(Angle.ofDeg(139.686111),Angle.ofDeg(4.875278));
-        EquatorialCoordinates eq=EquatorialCoordinates.of(Angle.ofHr(9+34.0/60+53.32/3600),Angle.ofDeg(19.5350030));
+        EclipticCoordinates ec=EclipticCoordinates.of(Angle.ofDMS(139,41,10),Angle.ofDMS(4,52,31));
+        EquatorialCoordinates eq=EquatorialCoordinates.of(Angle.ofHr(9+34.0/60+53.32/3600),Angle.ofDMS(19,32,6.01));
         assertEquals(eq.dec(),ETEC.apply(ec).dec(),1e-8);
     }
 
