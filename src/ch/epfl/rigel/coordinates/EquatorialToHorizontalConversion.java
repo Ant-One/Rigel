@@ -1,11 +1,9 @@
 package ch.epfl.rigel.coordinates;
 
-import ch.epfl.rigel.astronomy.Epoch;
 import ch.epfl.rigel.astronomy.SiderealTime;
 import ch.epfl.rigel.math.Angle;
 
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.function.Function;
 
 
@@ -16,8 +14,6 @@ import java.util.function.Function;
  * @author Antoine Moix (310052)
  */
 public class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
-
-    private final static double DEGREES_PER_HOUR = 15.0;
 
     private double localSidrealTime;
     private double sinLat;
