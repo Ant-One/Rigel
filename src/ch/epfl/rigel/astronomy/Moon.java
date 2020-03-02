@@ -25,7 +25,7 @@ public final class Moon extends CelestialObject{
      * @throws NullPointerException     if equatorialPos or name non-defined
      * @throws IllegalArgumentException if angularSize is negative or phase is not in [0;1]
      */
-    Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
+    public Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
         super(moonName, equatorialPos, angularSize, magnitude);
 
         Preconditions.checkInInterval(intervalPhase, phase);
