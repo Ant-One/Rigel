@@ -26,6 +26,7 @@ public class RightOpenInterval extends Interval {
      *
      * @param lowerBound lower Bound of the interval
      * @param upperBound UpperBound of the interval
+     * @throws IllegalArgumentException if the lower bound is bigger than the upper one
      * @return the new interval
      */
     static public RightOpenInterval of(double lowerBound, double upperBound) {

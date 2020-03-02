@@ -5,7 +5,7 @@ import ch.epfl.rigel.Preconditions;
 import java.util.Locale;
 
 /**
- * interval clod^sed on both side
+ * interval closed on both side
  *
  * @author Adrien Rey (313388)
  */
@@ -27,6 +27,7 @@ public final class ClosedInterval extends Interval {
      *
      * @param lowerBound lower Bound of the interval
      * @param upperBound UpperBound of the interval
+     * @throws IllegalArgumentException if the lowerBound is bigger than the upper one
      * @return the new interval
      */
     static public ClosedInterval of(double lowerBound, double upperBound) {

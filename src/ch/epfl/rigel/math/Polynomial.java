@@ -19,6 +19,7 @@ public final class Polynomial {
      *
      * @param coefficientN coefficient with higher degree
      * @param coefficients other coefficient
+     * @throws IllegalArgumentException if coefficientN is equal to 0
      * @return the constructed Polynomial
      */
     public static Polynomial of(double coefficientN, double... coefficients) {
