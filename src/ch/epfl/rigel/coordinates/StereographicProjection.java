@@ -3,7 +3,7 @@ package ch.epfl.rigel.coordinates;
 import java.util.function.Function;
 
 /**
- * Class used to creat Sterographic projection of a horizantal coordinates
+ * Class used to create Stereographic projection of a horizontal coordinates
  */
 public class StereographicProjection implements Function<HorizontalCoordinates, CartesianCoordinates> {
 
@@ -36,7 +36,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      * @param parallel One of the parallel coordinates
      * @return the radius of the circle
      */
-    double circleRadiusForParallel(HorizontalCoordinates parallel){
+    public double circleRadiusForParallel(HorizontalCoordinates parallel){
         return (Math.cos(parallel.alt())) / (Math.sin(parallel.alt())+sinPhi);
     }
 
@@ -46,7 +46,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      * @param rad angular size of the object
      * @return the diameter of the projected object
      */
-    double applyToAngle(double rad){
+    public double applyToAngle(double rad){
         return 2*Math.tan(rad/4);
     }
 
