@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GeographicCoordinatesTest_prof {
+class ProfGeographicCoordinatesTest {
     @Test
     void isValidLonDegWorks() {
         var rng = TestRandomizer.newRandom();

@@ -7,7 +7,7 @@ import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class EquatorialCoordinatesTest_prof {
+class ProfEquatorialCoordinatesTest {
     @Test
     void equOfWorksWithValidCoordinates() {
         var rng = TestRandomizer.newRandom();

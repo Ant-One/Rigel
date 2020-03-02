@@ -10,7 +10,7 @@ import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class HorizontalCoordinatesTest_prof {
+class ProfHorizontalCoordinatesTest {
     @Test
     void horOfWorksWithValidCoordinates() {
         var rng = TestRandomizer.newRandom();

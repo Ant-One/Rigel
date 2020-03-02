@@ -7,7 +7,7 @@ import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class EclipticCoordinatesTest_prof {
+class ProfEclipticCoordinatesTest {
     @Test
     void eclOfWorksWithValidCoordinates() {
         var rng = TestRandomizer.newRandom();
