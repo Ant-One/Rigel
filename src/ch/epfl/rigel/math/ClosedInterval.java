@@ -27,6 +27,7 @@ public final class ClosedInterval extends Interval {
      *
      * @param lowerBound lower Bound of the interval
      * @param upperBound UpperBound of the interval
+     * @throws IllegalArgumentException if the lowerBound is bigger than the upper one
      * @return the new interval
      */
     static public ClosedInterval of(double lowerBound, double upperBound) {

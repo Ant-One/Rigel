@@ -45,6 +45,7 @@ public final class Angle {
      * @param deg degrees of the angle to convert
      * @param min minutes of the angle to convert
      * @param sec seconds of the angle to convert
+     * @throws IllegalArgumentException if the min or sec not in the right interval
      * @return the angle in radians
      */
     public static double ofDMS(int deg, int min, double sec) {

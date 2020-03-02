@@ -34,6 +34,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      *
      * @param lon longitude in degree
      * @param lat latitude in degree
+     * @throws IllegalArgumentException if lon or lat not in the right interval
      * @return the new coordinates
      */
     public static EclipticCoordinates of(double lon, double lat) {
