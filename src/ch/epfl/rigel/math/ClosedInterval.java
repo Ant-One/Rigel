@@ -5,7 +5,7 @@ import ch.epfl.rigel.Preconditions;
 import java.util.Locale;
 
 /**
- * interval clod^sed on both side
+ * interval closed on both side
  *
  * @author Adrien Rey (313388)
  */
