@@ -1,6 +1,8 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
+import ch.epfl.rigel.math.ClosedInterval;
 
 /**
  * Class representing the Moon
@@ -8,17 +10,34 @@ import ch.epfl.rigel.coordinates.EquatorialCoordinates;
  * @author Antoine Moix (310052)
  */
 public final class Moon extends CelestialObject{
+
+    private final float phase;
+
+    private static final ClosedInterval intervalPhase = ClosedInterval.of(0, 1);
+    private static final String moonName = "Lune";
+
     /**
      * Construct a Moon object
      *
-     * @param name          non-null String ; name of the moon object
      * @param equatorialPos non-null EquatorialCoordinates ; coordinates of the moon object
      * @param angularSize   size of the object
      * @param magnitude     magnitude of the object. Cannot be negative
      * @throws NullPointerException     if equatorialPos or name non-defined
-     * @throws IllegalArgumentException if angularSize is negative
+     * @throws IllegalArgumentException if angularSize is negative or phase is not in [0;1]
      */
-    Moon(String name, EquatorialCoordinates equatorialPos, float angularSize, float magnitude) {
-        super(name, equatorialPos, angularSize, magnitude);
+    Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
+        super(moonName, equatorialPos, angularSize, magnitude);
+
+        Preconditions.checkInInterval(intervalPhase, phase);
+        this.phase = phase;
+    }
+
+    /**
+     * Returns the String for the Moon ("Lune" in French)
+     * @return the String for the Moon ("Lune" in French)
+     */
+    @Override
+    public String name() {
+        return super.name();
     }
 }
