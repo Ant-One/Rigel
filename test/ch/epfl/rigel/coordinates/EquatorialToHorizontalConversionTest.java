@@ -11,18 +11,17 @@ class EquatorialToHorizontalConversionTest {
 
     @Test
     void applyWorksForRad() {
-        /*HorizontalCoordinates hc = HorizontalCoordinates.of(Angle.ofDMS(283, 16, 15.70), Angle.ofDMS(19, 20, 3.64));
+        HorizontalCoordinates hc = HorizontalCoordinates.of(Angle.normalizePositive( -0.68009564965), 0.806478987115);
 
-        EquatorialCoordinates ec = EquatorialCoordinates.of(1, Angle.ofDMS(23, 13, 10));
+        EquatorialCoordinates ec = EquatorialCoordinates.of(4.77, 1.12);
 
         EquatorialToHorizontalConversion ETHC = new EquatorialToHorizontalConversion(ZonedDateTime.of(LocalDate.of(1980, Month.APRIL, 22),
                 LocalTime.of(14, 36, 52), ZoneId.of("UTC-4")),
                 GeographicCoordinates.ofDeg(52, 52));
 
         assertEquals(hc.alt(), ETHC.apply(ec).alt(), 1e-6);
-        assertEquals(hc.az(), ETHC.apply(ec).az(), 1e-6);*/
+        assertEquals(hc.az(), ETHC.apply(ec).az(), 1e-6);
 
-        //Marche seulement avec un angle horaire donné comme exemple, je t'expliquerai ce soir Adri
     }
 
     @Test
