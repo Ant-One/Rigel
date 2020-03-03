@@ -29,9 +29,9 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
 
 
-        double epsylon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600 + 23.439292;
-        sinEpsilon = Math.sin(Angle.ofDeg(epsylon));
-        cosEpsilon = Math.cos(Angle.ofDeg(epsylon));
+        double epsilon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600 + 23.439292; //Formula from the book
+        sinEpsilon = Math.sin(Angle.ofDeg(epsilon));
+        cosEpsilon = Math.cos(Angle.ofDeg(epsilon));
     }
 
 
