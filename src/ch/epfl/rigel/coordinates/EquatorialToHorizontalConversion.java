@@ -19,7 +19,6 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
     private double sinLat;
     private double cosLat;
 
-//TODO CORRECT CODE
     /**
      * Constructs a conversion from Equatorial to Horizontal coordinates
      *
@@ -38,7 +37,7 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      * @param raHr the right ascension angle in hours
      * @return the hour angle in hours
      */
-    static public double findHourAngle(double LST, double raHr){
+     private double findHourAngle(double LST, double raHr){
         double hourAngle = (LST - raHr);
 
         if (hourAngle < 0){
