@@ -48,9 +48,9 @@ public final class Moon extends CelestialObject{
     @Override
     public String info() {
         StringBuilder stringBuilder = new StringBuilder(name());
-        stringBuilder.append("(");
+        stringBuilder.append(" (");
         stringBuilder.append(phase * 100);
-        stringBuilder.append("% )");
-        return super.info();
+        stringBuilder.append("%)");
+        return stringBuilder.toString();
     }
 }
