@@ -52,7 +52,7 @@ public final class CartesianCoordinates {
 
     @Override
     public String toString() {
-        return "("+x +" ; "+y+")";
+        return "("+ x +" ; "+ y +")";
     }
     /**
      * @throws UnsupportedOperationException when used
