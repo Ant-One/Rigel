@@ -20,7 +20,6 @@ class StereographicProjectionTest {
 
     @Test
     void apply() {
-
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2, 0.12));
 
         CartesianCoordinates cc = sp.apply(HorizontalCoordinates.of(1.3, 1.56));
@@ -34,6 +33,13 @@ class StereographicProjectionTest {
 
     @Test
     void inverseApply() {
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2, 0.12));
+
+        HorizontalCoordinates hc = HorizontalCoordinates.of(0.2, 0.7);
+
+        assertEquals(hc.az(), sp.inverseApply(sp.apply(hc)).az());
+        assertEquals(hc.alt(), sp.inverseApply(sp.apply(hc)).alt());
+
     }
 
     @Test

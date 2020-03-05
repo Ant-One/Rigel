@@ -78,12 +78,12 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      */
     public HorizontalCoordinates inverseApply(CartesianCoordinates xy){
 
-        double rho =Math.sqrt(xy.x()*xy.x()+xy.y()*xy.y());
-        double sinC=2*rho/(rho*rho+1);
-        double cosC=(1-rho*rho)/rho*rho+1;
+        double rho = Math.sqrt(xy.x()*xy.x()+xy.y()*xy.y());
+        double sinC = 2*rho/(rho*rho+1);
+        double cosC = (1-rho*rho)/(rho*rho+1);
 
-        double lambda=Math.atan2(xy.x()*sinC  ,  rho*cosPhi*cosC-xy.y()*sinPhi*sinC)+center.az();
-        double phi=Math.asin( cosC*sinC+((xy.y()*sinC*cosPhi) / rho ));
+        double lambda = Math.atan2(xy.x()*sinC, rho*cosPhi*cosC - xy.y()*sinPhi*sinC) + center.az();
+        double phi = Math.asin(cosC*sinPhi+((xy.y()*sinC*cosPhi) / rho ));
 
         return HorizontalCoordinates.of(lambda,phi);
     }
