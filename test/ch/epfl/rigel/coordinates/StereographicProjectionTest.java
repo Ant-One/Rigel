@@ -20,6 +20,16 @@ class StereographicProjectionTest {
 
     @Test
     void apply() {
+
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2, 0.12));
+
+        CartesianCoordinates cc = sp.apply(HorizontalCoordinates.of(1.3, 1.56));
+
+        CartesianCoordinates ccTest = CartesianCoordinates.of(0.008555807, 0.882263534);
+
+        assertEquals(ccTest.x(), cc.x(), 1e-6);
+        assertEquals(ccTest.y(), cc.y(), 1e-6);
+
     }
 
     @Test

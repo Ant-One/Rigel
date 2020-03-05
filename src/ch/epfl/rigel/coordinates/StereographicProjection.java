@@ -58,7 +58,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      */
     public CartesianCoordinates apply(HorizontalCoordinates azAlt){
         double sinOtherPhi=Math.sin(azAlt.alt());
-        double cosOtherPhi=Math.sin(azAlt.alt());
+        double cosOtherPhi=Math.cos(azAlt.alt());
         double lambda=azAlt.az()-center.az();
         double sinLambda=Math.sin(lambda);
         double cosLambda=Math.cos(lambda);
@@ -66,7 +66,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
         double d=1/ ( 1+( sinPhi*sinOtherPhi )+(cosOtherPhi*cosPhi*cosLambda));
 
         double x=d*cosOtherPhi*sinLambda;
-        double y=d*(sinOtherPhi*sinPhi+cosOtherPhi*cosPhi*cosLambda);
+        double y=d*(sinOtherPhi*cosPhi-cosOtherPhi*sinPhi*cosLambda);
 
         return CartesianCoordinates.of(x,y);
     }
