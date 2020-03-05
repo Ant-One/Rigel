@@ -1,5 +1,6 @@
 package ch.epfl.rigel.coordinates;
 
+import ch.epfl.rigel.astronomy.Sun;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,14 +9,40 @@ class StereographicProjectionTest {
 
     @Test
     void circleCenterForParallel() {
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2, 0.12));
+        HorizontalCoordinates hor = HorizontalCoordinates.of(0.3, 0.98);
+
+        assertEquals(0, sp.circleCenterForParallel(hor).x());
+        assertEquals(1.04483122363, sp.circleCenterForParallel(hor).y(), 1e-8);
+
+        sp = new StereographicProjection(HorizontalCoordinates.of(0.3, 0));
+        hor = HorizontalCoordinates.of(0.2, 0);
+
+        assertEquals(0, sp.circleCenterForParallel(hor).x());
+        assertEquals(4.f/0.f, sp.circleCenterForParallel(hor).y(), 1e-8);
     }
 
     @Test
     void circleRadiusForParallel() {
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2, 0.12));
+        HorizontalCoordinates hor = HorizontalCoordinates.of(0.3, 0.98);
+
+        assertEquals(0.58621020014, sp.circleRadiusForParallel(hor), 1e-8);
+
+        sp = new StereographicProjection(HorizontalCoordinates.of(0.3, 0));
+        hor = HorizontalCoordinates.of(0.2, 0);
+
+        assertEquals(4.f/0.f, sp.circleRadiusForParallel(hor), 1e-8);
+
     }
 
     @Test
     void applyToAngle() {
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2, 0.12));
+        Sun sun = new Sun(EclipticCoordinates.of(1,1), EquatorialCoordinates.of(1,1), 2.33f,1.f);
+
+       assertEquals(1.3174948651, sp.applyToAngle(sun.angularSize()), 1e-7);
+
     }
 
     @Test

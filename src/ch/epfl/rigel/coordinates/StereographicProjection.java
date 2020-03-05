@@ -4,6 +4,8 @@ import java.util.function.Function;
 
 /**
  * Class used to create Stereographic projection of a horizontal coordinates
+ *
+ * @author Adrien Rey (313388)
  */
 public class StereographicProjection implements Function<HorizontalCoordinates, CartesianCoordinates> {
 
@@ -28,7 +30,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      */
     public CartesianCoordinates circleCenterForParallel(HorizontalCoordinates hor){
 
-        return CartesianCoordinates.of(0,cosPhi/(sinPhi+Math.sin(hor.alt())));
+        return CartesianCoordinates.of(0,cosPhi/(Math.sin(hor.alt()) + sinPhi));
     }
 
     /**
@@ -47,7 +49,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      * @return the diameter of the projected object
      */
     public double applyToAngle(double rad){
-        return 2*Math.tan(rad/4);
+        return 2*Math.tan(rad/4.0);
     }
 
 
