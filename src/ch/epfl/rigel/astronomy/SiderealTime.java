@@ -27,7 +27,7 @@ public final class SiderealTime {
 
         ZonedDateTime greenwichWhen = when.withZoneSameInstant(ZoneId.of("GMT+0"));
 
-        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
+        double T = Epoch.J2000.julianCenturiesUntil(greenwichWhen.truncatedTo(ChronoUnit.DAYS));
         double t = (double) greenwichWhen.truncatedTo(ChronoUnit.DAYS).until(greenwichWhen, ChronoUnit.MILLIS) / (double) ChronoUnit.HOURS.getDuration().toMillis();
 
 
