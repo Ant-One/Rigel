@@ -25,7 +25,7 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      * @param when ZonedDateTime of the current location
      */
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where) {
-        localSiderealTime = (SiderealTime.local(when, where));
+        localSiderealTime = Angle.toHr(SiderealTime.local(when, where));
 
         sinLat = Math.sin(where.lat());
         cosLat = Math.cos(where.lat());
