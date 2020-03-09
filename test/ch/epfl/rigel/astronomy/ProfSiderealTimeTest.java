@@ -122,6 +122,7 @@ class ProfSiderealTimeTest {
             var zdt2 = zdt1.plus(SIDEREAL_DAY.multipliedBy(siderealDays));
             var gst1 = SiderealTime.local(zdt1, where);
             var gst2 = SiderealTime.local(zdt2, where);
+
             assertEquals(gst1, gst2, 1e-3);
         }
     }

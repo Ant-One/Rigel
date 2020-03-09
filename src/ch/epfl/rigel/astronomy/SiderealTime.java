@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
  */
 public final class SiderealTime {
 
-    private final static RightOpenInterval radInterval= RightOpenInterval.of(0,Angle.TAU/2);
+    private final static RightOpenInterval radInterval= RightOpenInterval.of(0,Angle.TAU);
 
     /**
      * compute the sidereal time at greenwich
