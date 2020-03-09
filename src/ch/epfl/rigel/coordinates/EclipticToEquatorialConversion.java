@@ -26,10 +26,10 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      * @param when ZonedDateTime of the current location
      */
     public EclipticToEquatorialConversion(ZonedDateTime when) {
-        double T = Epoch.J2000.julianCenturiesUntil(when.truncatedTo(ChronoUnit.DAYS));
+        double T = Epoch.J2000.julianCenturiesUntil(when);
 
 
-        double epsilon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600 + 23.439292; //Formula from the book
+        double epsilon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600.f + (Angle.toDeg(Angle.ofDMS(23,26,21.45))); //Formula from the book
         sinEpsilon = Math.sin(Angle.ofDeg(epsilon));
         cosEpsilon = Math.cos(Angle.ofDeg(epsilon));
     }
