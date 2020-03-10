@@ -27,7 +27,6 @@ public abstract class CelestialObject {
      */
     CelestialObject(String name, EquatorialCoordinates equatorialPos, float angularSize, float magnitude){
 
-        //TODO Tests avec angularSize négative et name, equatorialPos non-définis
         Preconditions.checkArgument(angularSize >= 0);
         Objects.requireNonNull(name);
         Objects.requireNonNull(equatorialPos);

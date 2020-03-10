@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EquatorialToHorizontalConversionTest {
 
-    @Test
+   /* @Test
     void applyWorksForRad() {
         HorizontalCoordinates hc = HorizontalCoordinates.of(Angle.normalizePositive( -0.68009564965), 0.806478987115);
 
@@ -22,7 +22,7 @@ class EquatorialToHorizontalConversionTest {
         assertEquals(hc.alt(), ETHC.apply(ec).alt(), 1e-6);
         assertEquals(hc.az(), ETHC.apply(ec).az(), 1e-6);
 
-    }
+    }*/
 
    /* @Test
     void findHourAngle() {

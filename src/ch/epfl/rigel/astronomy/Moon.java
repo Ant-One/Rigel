@@ -4,6 +4,8 @@ import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.ClosedInterval;
 
+import java.util.Locale;
+
 /**
  * Class representing the Moon
  *
@@ -49,7 +51,7 @@ public final class Moon extends CelestialObject{
     public String info() {
         StringBuilder stringBuilder = new StringBuilder(name());
         stringBuilder.append(" (");
-        stringBuilder.append(phase * 100);
+        stringBuilder.append(String.format(Locale.ROOT, "%.1f", phase*100));
         stringBuilder.append("%)");
         return stringBuilder.toString();
     }
