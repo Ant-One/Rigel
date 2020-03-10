@@ -17,7 +17,7 @@ class MoonTest {
 
     @Test
     void info() {
-        assertEquals("Lune (37.5%)",new Moon(EquatorialCoordinates.of(1,1),8.f,0.2f,0.375f).info()) ;
+        assertEquals("Lune (37.5%)",new Moon(EquatorialCoordinates.of(1,1),8.f,0.2f,0.3752f).info()) ;
 
 
     }
