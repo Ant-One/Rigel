@@ -3,6 +3,8 @@ package ch.epfl.rigel.coordinates;
 import ch.epfl.rigel.astronomy.Sun;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StereographicProjectionTest {
@@ -92,5 +94,23 @@ class StereographicProjectionTest {
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.6,1.3));
 
         assertEquals("StereographicProjection{center of (az=34.3775°, alt=74.4845°)}", sp.toString());
+    }
+
+    @Test
+    void inverseWorkOnAplly(){
+
+       Random r=new Random();
+        for (int j = 0; j <1000 ; j++) {
+
+            StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(r.nextDouble() * 360, r.nextDouble() * 180 - 90));
+            for (int i = 0; i < 1000; i++) {
+                HorizontalCoordinates cord = HorizontalCoordinates.ofDeg(r.nextDouble() * 360, r.nextDouble() * 180 - 90);
+                HorizontalCoordinates coord = sp.inverseApply(sp.apply(cord));
+                assertEquals(cord.alt(), coord.alt(), 1e-6);
+                assertEquals(cord.az(), coord.az(), 1e-6);
+            }
+        }
+
+
     }
 }
