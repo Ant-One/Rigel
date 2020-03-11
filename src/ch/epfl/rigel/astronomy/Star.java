@@ -6,6 +6,11 @@ import ch.epfl.rigel.math.ClosedInterval;
 
 import java.io.PrintWriter;
 
+/**
+ * Basic Star object
+ * @author Adrien Rey (313388)
+ */
+
 public final class Star extends CelestialObject {
     private final int hipparcosId;
     private final float colorIndex;
@@ -42,7 +47,7 @@ public final class Star extends CelestialObject {
      * the color index of the star
      * @return the color index
      */
-    public float colorIndex() {
-        return colorIndex;
+    public int colorTemperature() {
+        return (int)Math.floor(colorIndex);
     }
 }
