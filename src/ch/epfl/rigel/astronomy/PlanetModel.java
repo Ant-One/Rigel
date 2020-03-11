@@ -1,10 +1,12 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.math.Angle;
 
 import java.util.Arrays;
 import java.util.List;
+import static java.lang.Math.*;
 
 /**
  * Model of Solar System Planet
@@ -31,40 +33,39 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
             30.1985, 1.7673, 131.879, 62.20, -6.87);
 
     private String frenchName;
-    private double tropicalYean, J2010Long, periapsisLong, orbitalEccentricity, semiMajorAxis, orbitalDeclination;
-    private double ascendingNodeLong, angularSize, magnitude;
+    private double tropicalYear, J2010Long, periapsisLongitude, orbitalEccentricity, semiMajorAxis, orbitalDeclination;
+    private double ascendingNodeLongitude, angularSize, magnitude;
 
-    public List<PlanetModel> ALL = Arrays.asList(PlanetModel.values());
+    public static List<PlanetModel> ALL = Arrays.asList(PlanetModel.values());
 
     /**
      * construct a PlanetModel according to the specified data
      * @param frenchName string of the French name of the planet
-     * @param tropicalYear Revolution period of the planet
-     * @param J2010Long longitude at J2010
-     * @param periapsisLong longitude at the periapsis
+     * @param tropicalYear Revolution period of the planet in tropicalYear
+     * @param J2010Long longitude at J2010 in degrees
+     * @param periapsisLongitude longitude at the periapsis in degrees (périgée in French)
      * @param orbitalEccentricity orbit's eccentricity
-     * @param semiMajorAxis semi-major axis of the orbit
-     * @param orbitalDeclination orbital declination
-     * @param ascendingNodeLong longitude at the ascending node
-     * @param angularSize angular size of the planet
+     * @param semiMajorAxis semi-major axis of the orbit in UA
+     * @param orbitalDeclination orbital declination in degrees
+     * @param ascendingNodeLongitude longitude at the ascending node in degrees
+     * @param angularSize angular size of the planet in arcsecs
      * @param magnitude magnitude of the planet
      */
-    PlanetModel(String frenchName, double tropicalYear, double J2010Long, double periapsisLong, double orbitalEccentricity,
-                double semiMajorAxis, double orbitalDeclination, double ascendingNodeLong,
+    PlanetModel(String frenchName, double tropicalYear, double J2010Long, double periapsisLongitude, double orbitalEccentricity,
+                double semiMajorAxis, double orbitalDeclination, double ascendingNodeLongitude,
                 double angularSize, double magnitude) {
 
         this.frenchName = frenchName;
-        this.tropicalYean = tropicalYear;
+        this.tropicalYear = tropicalYear;
         this.J2010Long = Angle.ofDeg(J2010Long);
-        this.periapsisLong = Angle.ofDeg(periapsisLong);
+        this.periapsisLongitude = Angle.ofDeg(periapsisLongitude);
         this.orbitalEccentricity = orbitalEccentricity;
         this.orbitalDeclination = Angle.ofDeg(orbitalDeclination);
         this.semiMajorAxis = semiMajorAxis;
-        this.ascendingNodeLong = Angle.ofDeg(ascendingNodeLong);
-        this.angularSize = angularSize;
+        this.ascendingNodeLongitude = Angle.ofDeg(ascendingNodeLongitude);
+        this.angularSize = Angle.ofArcsec(angularSize);
         this.magnitude = magnitude;
     }
-
 
     /**
      * Method to compute the object after a number of days (can be negative!)
@@ -75,6 +76,49 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      */
     @Override
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
-        return null;
+        double meanAnomaly = (Angle.TAU/365.242191) * (daysSinceJ2010/ tropicalYear) + J2010Long - periapsisLongitude;
+        double realAnomaly = meanAnomaly + 2 * orbitalEccentricity * sin(meanAnomaly);
+
+        double radius = (semiMajorAxis * (1 - pow(orbitalEccentricity, 2))) / (1 + orbitalEccentricity * cos(realAnomaly));
+        double heliocentricLongitude = realAnomaly + periapsisLongitude;
+        double heliocentricEclipticLatitude = asin(Math.sin(heliocentricLongitude - ascendingNodeLongitude) * sin(orbitalDeclination));
+
+        double projectedRadius = radius * cos(heliocentricEclipticLatitude);
+        double projectedLongitude = atan2(sin(heliocentricLongitude - ascendingNodeLongitude) * cos(orbitalDeclination), cos(heliocentricLongitude - ascendingNodeLongitude))
+                + ascendingNodeLongitude;
+
+        double earthMeanAnomaly = (Angle.TAU/365.242191) * (daysSinceJ2010/PlanetModel.EARTH.tropicalYear) + PlanetModel.EARTH.J2010Long - PlanetModel.EARTH.periapsisLongitude;
+        double earthRealAnomaly = earthMeanAnomaly + 2 * PlanetModel.EARTH.orbitalEccentricity * sin(earthMeanAnomaly);
+
+        double earthRadius = (PlanetModel.EARTH.semiMajorAxis * (1 - pow(PlanetModel.EARTH.orbitalEccentricity, 2)))
+                / (1 + PlanetModel.EARTH.orbitalEccentricity * cos(earthRealAnomaly));
+        double earthHeliocentricLongitude = earthRealAnomaly + PlanetModel.EARTH.periapsisLongitude;
+
+        double geocentricEclipticLongitude;
+
+        if(this == PlanetModel.MERCURY || this == PlanetModel.VENUS){
+            geocentricEclipticLongitude = Angle.TAU/2 + earthHeliocentricLongitude +
+                    atan2(projectedRadius * sin(earthHeliocentricLongitude - projectedLongitude),
+                            earthRadius - projectedRadius * cos(earthHeliocentricLongitude - projectedLongitude));
+        }else{
+            geocentricEclipticLongitude = projectedLongitude
+                    + atan2(earthRadius * sin(projectedLongitude - earthHeliocentricLongitude),
+                    projectedRadius - earthRadius * cos(projectedLongitude - earthHeliocentricLongitude));
+        }
+
+        double geocentricLatitude = atan2(projectedRadius * tan(heliocentricEclipticLatitude)
+                * sin(geocentricEclipticLongitude - projectedLongitude),
+                earthRadius * sin(projectedLongitude - earthHeliocentricLongitude));
+
+        double rho = sqrt(pow(earthRadius, 2) + pow(radius, 2) - 2 * earthRadius * radius
+                * cos(heliocentricLongitude - earthHeliocentricLongitude) * cos(heliocentricEclipticLatitude));
+
+        double adujustedAngularSize = angularSize / rho;
+
+        double phase = (1 + cos(geocentricLatitude - heliocentricLongitude) / 2);
+        double adjustedMagnitude = magnitude + 5 * log10((radius * rho) / sqrt(phase));
+
+        return new Planet(frenchName, eclipticToEquatorialConversion.apply(EclipticCoordinates.of(geocentricEclipticLongitude, geocentricLatitude)),
+                (float) adujustedAngularSize, (float) adjustedMagnitude);
     }
 }
