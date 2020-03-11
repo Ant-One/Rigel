@@ -9,7 +9,7 @@ import java.util.List;
 import static java.lang.Math.*;
 
 /**
- * Model of Solar System Planet
+ * Model of Solar System Planets
  * @author Antoine Moix (310052)
  */
 
