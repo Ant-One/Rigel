@@ -76,16 +76,22 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      */
     @Override
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
+
+        //Basic Calculus
+
         double meanAnomaly = (Angle.TAU/365.242191) * (daysSinceJ2010/ tropicalYear) + J2010Long - periapsisLongitude;
         double realAnomaly = meanAnomaly + 2 * orbitalEccentricity * sin(meanAnomaly);
 
         double radius = (semiMajorAxis * (1 - pow(orbitalEccentricity, 2))) / (1 + orbitalEccentricity * cos(realAnomaly));
         double heliocentricLongitude = realAnomaly + periapsisLongitude;
-        double heliocentricEclipticLatitude = asin(Math.sin(heliocentricLongitude - ascendingNodeLongitude) * sin(orbitalDeclination));
+        double heliocentricEclipticLatitude = asin(sin(heliocentricLongitude - ascendingNodeLongitude) * sin(orbitalDeclination));
 
         double projectedRadius = radius * cos(heliocentricEclipticLatitude);
         double projectedLongitude = atan2(sin(heliocentricLongitude - ascendingNodeLongitude) * cos(orbitalDeclination), cos(heliocentricLongitude - ascendingNodeLongitude))
                 + ascendingNodeLongitude;
+
+
+        //Earth Calculus
 
         double earthMeanAnomaly = (Angle.TAU/365.242191) * (daysSinceJ2010/PlanetModel.EARTH.tropicalYear) + PlanetModel.EARTH.J2010Long - PlanetModel.EARTH.periapsisLongitude;
         double earthRealAnomaly = earthMeanAnomaly + 2 * PlanetModel.EARTH.orbitalEccentricity * sin(earthMeanAnomaly);
@@ -93,6 +99,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double earthRadius = (PlanetModel.EARTH.semiMajorAxis * (1 - pow(PlanetModel.EARTH.orbitalEccentricity, 2)))
                 / (1 + PlanetModel.EARTH.orbitalEccentricity * cos(earthRealAnomaly));
         double earthHeliocentricLongitude = earthRealAnomaly + PlanetModel.EARTH.periapsisLongitude;
+
+        //Inferior and Superior Planet
 
         double geocentricEclipticLongitude;
 
