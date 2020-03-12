@@ -6,7 +6,7 @@ import ch.epfl.rigel.math.Angle;
 
 public enum SunModel implements CelestialObjectModel<Sun> {
     SUN;
-    private final static double epsylon= Angle.ofDeg(279.557208),w=Angle.ofDeg(283.112438),e=Angle.ofArcsec(0.016705);
+    private final static double epsylon= Angle.ofDeg(279.557208),w=Angle.ofDeg(283.112438),e=0.016705;
 
 
 
