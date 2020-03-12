@@ -39,8 +39,8 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      */
     public static EclipticCoordinates of(double lon, double lat) {
 
-        Preconditions.checkInInterval(latitudeInterval, lat);
         Preconditions.checkInInterval(longitudeInterval, lon);
+        Preconditions.checkInInterval(latitudeInterval, lat);
         return new EclipticCoordinates(lon, lat);
 
     }
