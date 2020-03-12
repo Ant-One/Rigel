@@ -13,17 +13,15 @@ import java.util.List;
 
 public class Asterism {
 
-    private List<Star> stars;
+    private List<Star> stars = new ArrayList<>();
 
     public Asterism(List<Star> stars) {
         Preconditions.checkArgument(!stars.isEmpty());
         this.stars.addAll(stars);
     }
-    //TODO check if imuable
-
+    //TODO Comment
 
     public List<Star> stars() {
-        List<Star> list = new ArrayList<>(stars);
-        return list;
+        return new ArrayList<>(stars);
     }
 }
