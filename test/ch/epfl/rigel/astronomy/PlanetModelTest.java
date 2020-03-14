@@ -32,6 +32,7 @@ class PlanetModelTest {
         assertEquals(EC.dec(),mercury .equatorialPos().dec(),1e-8);
         assertEquals(EC.ra(),mercury .equatorialPos().ra(),1e-8);
 
+
     }
     @Test
     void testForJupiter(){
@@ -49,7 +50,7 @@ class PlanetModelTest {
         assertEquals(EC.dec(),jupiter.equatorialPos().dec(),1e-8);
         assertEquals(EC.ra(),jupiter.equatorialPos().ra(),1e-8);
         assertEquals(Angle.ofArcsec(35.1),jupiter.angularSize(),1e-6);
-        assertEquals(-2,jupiter.magnitude());
+        assertEquals(-2,jupiter.magnitude(),2*1e-2);
 
     }
 }

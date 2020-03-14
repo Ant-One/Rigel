@@ -125,12 +125,12 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double rho = sqrt(pow(earthRadius, 2) + pow(radius, 2) - 2 * earthRadius * radius
                 * cos(heliocentricLongitude - earthHeliocentricLongitude) * cos(heliocentricEclipticLatitude));
 
-        double adujustedAngularSize = angularSize / rho;
-
-        double phase = ((1 + cos(geocentricLatitude - heliocentricLongitude) )/ 2);
+        double adjustedAngularSize = angularSize / rho;
+        double d=geocentricEclipticLongitude-heliocentricLongitude;
+        double phase = ((1 +cos(d) )/ 2.0);
         double adjustedMagnitude = magnitude + 5 * log10((radius * rho) / sqrt(phase));
 
         return new Planet(frenchName, eclipticToEquatorialConversion.apply(coordinates),
-                (float) adujustedAngularSize, (float) adjustedMagnitude);
+                (float) adjustedAngularSize, (float) adjustedMagnitude);
     }
 }
