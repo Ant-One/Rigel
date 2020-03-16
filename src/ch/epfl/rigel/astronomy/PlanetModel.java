@@ -3,7 +3,6 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.math.Angle;
-import ch.epfl.rigel.math.ClosedInterval;
 import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.util.Arrays;
@@ -119,7 +118,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double geocentricLatitude = atan2(projectedRadius * tan(heliocentricEclipticLatitude)
                 * sin(geocentricEclipticLongitude - projectedLongitude),
                 earthRadius * sin(projectedLongitude - earthHeliocentricLongitude));
-        EclipticCoordinates coordinates=EclipticCoordinates .of(Angle.normalizePositive(geocentricEclipticLongitude), RightOpenInterval.symmetric(Angle.TAU / 2).reduce(geocentricLatitude ));
+        EclipticCoordinates coordinates=EclipticCoordinates .of(Angle.normalizePositive(geocentricEclipticLongitude), RightOpenInterval.symmetric(Angle.TAU / 2).reduce(geocentricLatitude));
 
 
         double rho = sqrt(pow(earthRadius, 2) + pow(radius, 2) - 2 * earthRadius * radius
