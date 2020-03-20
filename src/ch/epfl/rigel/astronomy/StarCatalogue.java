@@ -104,7 +104,8 @@ public final class StarCatalogue {
         }
 
         public Builder loadFrom(InputStream inputStream, Loader loader) throws IOException {
-            //TODO faire ça
+            loader.load(inputStream, this);
+            return this;
         }
 
         public StarCatalogue build(){
