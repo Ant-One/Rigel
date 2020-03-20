@@ -48,7 +48,7 @@ public final class StarCatalogue {
      * Returns the list of stars
      * @return the list of the stars used in the catalogue
      */
-    List<Star> stars(){
+    public List<Star> stars(){
         return stars;
     }
 
@@ -56,7 +56,7 @@ public final class StarCatalogue {
      * Returns a set of all the asterisms used in the catalogue
      * @return Returns a set of all the asterisms used in the catalogue
      */
-    Set<Asterism> asterisms(){
+    public Set<Asterism> asterisms(){
         return catalogueMap.keySet();
     }
 
@@ -66,7 +66,7 @@ public final class StarCatalogue {
      * @return all the stars used by the given asterism object
      * @throws IllegalArgumentException if the given asterism is not in the catalogue
      */
-    List<Integer> asterismIndices(Asterism asterism){
+    public List<Integer> asterismIndices(Asterism asterism){
         if (catalogueMap.containsKey(asterism)) {
             return catalogueMap.get(asterism);
         }
