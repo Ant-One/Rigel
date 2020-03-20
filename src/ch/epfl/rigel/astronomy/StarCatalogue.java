@@ -1,5 +1,7 @@
 package ch.epfl.rigel.astronomy;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -20,7 +22,7 @@ public final class StarCatalogue {
      * @param asterisms list of asterisms
      * @throws IllegalArgumentException if a star used in an asterism is not in the provided list of stars
      */
-    StarCatalogue(List<Star> stars, List<Asterism> asterisms){
+    public StarCatalogue(List<Star> stars, List<Asterism> asterisms){
         this.stars = new ArrayList<>(stars);
         ArrayList<Asterism> workAsterisms = new ArrayList<>(asterisms);
 
@@ -71,5 +73,48 @@ public final class StarCatalogue {
         else{
             throw new IllegalArgumentException();
         }
+    }
+
+    public final static class Builder{
+//TODO COMMENTER
+        ArrayList<Star> builderStars;
+        ArrayList<Asterism> builderAsterisms;
+
+        public Builder(){
+            builderStars = new ArrayList<>();
+            builderAsterisms = new ArrayList<>();
+        }
+
+        public Builder addStar(Star star){
+            builderStars.add(star);
+            return this;
+        }
+
+        public List<Star> stars(){
+            return Collections.unmodifiableList(builderStars);
+        }
+
+        public Builder addAsterism(Asterism asterism){
+            builderAsterisms.add(asterism);
+            return this;
+        }
+
+        public List<Asterism> asterisms(){
+            return Collections.unmodifiableList(builderAsterisms);
+        }
+
+        public Builder loadFrom(InputStream inputStream, Loader loader) throws IOException {
+            //TODO faire ça
+        }
+
+        public StarCatalogue build(){
+            return new StarCatalogue(builderStars, builderAsterisms);
+        }
+    }
+
+    public interface Loader{
+        //TODO commenter
+
+        void load(InputStream inputStream, Builder builder) throws IOException;
     }
 }
