@@ -113,8 +113,13 @@ public final class StarCatalogue {
     }
 
     public interface Loader{
-        //TODO commenter
 
+        /**
+         * Loads stars and/or asterisms from the input stream and add them to the builder's lists
+         * @param inputStream the input stream of data for the stars and asterisms
+         * @param builder the builder to whose catalogue add the read data
+         * @throws IOException if an error with the streams happens
+         */
         void load(InputStream inputStream, Builder builder) throws IOException;
     }
 }
