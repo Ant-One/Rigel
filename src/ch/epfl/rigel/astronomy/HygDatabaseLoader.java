@@ -45,8 +45,12 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader{
                 }
 
                 String name = values[Types.PROPER.ordinal()];
-                if(name.isEmpty()){
-                    name = values[Types.BAYER.ordinal()] + " " + values[Types.CON.ordinal()];
+                String bayer = values[Types.BAYER.ordinal()];
+
+                if(name.isEmpty() && !bayer.isEmpty()){
+                    name = bayer + " " + values[Types.CON.ordinal()];
+                }else if(bayer.isEmpty()){
+                    name = "? " + values[Types.CON.ordinal()];
                 }
 
                 double raRad = Double.parseDouble(values[Types.RARAD.ordinal()]);
