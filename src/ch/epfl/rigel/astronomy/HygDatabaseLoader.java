@@ -30,6 +30,8 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader{
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         try (BufferedReader inStream = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.US_ASCII));){
 
+            inStream.readLine();
+
             while(inStream.ready()) {
                 String line = inStream.readLine();
                 String[] values = line.split(",");
