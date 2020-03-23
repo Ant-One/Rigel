@@ -24,9 +24,9 @@ class MoonModelTest {
                 LocalTime.MIDNIGHT, ZoneOffset.UTC)), ETEC);
 
         assertEquals(bookValues.ra(), moon.equatorialPos().ra(),1e-6);
-        assertEquals(bookValues.dec(), moon.equatorialPos().dec(),1e-6);
+        assertEquals(bookValues.dec(), moon.equatorialPos().dec(),+1e-6);
 
-        assertEquals(Angle.ofDeg(0.5181), moon.angularSize());
+        assertEquals(Angle.ofDeg(0.546822), moon.angularSize());
 
     }
 }
