@@ -18,13 +18,13 @@ class MoonModelTest {
                 LocalTime.MIDNIGHT, ZoneOffset.UTC));
 
 
-        EquatorialCoordinates bookValues = EquatorialCoordinates.of(Angle.ofDeg(214.862515), Angle.ofDeg(1.716257));
+        EquatorialCoordinates bookValues = ETEC.apply(EclipticCoordinates.of(Angle.ofDeg(214.862515), Angle.ofDeg(1.716257)));
 
         Moon moon = MoonModel.MOON.at(Epoch.J2010.daysUntil(ZonedDateTime.of(LocalDate.of(2003, Month.SEPTEMBER, 1),
                 LocalTime.MIDNIGHT, ZoneOffset.UTC)), ETEC);
 
-        assertEquals(bookValues.ra(), moon.equatorialPos().ra());
-        assertEquals(bookValues.dec(), moon.equatorialPos().dec());
+        assertEquals(bookValues.ra(), moon.equatorialPos().ra(),1e-6);
+        assertEquals(bookValues.dec(), moon.equatorialPos().dec(),1e-6);
 
         assertEquals(Angle.ofDeg(0.5181), moon.angularSize());
 
