@@ -76,20 +76,31 @@ public final class StarCatalogue {
     }
 
     public final static class Builder{
-//TODO COMMENTER
         ArrayList<Star> builderStars;
         ArrayList<Asterism> builderAsterisms;
 
+        /**
+         * Construct a builder for the StarCatalogue object
+         */
         public Builder(){
             builderStars = new ArrayList<>();
             builderAsterisms = new ArrayList<>();
         }
 
+        /**
+         * Add a star to the star list of the builder
+         * @param star the star to be added to the list of the builder
+         * @return the current builder object
+         */
         public Builder addStar(Star star){
             builderStars.add(star);
             return this;
         }
 
+        /**
+         * Returns an unmodifiable view on the list of the stars of the builder
+         * @return an unmodifiable view on the list of the stars of the builder
+         */
         public List<Star> stars(){
             return Collections.unmodifiableList(builderStars);
         }
@@ -99,15 +110,30 @@ public final class StarCatalogue {
             return this;
         }
 
+        /**
+         * Returns an unmodifiable view on the list of the asterisms of the builder
+         * @return an unmodifiable view on the list of the asterisms of the builder
+         */
         public List<Asterism> asterisms(){
             return Collections.unmodifiableList(builderAsterisms);
         }
 
+        /**
+         * Load from an inputStream and a loader object
+         * @param inputStream the inputStream from which to load stars or asterisms
+         * @param loader the loader used to load asterisms or stars
+         * @return the builder object
+         * @throws IOException if an IO exception happens
+         */
         public Builder loadFrom(InputStream inputStream, Loader loader) throws IOException {
             loader.load(inputStream, this);
             return this;
         }
 
+        /**
+         * Returns the built StarCatalogue object
+         * @return the built StarCatalogue object
+         */
         public StarCatalogue build(){
             return new StarCatalogue(builderStars, builderAsterisms);
         }
