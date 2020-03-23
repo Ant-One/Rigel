@@ -24,7 +24,7 @@ public enum SunModel implements CelestialObjectModel<Sun> {
     public Sun at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
         double M = Angle.normalizePositive((Angle.TAU / 365.242191) * daysSinceJ2010 + epsylon - w);
         double v = M + 2 * e * Math.sin(M);
-        double lambda = v + w;
+        double lambda = Angle.normalizePositive(v + w);
         EclipticCoordinates coordinates = EclipticCoordinates.of(Angle.normalizePositive(lambda), 0); //no need to reduce, lat = 0 anyways
 
         double theta = Angle.ofDeg(thetaZero * ((1 + e * Math.cos(v)) / (1 - e * e)));

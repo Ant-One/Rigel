@@ -3,6 +3,7 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.RightOpenInterval;
 
 public enum  MoonModel implements CelestialObjectModel<Moon> {
     MOON;
@@ -15,8 +16,8 @@ public enum  MoonModel implements CelestialObjectModel<Moon> {
 
         //Orbital Longitude
         Sun sun=SunModel.SUN.at(daysSinceJ2010,eclipticToEquatorialConversion);
-        double l=Angle.ofDeg(13.1763966)*daysSinceJ2010+l0;
-        double Mm=l-Angle.ofDeg(0.1114041)*daysSinceJ2010-P0;
+        double l=Angle.normalizePositive(Angle.ofDeg(13.1763966)*daysSinceJ2010+l0);
+        double Mm=Angle.normalizePositive(l-Angle.ofDeg(0.1114041)*daysSinceJ2010-P0);
         double Ev=Angle.ofDeg(1.2739)*Math.sin(2* (l-sun.eclipticPos().lon()) - Mm );
         double Ae=Angle.ofDeg(0.1858)*Math.sin(sun.meanAnomaly());
         double A3=Angle.ofDeg(0.37)*Math.sin(sun.meanAnomaly());
@@ -35,7 +36,7 @@ public enum  MoonModel implements CelestialObjectModel<Moon> {
                                 Math.cos(l2bis-Nbis))+Nbis;
         double lat=Math.asin( Math.sin(l2bis-Nbis )*Math.sin(i) );
 
-        EclipticCoordinates coordinates=EclipticCoordinates.of(lon,lat);
+        EclipticCoordinates coordinates=EclipticCoordinates.of(Angle.normalizePositive(lon), RightOpenInterval.symmetric(Angle.TAU / 2).reduce(lat));
 
         //Phase
 
