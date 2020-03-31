@@ -4,8 +4,6 @@ import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.ClosedInterval;
 
-import java.io.PrintWriter;
-
 /**
  * Basic Star object
  * @author Adrien Rey (313388)
@@ -17,7 +15,7 @@ public final class Star extends CelestialObject {
     private final static ClosedInterval colorIndexInterval= ClosedInterval.of(-0.5,5.5);
 
     /**
-     * Basic contructor for a star
+     * Basic constructor for a star
      * @param hipparcosId the hipparcos Id
      * @param name the star's name
      * @param equatorialPos the equatorial coordinates of the star

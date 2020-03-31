@@ -8,8 +8,8 @@ import ch.epfl.rigel.math.Angle;
  * @author Adrien (313388)
  */
 abstract class SphericalCoordinates {
-    private double longitude;
-    private double latitude;
+    private final double longitude;
+    private final double latitude;
 
     /**
      * Package private spherical coordinates constructor

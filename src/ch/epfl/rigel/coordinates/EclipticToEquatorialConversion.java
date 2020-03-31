@@ -4,7 +4,6 @@ import ch.epfl.rigel.astronomy.Epoch;
 import ch.epfl.rigel.math.Angle;
 
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.function.Function;
 
 

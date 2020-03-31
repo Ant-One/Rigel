@@ -39,7 +39,7 @@ public abstract class CelestialObject {
 
     /**
      * Returns the name of the celestial object
-     * @return the name of the celestial objet
+     * @return the name of the celestial object
      */
     public String name(){
         return name;
@@ -47,7 +47,7 @@ public abstract class CelestialObject {
 
     /**
      * Returns the angularSize of the celestial object
-     * @return the angularSize of the celestial obeject
+     * @return the angularSize of the celestial object
      */
     public double angularSize(){
         return angularSize;
@@ -70,8 +70,8 @@ public abstract class CelestialObject {
     }
 
     /**
-     * Method to be overriden. By default returns the same as the name() method. Is used to get more infos about the object
-     * @return by defaul same as name()
+     * Method to be overridden. By default returns the same as the name() method. Is used to get more infos about the object
+     * @return by default same as name()
      */
     public String info(){
         return name();

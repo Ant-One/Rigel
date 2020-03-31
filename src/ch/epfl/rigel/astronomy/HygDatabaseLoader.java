@@ -15,7 +15,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader{
         D, HIP, HD, HR, GL, BF, PROPER, RA, DEC, DIST, PMRA, PMDEC,
         RV, MAG, ABSMAG, SPECT, CI, X, Y, Z, VX, VY, VZ,
         RARAD, DECRAD, PMRARAD, PMDECRAD, BAYER, FLAM, CON,
-        COMP, COMP_PRIMARY, BASE, LUM, VAR, VAR_MIN, VAR_MAX;
+        COMP, COMP_PRIMARY, BASE, LUM, VAR, VAR_MIN, VAR_MAX
     }
 
 
@@ -28,7 +28,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader{
      */
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
-        try (BufferedReader inStream = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.US_ASCII));){
+        try (BufferedReader inStream = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.US_ASCII))){
 
             inStream.readLine();
 

@@ -2,7 +2,6 @@ package ch.epfl.rigel.astronomy;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -12,8 +11,8 @@ import java.util.*;
  */
 public final class StarCatalogue {
 
-    private Map<Asterism, List<Integer>> catalogueMap;
-    private List<Star> stars;
+    private final Map<Asterism, List<Integer>> catalogueMap;
+    private final List<Star> stars;
 
     /**
      * Construct a Star Catalogue with keys as asterism objects and values as lists of the corresponding star's indexes
@@ -76,8 +75,8 @@ public final class StarCatalogue {
     }
 
     public final static class Builder{
-        ArrayList<Star> builderStars;
-        ArrayList<Asterism> builderAsterisms;
+        final ArrayList<Star> builderStars;
+        final ArrayList<Asterism> builderAsterisms;
 
         /**
          * Construct a builder for the StarCatalogue object

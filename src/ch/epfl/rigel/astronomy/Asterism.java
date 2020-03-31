@@ -3,7 +3,6 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.Preconditions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class Asterism {
 
-    private List<Star> stars = new ArrayList<>();
+    private final List<Star> stars = new ArrayList<>();
 
     /**
      * Construct an asterism with a list of stars

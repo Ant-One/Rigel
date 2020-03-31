@@ -33,9 +33,16 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     NEPTUNE("Neptune", 165.84539, 326.895127, 23.07, 0.010483,
             30.1985, 1.7673, 131.879, 62.20, -6.87);
 
-    private String frenchName;
-    private double tropicalYear, J2010Long, periapsisLongitude, orbitalEccentricity, semiMajorAxis, orbitalDeclination;
-    private double ascendingNodeLongitude, angularSize, magnitude;
+    private final String frenchName;
+    private final double tropicalYear;
+    private final double J2010Long;
+    private final double periapsisLongitude;
+    private final double orbitalEccentricity;
+    private final double semiMajorAxis;
+    private final double orbitalDeclination;
+    private final double ascendingNodeLongitude;
+    private final double angularSize;
+    private final double magnitude;
 
     public static List<PlanetModel> ALL = Arrays.asList(PlanetModel.values());
 

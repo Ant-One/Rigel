@@ -2,7 +2,7 @@ package ch.epfl.rigel.coordinates;
 
 /**
  * Cartesian Coordinates
- * @author Adrien Rey(313388)
+ * @author Adrien Rey (313388)
  */
 
 public final class CartesianCoordinates {

@@ -15,8 +15,8 @@ public final class Sun extends CelestialObject{
     private static final String sunName = "Soleil";
     private static final float sunMagnitude = -26.7f;
 
-    private float meanAnomaly;
-    private EclipticCoordinates eclipticPos;
+    private final float meanAnomaly;
+    private final EclipticCoordinates eclipticPos;
 
     /**
      * Construct a Sun object
@@ -33,15 +33,6 @@ public final class Sun extends CelestialObject{
 
         this.eclipticPos = eclipticPos;
         this.meanAnomaly = meanAnomaly;
-    }
-
-    /**
-     * Returns the name of the sun object ; "Soleil" in French
-     * @return the name of the sun object ; "Soleil" in French
-     */
-    @Override
-    public String name() {
-        return super.name();
     }
 
     /**

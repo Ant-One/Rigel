@@ -15,9 +15,9 @@ import java.util.function.Function;
  */
 public class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
 
-    private double localSiderealTime;
-    private double sinLat;
-    private double cosLat;
+    private final double localSiderealTime;
+    private final double sinLat;
+    private final double cosLat;
 
     /**
      * Constructs a conversion from Equatorial to Horizontal coordinates
@@ -46,13 +46,12 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
         return hourAngle;
     }
 
-
-    @Override
     /**
      * Converts the given EquatorialCoordinates to HorizontalCoordinates
      * @param equatorialCoordinates EquatorialCoordinates to convert
      * @return the converted horizontal coordinates
      */
+    @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
 
         double hourAngle = Angle.ofHr(findHourAngle(localSiderealTime, equatorialCoordinates.raHr()));

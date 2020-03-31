@@ -35,15 +35,6 @@ public final class Moon extends CelestialObject{
     }
 
     /**
-     * Returns the String for the Moon ("Lune" in French) in a String
-     * @return the String for the Moon ("Lune" in French) in a String
-     */
-    @Override
-    public String name() {
-        return super.name();
-    }
-
-    /**
      * Returns the name of the Moon and its phase in percents in a String
      * @return the name of the Moon and its phase in percents in a String
      */

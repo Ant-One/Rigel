@@ -150,11 +150,4 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
         return String.format(Locale.ROOT, "(az=%.4f°, alt=%.4f°)", azDeg(), altDeg());
 
     }
-
-    /**
-     * Cartesian Coordinates
-     * @author Antoine Moix (310052)
-     */
-
-
 }
