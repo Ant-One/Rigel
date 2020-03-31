@@ -12,7 +12,7 @@ class StarTest {
     void testConstructorStar(){
         Star s = new Star(4, "test", EquatorialCoordinates.of(1, 1), 1f, 2.45f);
 
-        assertEquals(2, s.colorTemperature());
+        assertEquals(2763, s.colorTemperature());
         assertEquals(4, s.hipparcosId());
         assertEquals(0, s.angularSize()); //Must be zero
     }
