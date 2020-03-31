@@ -27,8 +27,8 @@ public final class ClosedInterval extends Interval {
      *
      * @param lowerBound lower Bound of the interval
      * @param upperBound UpperBound of the interval
-     * @throws IllegalArgumentException if the lowerBound is bigger than the upper one
      * @return the new interval
+     * @throws IllegalArgumentException if the lowerBound is bigger than the upper one
      */
     static public ClosedInterval of(double lowerBound, double upperBound) {
         Preconditions.checkArgument(lowerBound < upperBound);
@@ -69,6 +69,11 @@ public final class ClosedInterval extends Interval {
         }
     }
 
+    /**
+     * ToString method
+     *
+     * @return the String representation of the closedInterval object
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "[%f,%f]", low(), high());

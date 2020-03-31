@@ -13,7 +13,7 @@ public final class Angle {
     public final static double HOUR_PER_RAD = 24.0 / TAU; //Hours per radian
     public final static double RAD_PER_HOUR = TAU / 24.0; //Radians per hour
     public final static double DEGREES_PER_SECOND = 1.0 / 3600.0; //Hours per second
-    private static final double DEGREES_PER_MINUTE = 1.0/60.0;
+    private static final double DEGREES_PER_MINUTE = 1.0 / 60.0;
 
     private Angle() {
     }
@@ -45,8 +45,8 @@ public final class Angle {
      * @param deg degrees of the angle to convert
      * @param min minutes of the angle to convert
      * @param sec seconds of the angle to convert
-     * @throws IllegalArgumentException if the min or sec not in the right interval
      * @return the angle in radians
+     * @throws IllegalArgumentException if the min or sec not in the right interval
      */
     public static double ofDMS(int deg, int min, double sec) {
         Preconditions.checkArgument(min >= 0 && min < 60);

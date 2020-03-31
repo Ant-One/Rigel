@@ -50,12 +50,23 @@ public abstract class Interval {
      */
     public abstract boolean contains(double v);
 
-
+    /**
+     * Cannot be used
+     *
+     * @return nothing, to to be used
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     final public int hashCode() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Cannot be used
+     *
+     * @return nothing, to to be used
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException();

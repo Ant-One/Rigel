@@ -26,8 +26,8 @@ public class RightOpenInterval extends Interval {
      *
      * @param lowerBound lower Bound of the interval
      * @param upperBound UpperBound of the interval
-     * @throws IllegalArgumentException if the lower bound is bigger than the upper one
      * @return the new interval
+     * @throws IllegalArgumentException if the lower bound is bigger than the upper one
      */
     static public RightOpenInterval of(double lowerBound, double upperBound) {
         Preconditions.checkArgument(lowerBound < upperBound);
@@ -72,6 +72,11 @@ public class RightOpenInterval extends Interval {
     }
 
 
+    /**
+     * toString method
+     *
+     * @return the string representation of the RightOpenInterval object
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "[%f,%f[", low(), high());

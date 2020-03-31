@@ -19,8 +19,8 @@ public final class Polynomial {
      *
      * @param coefficientN coefficient with higher degree
      * @param coefficients other coefficient
-     * @throws IllegalArgumentException if coefficientN is equal to 0
      * @return the constructed Polynomial
+     * @throws IllegalArgumentException if coefficientN is equal to 0
      */
     public static Polynomial of(double coefficientN, double... coefficients) {
 
@@ -46,6 +46,11 @@ public final class Polynomial {
         return horner;
     }
 
+    /**
+     * ToString method
+     *
+     * @return the string representation of a polynomial object
+     */
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder(polynomial.length * 3);
@@ -72,11 +77,23 @@ public final class Polynomial {
         return str.toString();
     }
 
+    /**
+     * Cannot be used
+     *
+     * @return nothing, to to be used
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     final public int hashCode() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Cannot be used
+     *
+     * @return nothing, to to be used
+     * @throws UnsupportedOperationException when used
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException();
