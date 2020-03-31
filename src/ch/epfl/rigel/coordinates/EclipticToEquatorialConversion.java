@@ -28,7 +28,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         double T = Epoch.J2000.julianCenturiesUntil(when);
 
 
-        double epsilon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600.f + (Angle.toDeg(Angle.ofDMS(23,26,21.45))); //Formula from the book
+        double epsilon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600.f + (Angle.toDeg(Angle.ofDMS(23, 26, 21.45))); //Formula from the book
         sinEpsilon = Math.sin(Angle.ofDeg(epsilon));
         cosEpsilon = Math.cos(Angle.ofDeg(epsilon));
     }
@@ -45,8 +45,8 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         double sinLambda = Math.sin(ec1.lon());
 
         double delta = Math.asin(Math.sin(ec1.lat()) * cosEpsilon + Math.cos(ec1.lat()) * sinEpsilon * sinLambda);
-        double alpha = Math.atan2(sinLambda * cosEpsilon - Math.tan(ec1.lat())* sinEpsilon,Math.cos(ec1.lon()));
-        alpha=Angle.normalizePositive(alpha);
+        double alpha = Math.atan2(sinLambda * cosEpsilon - Math.tan(ec1.lat()) * sinEpsilon, Math.cos(ec1.lon()));
+        alpha = Angle.normalizePositive(alpha);
 
         return EquatorialCoordinates.of(alpha, delta);
     }

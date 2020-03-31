@@ -33,8 +33,8 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
      *
      * @param ra  right ascension in rad
      * @param dec declination in rad
-     * @throws IllegalArgumentException if ra or dec not in the right interval
      * @return the new coordinates
+     * @throws IllegalArgumentException if ra or dec not in the right interval
      */
     public static EquatorialCoordinates of(double ra, double dec) {
 

@@ -18,7 +18,7 @@ import static java.lang.Math.*;
  */
 public final class HorizontalCoordinates extends SphericalCoordinates {
 
-    private static final RightOpenInterval  AZIMUTH_INTERVAL = RightOpenInterval.of(0, Angle.TAU);
+    private static final RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(0, Angle.TAU);
     private static final ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(-Angle.TAU / 4.0, Angle.TAU / 4.0);
 
     private static final ClosedInterval NORTH_INTERVAL_1 = ClosedInterval.of(0, 3 * Angle.TAU / 16.0);
@@ -42,8 +42,8 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      *
      * @param az  the azimuth angle in radians
      * @param alt the altitude angle in radians
-     * @throws IllegalArgumentException if az or alt not in the right interval
      * @return the HorizontalCoordinates object created
+     * @throws IllegalArgumentException if az or alt not in the right interval
      */
     public static HorizontalCoordinates of(double az, double alt) {
         Preconditions.checkInInterval(AZIMUTH_INTERVAL, az);

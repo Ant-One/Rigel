@@ -2,15 +2,17 @@ package ch.epfl.rigel.coordinates;
 
 /**
  * Cartesian Coordinates
+ *
  * @author Adrien Rey (313388)
  */
 
 public final class CartesianCoordinates {
 
-    private final double x,y;
+    private final double x, y;
 
     /**
      * private constructor of Cartesian coordinates
+     *
      * @param x x coordinate
      * @param y y coordinate
      */
@@ -21,12 +23,13 @@ public final class CartesianCoordinates {
 
     /**
      * Construct Cartesian coordinates
+     *
      * @param x x value
      * @param y y value
      * @return the constructed cartesian coordinates
      */
-    static public CartesianCoordinates of(double x,double y){
-        return new CartesianCoordinates(x,y);
+    static public CartesianCoordinates of(double x, double y) {
+        return new CartesianCoordinates(x, y);
     }
 
     /**
@@ -57,8 +60,9 @@ public final class CartesianCoordinates {
 
     @Override
     public String toString() {
-        return "("+ x +" ; "+ y +")";
+        return "(" + x + " ; " + y + ")";
     }
+
     /**
      * @throws UnsupportedOperationException when used
      */

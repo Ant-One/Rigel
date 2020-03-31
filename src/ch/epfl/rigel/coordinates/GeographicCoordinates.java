@@ -22,7 +22,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      * Package private spherical coordinates constructor
      *
      * @param longitude , longitude in rad
-     * @param latitude , latitude in rad
+     * @param latitude  , latitude in rad
      */
     private GeographicCoordinates(double longitude, double latitude) {
         super(longitude, latitude);
@@ -33,8 +33,8 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      *
      * @param longDeg longitude in degree
      * @param latDeg  latitude in degree
-     * @throws IllegalArgumentException if longDeg or latDeg not in the right interval
      * @return the new coordinates
+     * @throws IllegalArgumentException if longDeg or latDeg not in the right interval
      */
     public static GeographicCoordinates ofDeg(double longDeg, double latDeg) {
 

@@ -5,7 +5,7 @@ import ch.epfl.rigel.math.Angle;
 /**
  * Mother class for all Spherical coordinates
  *
- * @author Adrien (313388)
+ * @author Adrien Rey (313388)
  */
 abstract class SphericalCoordinates {
     private final double longitude;
@@ -14,8 +14,8 @@ abstract class SphericalCoordinates {
     /**
      * Package private spherical coordinates constructor
      *
-     * @param longitude , longitude in rad
-     * @param latitude  , latitude in rad
+     * @param longitude longitude in rad
+     * @param latitude  latitude in rad
      */
     SphericalCoordinates(double longitude, double latitude) {
         this.longitude = longitude;

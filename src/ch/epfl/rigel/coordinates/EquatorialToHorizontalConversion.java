@@ -7,7 +7,6 @@ import java.time.ZonedDateTime;
 import java.util.function.Function;
 
 
-
 /**
  * Model a conversion from Equatorial to Horizontal coordinates
  *
@@ -33,14 +32,15 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
 
     /**
      * Function to find the hour angle in hours
-     * @param LST Local Sidereal Time of the observer
+     *
+     * @param LST  Local Sidereal Time of the observer
      * @param raHr the right ascension angle in hours
      * @return the hour angle in hours
      */
-     private double findHourAngle(double LST, double raHr){
+    private double findHourAngle(double LST, double raHr) {
         double hourAngle = (LST - raHr);
 
-        if (hourAngle < 0){
+        if (hourAngle < 0) {
             hourAngle += 24.0;
         }
         return hourAngle;
@@ -48,6 +48,7 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
 
     /**
      * Converts the given EquatorialCoordinates to HorizontalCoordinates
+     *
      * @param equatorialCoordinates EquatorialCoordinates to convert
      * @return the converted horizontal coordinates
      */

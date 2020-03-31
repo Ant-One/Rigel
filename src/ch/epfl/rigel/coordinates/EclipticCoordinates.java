@@ -14,7 +14,7 @@ import java.util.Locale;
  */
 public final class EclipticCoordinates extends SphericalCoordinates {
 
-    private static final RightOpenInterval longitudeInterval = RightOpenInterval.of(0,Angle.TAU);
+    private static final RightOpenInterval longitudeInterval = RightOpenInterval.of(0, Angle.TAU);
     private static final ClosedInterval latitudeInterval = ClosedInterval.symmetric(Angle.TAU / 2);
 
 
@@ -34,8 +34,8 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      *
      * @param lon longitude in degree
      * @param lat latitude in degree
-     * @throws IllegalArgumentException if lon or lat not in the right interval
      * @return the new coordinates
+     * @throws IllegalArgumentException if lon or lat not in the right interval
      */
     public static EclipticCoordinates of(double lon, double lat) {
 
