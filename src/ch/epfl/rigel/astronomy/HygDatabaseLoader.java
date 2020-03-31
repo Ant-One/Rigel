@@ -2,16 +2,19 @@ package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
  * @author Antoine Moix (310052)
  */
-public enum HygDatabaseLoader implements StarCatalogue.Loader{
+public enum HygDatabaseLoader implements StarCatalogue.Loader {
     INSTANCE;
 
-    private enum Types{
+    private enum Types {
         D, HIP, HD, HR, GL, BF, PROPER, RA, DEC, DIST, PMRA, PMDEC,
         RV, MAG, ABSMAG, SPECT, CI, X, Y, Z, VX, VY, VZ,
         RARAD, DECRAD, PMRARAD, PMDECRAD, BAYER, FLAM, CON,
@@ -28,28 +31,27 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader{
      */
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
-        try (BufferedReader inStream = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.US_ASCII))){
+        try (BufferedReader inStream = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.US_ASCII))) {
 
             inStream.readLine();
 
-            while(inStream.ready()) {
+            while (inStream.ready()) {
                 String line = inStream.readLine();
                 String[] values = line.split(",");
 
                 int hipparcosID;
-                try{
+                try {
                     hipparcosID = Integer.parseInt(values[Types.HIP.ordinal()]);
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     hipparcosID = 0;
                 }
 
                 String name = values[Types.PROPER.ordinal()];
                 String bayer = values[Types.BAYER.ordinal()];
 
-                if(name.isEmpty() && !bayer.isEmpty()){
+                if (name.isEmpty() && !bayer.isEmpty()) {
                     name = bayer + " " + values[Types.CON.ordinal()];
-                }else if(bayer.isEmpty()){
+                } else if (bayer.isEmpty()) {
                     name = "? " + values[Types.CON.ordinal()];
                 }
 
@@ -57,18 +59,16 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader{
                 double decRad = Double.parseDouble(values[Types.DECRAD.ordinal()]);
 
                 double magnitude;
-                try{
+                try {
                     magnitude = Double.parseDouble(values[Types.MAG.ordinal()]);
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     magnitude = 0;
                 }
 
                 double colorIndex;
-                try{
+                try {
                     colorIndex = Double.parseDouble(values[Types.CI.ordinal()]);
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     colorIndex = 0;
                 }
 

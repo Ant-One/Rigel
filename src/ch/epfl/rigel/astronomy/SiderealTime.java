@@ -15,10 +15,10 @@ import java.time.temporal.ChronoUnit;
  */
 public final class SiderealTime {
 
-    private final static RightOpenInterval radInterval= RightOpenInterval.of(0,Angle.TAU);
+    private final static RightOpenInterval radInterval = RightOpenInterval.of(0, Angle.TAU);
 
     /**
-     * compute the sidereal time at greenwich
+     * Computes the sidereal time at greenwich
      *
      * @param when ZonedDateTime of your current place
      * @return greenwich sidereal time
@@ -39,7 +39,7 @@ public final class SiderealTime {
     }
 
     /**
-     * compute the local sidereal time
+     * Computes the local sidereal time
      *
      * @param when  ZonedDateTime of the current place
      * @param where Geographic coordinates of the location

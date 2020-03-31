@@ -16,7 +16,8 @@ public enum SunModel implements CelestialObjectModel<Sun> {
 
     /**
      * Method to simulate the next position of the Sun
-     * @param daysSinceJ2010 number of days after J2010
+     *
+     * @param daysSinceJ2010                 number of days after J2010
      * @param eclipticToEquatorialConversion conversion to convert ecliptic coordinates to equatorial ones
      * @return a new Sun object
      */

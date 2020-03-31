@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Antoine Moix (310052)
  */
-public enum AsterismLoader implements StarCatalogue.Loader{
+public enum AsterismLoader implements StarCatalogue.Loader {
     INSTANCE;
 
     /**
@@ -33,11 +33,11 @@ public enum AsterismLoader implements StarCatalogue.Loader{
                 ArrayList<Star> currentStars = new ArrayList<>();
 
 
-                for(String idString : values){
+                for (String idString : values) {
                     int id = Integer.parseInt(idString);
 
-                    for(Star star : builder.stars()){
-                        if(star.hipparcosId() == id){
+                    for (Star star : builder.stars()) {
+                        if (star.hipparcosId() == id) {
                             currentStars.add(star);
                         }
                     }

@@ -18,14 +18,15 @@ public abstract class CelestialObject {
 
     /**
      * Construct a celestial object
-     * @param name non-null String ; name of the celestial object
+     *
+     * @param name          non-null String ; name of the celestial object
      * @param equatorialPos non-null EquatorialCoordinates ; coordinates of the celestial object
-     * @param angularSize size of the object
-     * @param magnitude magnitude of the object. Cannot be negative
-     * @throws NullPointerException if equatorialPos or name non-defined
+     * @param angularSize   size of the object
+     * @param magnitude     magnitude of the object. Cannot be negative
+     * @throws NullPointerException     if equatorialPos or name non-defined
      * @throws IllegalArgumentException if angularSize is negative
      */
-    CelestialObject(String name, EquatorialCoordinates equatorialPos, float angularSize, float magnitude){
+    CelestialObject(String name, EquatorialCoordinates equatorialPos, float angularSize, float magnitude) {
 
         Preconditions.checkArgument(angularSize >= 0);
         Objects.requireNonNull(name);
@@ -39,46 +40,52 @@ public abstract class CelestialObject {
 
     /**
      * Returns the name of the celestial object
+     *
      * @return the name of the celestial object
      */
-    public String name(){
+    public String name() {
         return name;
     }
 
     /**
      * Returns the angularSize of the celestial object
+     *
      * @return the angularSize of the celestial object
      */
-    public double angularSize(){
+    public double angularSize() {
         return angularSize;
     }
 
     /**
      * Returns the magnitude of the celestial object
+     *
      * @return the magnitude of the celestial object
      */
-    public double magnitude(){
+    public double magnitude() {
         return magnitude;
     }
 
     /**
      * Returns the equatorial position of the celestial object
+     *
      * @return the equatorial position of the celestial object
      */
-    public EquatorialCoordinates equatorialPos(){
+    public EquatorialCoordinates equatorialPos() {
         return equatorialPos;
     }
 
     /**
      * Method to be overridden. By default returns the same as the name() method. Is used to get more infos about the object
+     *
      * @return by default same as name()
      */
-    public String info(){
+    public String info() {
         return name();
     }
 
     /**
      * Same as name()
+     *
      * @return same as name()
      */
     @Override

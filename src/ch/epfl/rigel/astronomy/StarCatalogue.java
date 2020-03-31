@@ -15,13 +15,14 @@ public final class StarCatalogue {
     private final List<Star> stars;
 
     /**
-     * Construct a Star Catalogue with keys as asterism objects and values as lists of the corresponding star's indexes
+     * Constructs a Star Catalogue with keys as asterism objects and values as lists of the corresponding star's indexes
      * in the stars list
-     * @param stars list of stars
+     *
+     * @param stars     list of stars
      * @param asterisms list of asterisms
      * @throws IllegalArgumentException if a star used in an asterism is not in the provided list of stars
      */
-    public StarCatalogue(List<Star> stars, List<Asterism> asterisms){
+    public StarCatalogue(List<Star> stars, List<Asterism> asterisms) {
         this.stars = new ArrayList<>(stars);
         ArrayList<Asterism> workAsterisms = new ArrayList<>(asterisms);
 
@@ -30,12 +31,11 @@ public final class StarCatalogue {
         for (Asterism aste : workAsterisms) {
             List<Integer> indexes = new ArrayList<>();
 
-            for(Star star : aste.stars()){
+            for (Star star : aste.stars()) {
                 int index = stars.indexOf(star);
-                if(index >= 0){
+                if (index >= 0) {
                     indexes.add(index);
-                }
-                else{
+                } else {
                     throw new IllegalArgumentException();
                 }
             }
@@ -45,82 +45,88 @@ public final class StarCatalogue {
 
     /**
      * Returns the list of stars
+     *
      * @return the list of the stars used in the catalogue
      */
-    public List<Star> stars(){
+    public List<Star> stars() {
         return stars;
     }
 
     /**
      * Returns a set of all the asterisms used in the catalogue
+     *
      * @return Returns a set of all the asterisms used in the catalogue
      */
-    public Set<Asterism> asterisms(){
+    public Set<Asterism> asterisms() {
         return catalogueMap.keySet();
     }
 
     /**
      * Returns a list of the stars used by a given asterism
+     *
      * @param asterism a astersim object
      * @return all the stars used by the given asterism object
      * @throws IllegalArgumentException if the given asterism is not in the catalogue
      */
-    public List<Integer> asterismIndices(Asterism asterism){
+    public List<Integer> asterismIndices(Asterism asterism) {
         if (catalogueMap.containsKey(asterism)) {
             return catalogueMap.get(asterism);
-        }
-        else{
+        } else {
             throw new IllegalArgumentException();
         }
     }
 
-    public final static class Builder{
+    public final static class Builder {
         final ArrayList<Star> builderStars;
         final ArrayList<Asterism> builderAsterisms;
 
         /**
          * Construct a builder for the StarCatalogue object
          */
-        public Builder(){
+        public Builder() {
             builderStars = new ArrayList<>();
             builderAsterisms = new ArrayList<>();
         }
 
         /**
          * Add a star to the star list of the builder
+         *
          * @param star the star to be added to the list of the builder
          * @return the current builder object
          */
-        public Builder addStar(Star star){
+        public Builder addStar(Star star) {
             builderStars.add(star);
             return this;
         }
 
         /**
          * Returns an unmodifiable view on the list of the stars of the builder
+         *
          * @return an unmodifiable view on the list of the stars of the builder
          */
-        public List<Star> stars(){
+        public List<Star> stars() {
             return Collections.unmodifiableList(builderStars);
         }
 
-        public Builder addAsterism(Asterism asterism){
+        public Builder addAsterism(Asterism asterism) {
             builderAsterisms.add(asterism);
             return this;
         }
 
         /**
          * Returns an unmodifiable view on the list of the asterisms of the builder
+         *
          * @return an unmodifiable view on the list of the asterisms of the builder
          */
-        public List<Asterism> asterisms(){
+        public List<Asterism> asterisms() {
             return Collections.unmodifiableList(builderAsterisms);
         }
 
         /**
          * Load from an inputStream and a loader object
+         *
          * @param inputStream the inputStream from which to load stars or asterisms
-         * @param loader the loader used to load asterisms or stars
+         * @param loader      the loader used to load asterisms or stars
          * @return the builder object
          * @throws IOException if an IO exception happens
          */
@@ -131,19 +137,21 @@ public final class StarCatalogue {
 
         /**
          * Returns the built StarCatalogue object
+         *
          * @return the built StarCatalogue object
          */
-        public StarCatalogue build(){
+        public StarCatalogue build() {
             return new StarCatalogue(builderStars, builderAsterisms);
         }
     }
 
-    public interface Loader{
+    public interface Loader {
 
         /**
          * Loads stars and/or asterisms from the input stream and add them to the builder's lists
+         *
          * @param inputStream the input stream of data for the stars and asterisms
-         * @param builder the builder to whose catalogue add the read data
+         * @param builder     the builder to whose catalogue add the read data
          * @throws IOException if an error with the streams happens
          */
         void load(InputStream inputStream, Builder builder) throws IOException;

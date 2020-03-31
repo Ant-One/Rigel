@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author Antoine Moix (310052)
  */
-public final class Sun extends CelestialObject{
+public final class Sun extends CelestialObject {
 
     private static final String sunName = "Soleil";
     private static final float sunMagnitude = -26.7f;
@@ -20,13 +20,14 @@ public final class Sun extends CelestialObject{
 
     /**
      * Construct a Sun object
-     * @param eclipticPos non-null EclipticCoordinates ; Ecliptic coordinates of the sun object
+     *
+     * @param eclipticPos   non-null EclipticCoordinates ; Ecliptic coordinates of the sun object
      * @param equatorialPos non-null EquatorialCoordinates ; Equatorial coordinates of the sun object
      * @param angularSize   size of the object
      * @throws NullPointerException if eclipticPos non-defined
      */
 
-    public Sun(EclipticCoordinates eclipticPos, EquatorialCoordinates equatorialPos, float angularSize, float meanAnomaly){
+    public Sun(EclipticCoordinates eclipticPos, EquatorialCoordinates equatorialPos, float angularSize, float meanAnomaly) {
         super(sunName, equatorialPos, angularSize, sunMagnitude);
 
         Objects.requireNonNull(eclipticPos);
@@ -37,6 +38,7 @@ public final class Sun extends CelestialObject{
 
     /**
      * Returns the ecliptic position of the sun object
+     *
      * @return the ecliptic position of the sun object
      */
     public EclipticCoordinates eclipticPos() {
@@ -45,9 +47,10 @@ public final class Sun extends CelestialObject{
 
     /**
      * Returns the mean anomaly of the sun object
+     *
      * @return the mean anomaly of the sun object
      */
-    public double meanAnomaly(){
+    public double meanAnomaly() {
         return meanAnomaly;
     }
 }

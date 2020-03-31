@@ -11,7 +11,7 @@ import java.util.Locale;
  *
  * @author Antoine Moix (310052)
  */
-public final class Moon extends CelestialObject{
+public final class Moon extends CelestialObject {
 
     private final float phase;
 
@@ -36,13 +36,14 @@ public final class Moon extends CelestialObject{
 
     /**
      * Returns the name of the Moon and its phase in percents in a String
+     *
      * @return the name of the Moon and its phase in percents in a String
      */
     @Override
     public String info() {
         StringBuilder stringBuilder = new StringBuilder(name());
         stringBuilder.append(" (");
-        stringBuilder.append(String.format(Locale.ROOT, "%.1f", phase*100));
+        stringBuilder.append(String.format(Locale.ROOT, "%.1f", phase * 100));
         stringBuilder.append("%)");
         return stringBuilder.toString();
     }

@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Asterism (Group of stars)
+ *
  * @author Adrien Rey (313388)
  */
 
@@ -16,6 +17,7 @@ public class Asterism {
 
     /**
      * Construct an asterism with a list of stars
+     *
      * @param stars the list of stars to be included in the asterism
      * @throws IllegalArgumentException if the list is empty
      */
@@ -26,6 +28,7 @@ public class Asterism {
 
     /**
      * Returns the list of stars in the asterism
+     *
      * @return the list of stars of the asterism
      */
     public List<Star> stars() {
