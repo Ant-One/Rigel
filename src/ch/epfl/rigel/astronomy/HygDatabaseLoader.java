@@ -8,7 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-/**
+/**loader for the HYgData file
+ *
  * @author Antoine Moix (310052)
  */
 public enum HygDatabaseLoader implements StarCatalogue.Loader {
