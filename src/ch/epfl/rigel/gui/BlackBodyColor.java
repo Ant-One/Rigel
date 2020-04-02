@@ -24,10 +24,13 @@ public class BlackBodyColor {
             while(bbrStream.ready()){
                 String readLine = bbrStream.readLine();
 
-                if(readLine.charAt(0) == '#' || readLine.charAt(11) == '2'){ //If it is a comment line or the value for 2 deg, we skip it
-                    break;
-                }else{
-                    int kelvin = Integer.getInteger(readLine.substring(1, 6));
+                if(readLine.charAt(0) != '#' && readLine.charAt(11) != '2'){ //If it is a comment line or the value for 2 deg, we skip it
+
+                    String substring=readLine.substring(1, 6);
+                    if(substring.charAt(0)==' '){
+                        substring=substring.substring(1,5);
+                    }
+                    int kelvin = Integer.valueOf(substring) ;
                     String color = readLine.substring(80, 87);
 
                     colorMap.put(kelvin, color);
@@ -40,21 +43,23 @@ public class BlackBodyColor {
 
     /**
      * Useless constructor
+     * @throws UnsupportedOperationException
      */
     private BlackBodyColor(){
+        throw new UnsupportedOperationException("BlackBodyColor is not instantiable");
     }
 
     /**
      * Method used to convert the temperature in Kelvin to a JFX Color Object
      * @param kelvinTemp the temperature in Kelvin. Must be between 1000 and 40'000
-     * @return a JFX Color object representing the black body color for a given temo
+     * @return a JFX Color object representing the black body color for a given temperature
      * @throws IllegalArgumentException if kelvinTemp is not between 1000 and 40'000
      */
     public static Color colorForTemperature(float kelvinTemp){
         Preconditions.checkArgument(kelvinTemp >= 1000 && kelvinTemp <= 40000);
 
-        int roundedTemp = (int) kelvinTemp;
-        roundedTemp = ((roundedTemp + 99) / 100) * 100;
+
+        int roundedTemp=Math.round(kelvinTemp/100)*100;
 
         String color = colorMap.get(roundedTemp);
 
