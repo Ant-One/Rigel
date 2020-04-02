@@ -58,6 +58,6 @@ public class BlackBodyColor {
 
         String color = colorMap.get(roundedTemp);
 
-        return Color.web(colorMap.get(roundedTemp));
+        return Color.web(color);
     }
 }
