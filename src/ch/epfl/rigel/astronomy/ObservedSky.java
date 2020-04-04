@@ -185,7 +185,7 @@ public class ObservedSky {
      * Compute the closest object to a point under a maximum distance
      * @param point the point
      * @param maxDistance maximum distance of the object to the point
-     * @return the closest object
+     * @return the closest object or null if not an object was not found
      */
     public CelestialObject objectClosestTo(CartesianCoordinates point, double maxDistance) {
         CelestialObject object = null;
