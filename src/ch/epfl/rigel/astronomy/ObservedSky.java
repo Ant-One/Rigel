@@ -13,7 +13,7 @@ import java.util.*;
 public class ObservedSky {
 
     private final StarCatalogue catalogue;
-    private final HashMap<CelestialObject, CartesianCoordinates> objects = new HashMap<>();
+    private final HashMap<CelestialObject, CartesianCoordinates> objects = new HashMap<>(); //TODO faire en sorte que Closestobjectoto marche
 
     private final List<Star> stars;
     private final List<Double> starsPosition = new ArrayList<>();
