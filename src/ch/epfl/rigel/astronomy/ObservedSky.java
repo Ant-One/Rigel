@@ -2,6 +2,7 @@ package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.*;
 
+import java.awt.geom.AffineTransform;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -13,7 +14,9 @@ import java.util.*;
 public class ObservedSky {
 
     private final StarCatalogue catalogue;
-    private final HashMap<CartesianCoordinates, CelestialObject> objects = new HashMap<>();
+    private final ArrayList<CelestialObject> objects= new ArrayList<>();
+    private final ArrayList<CartesianCoordinates> objectsCoordinates= new ArrayList<>();
+
 
     private final List<Star> stars;
     private final List<Double> starsPosition = new ArrayList<>();
@@ -56,20 +59,24 @@ public class ObservedSky {
             starsPosition.add(coord.x());
             starsPosition.add(coord.y());
 
-            objects.put(coord, s);
+            objects.add(s);
+            objectsCoordinates.add(coord);
+
         }
 
         //Construct Sun
 
         sun = SunModel.SUN.at(sinceJ2010, ETE);
         sunPosition = projection.apply(ETH.apply(ETE.apply(sun.eclipticPos())));
-        objects.put(sunPosition, sun);
+        objects.add(sun);
+        objectsCoordinates.add(sunPosition);
 
         //Construct Moon
 
         moon = MoonModel.MOON.at(sinceJ2010, ETE);
         moonPosition = projection.apply(ETH.apply(moon.equatorialPos()));
-        objects.put(moonPosition, moon);
+        objects.add(moon);
+        objectsCoordinates.add(moonPosition);
 
         //Construct Planet
 
@@ -82,8 +89,8 @@ public class ObservedSky {
                 CartesianCoordinates coord = projection.apply(ETH.apply(planet.equatorialPos()));
                 planetsPosition.add(coord.x());
                 planetsPosition.add(coord.y());
-                objects.put(coord, planet);
-
+                objects.add(planet);
+                objectsCoordinates.add(coord);
             }
         }
 
@@ -191,13 +198,13 @@ public class ObservedSky {
         CelestialObject object = null;
         double actualDistance = Double.MAX_VALUE;
 
-        for (CartesianCoordinates coord : objects.keySet()) {
-            double distance = Math.hypot(coord.x() - point.x(), coord.y() - point.y());
+        for (int i = 0; i <objectsCoordinates.size() ; i++) {
+            double distance = Math.hypot(objectsCoordinates.get(i).x() - point.x(), objectsCoordinates.get(i).y() - point.y());
 
             if (distance < maxDistance) {
                 if (object == null || distance < actualDistance) {
                     actualDistance = distance;
-                    object = objects.get(coord);
+                    object = objects.get(i);
                 }
             }
         }
