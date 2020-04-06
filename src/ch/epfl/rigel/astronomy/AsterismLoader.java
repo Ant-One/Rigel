@@ -26,7 +26,7 @@ public enum AsterismLoader implements StarCatalogue.Loader {
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         try (BufferedReader inStream = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.US_ASCII))) {
 
-            while (inStream.ready()) {
+            do {
                 String line = inStream.readLine();
                 String[] values = line.split(",");
 
@@ -44,7 +44,7 @@ public enum AsterismLoader implements StarCatalogue.Loader {
                 }
 
                 builder.addAsterism(new Asterism(currentStars));
-            }
+            } while (inStream.ready());
         }
     }
 }
