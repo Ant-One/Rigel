@@ -46,19 +46,19 @@ public final class StarCatalogue {
     /**
      * Returns the list of stars
      *
-     * @return the list of the stars used in the catalogue
+     * @return an unmodifiable list of the stars used in the catalogue
      */
     public List<Star> stars() {
-        return stars;
+        return Collections.unmodifiableList(stars);
     }
 
     /**
      * Returns a set of all the asterisms used in the catalogue
      *
-     * @return Returns a set of all the asterisms used in the catalogue
+     * @return Returns an unmodifiable set of all the asterisms used in the catalogue
      */
     public Set<Asterism> asterisms() {
-        return catalogueMap.keySet();
+        return Collections.unmodifiableSet(catalogueMap.keySet());
     }
 
     /**
@@ -70,7 +70,7 @@ public final class StarCatalogue {
      */
     public List<Integer> asterismIndices(Asterism asterism) {
         if (catalogueMap.containsKey(asterism)) {
-            return catalogueMap.get(asterism);
+            return Collections.unmodifiableList(catalogueMap.get(asterism));
         } else {
             throw new IllegalArgumentException();
         }
