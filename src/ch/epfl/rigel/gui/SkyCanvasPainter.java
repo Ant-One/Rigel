@@ -2,7 +2,6 @@ package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.Asterism;
 import ch.epfl.rigel.astronomy.ObservedSky;
-import ch.epfl.rigel.astronomy.Star;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
@@ -17,7 +16,7 @@ public class SkyCanvasPainter {
 
     private final Canvas canvas;
     private final GraphicsContext ctx;
-    private final ClosedInterval magnitude=ClosedInterval.of(-2,5);
+    private final ClosedInterval magnitudeInterval =ClosedInterval.of(-2,5);
 
     /**
      * Basic constructor for the painter
@@ -38,7 +37,12 @@ public class SkyCanvasPainter {
 
 
 
-
+    /**
+     * Draw all the stars with appropriate colors on the canvas
+     * @param sky the observed sky
+     * @param projection the stereographic projection
+     * @param planeToCanvas transformation from stereographic to canvas
+     */
     void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
 
         double[] coord= new double[sky.starsPosition().length];
@@ -48,6 +52,7 @@ public class SkyCanvasPainter {
         for (Asterism asterism : sky.asterisms()) {
 
             ctx.beginPath();
+            ctx.setLineWidth(1);
             int firstStarIndice=sky.asterismIndices(asterism).get(0);
             ctx.moveTo(coord[2*firstStarIndice],coord[2*firstStarIndice+1]);
             boolean isLastIn=canvas.getBoundsInLocal().contains(coord[2*firstStarIndice],coord[2*firstStarIndice+1]);
@@ -70,10 +75,9 @@ public class SkyCanvasPainter {
 
         for (int i = 0; i <sky.starsPosition().length/2 ; i++) {
 
-            double m=magnitude.clip(sky.stars().get(i).magnitude());
-            double f=(99.-17.*m)/140.;
-            double d=f*2*Math.tan(Angle.ofDeg(0.5/4));
-            Point2D size=planeToCanvas.deltaTransform(d,d);
+
+
+            Point2D size=size(sky.stars().get(i).magnitude(),planeToCanvas);
 
             ctx.setFill(BlackBodyColor.colorForTemperature(sky.stars().get(i).colorTemperature()));
 
@@ -85,7 +89,7 @@ public class SkyCanvasPainter {
 
     /**
      * Draw all the planets in gray on the canvas
-     * @param sky teh observed sky
+     * @param sky the observed sky
      * @param projection the stereographic projection
      * @param planeToCanvas transformation from stereographic to canvas
      */
@@ -97,9 +101,23 @@ public class SkyCanvasPainter {
         for (int i = 0; i <sky.planetsPosition().length/2 ; i++) {
 
             ctx.setFill(Color.LIGHTGRAY);
-            ctx.fillOval(coord[2*i],coord[2*i+1],sky.planets().get(i).angularSize(),sky.planets().get(i).angularSize());
+            Point2D size=size(sky.planets().get(i).magnitude(),planeToCanvas);
+            ctx.fillOval(coord[2*i],coord[2*i+1],size.getX(),size.getY());
 
         }
+    }
+
+    /**
+     * Compute size of object with 0 as angular size
+     * @param magnitude magnitude of the objects
+     * @param planeToCanvas the transform form the stereographicProjection to canvas
+     * @return the size to draw
+     */
+    private Point2D size(double magnitude, Transform planeToCanvas){
+        double m=magnitudeInterval.clip(magnitude);
+        double f=(99.-17.*m)/140.;
+        double d=f*2*Math.tan(Angle.ofDeg(0.5/4));
+        return planeToCanvas.deltaTransform(d,d);
     }
 
 
