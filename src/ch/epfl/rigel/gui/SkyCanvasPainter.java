@@ -4,15 +4,20 @@ import ch.epfl.rigel.astronomy.Asterism;
 import ch.epfl.rigel.astronomy.ObservedSky;
 import ch.epfl.rigel.astronomy.Star;
 import ch.epfl.rigel.coordinates.StereographicProjection;
+import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.ClosedInterval;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Transform;
 
+
 public class SkyCanvasPainter {
 
     private final Canvas canvas;
     private final GraphicsContext ctx;
+    private final ClosedInterval magnitude=ClosedInterval.of(-2,5);
 
     /**
      * Basic constructor for the painter
@@ -65,13 +70,16 @@ public class SkyCanvasPainter {
 
         for (int i = 0; i <sky.starsPosition().length/2 ; i++) {
 
-            System.out.println(coord[2*i]+" et "+coord[2*i+1]);
+            double m=magnitude.clip(sky.stars().get(i).magnitude());
+            double f=(99.-17.*m)/140.;
+            double d=f*2*Math.tan(Angle.ofDeg(0.5/4));
+            Point2D size=planeToCanvas.deltaTransform(d,d);
 
             ctx.setFill(BlackBodyColor.colorForTemperature(sky.stars().get(i).colorTemperature()));
 
-            ctx.fillOval(coord[2*i],coord[2*i+1],sky.stars().get(i).angularSize(),sky.stars().get(i).angularSize());
-
+            ctx.fillOval(coord[2*i]-size.getX()/2,coord[2*i+1]-size.getX()/2,size.getX(),size.getX());
         }
+
 
     }
 
