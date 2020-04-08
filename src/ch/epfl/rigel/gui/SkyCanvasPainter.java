@@ -53,9 +53,9 @@ public class SkyCanvasPainter {
 
             ctx.beginPath();
             ctx.setLineWidth(1);
-            int firstStarIndice=sky.asterismIndices(asterism).get(0);
-            ctx.moveTo(coord[2*firstStarIndice],coord[2*firstStarIndice+1]);
-            boolean isLastIn=canvas.getBoundsInLocal().contains(coord[2*firstStarIndice],coord[2*firstStarIndice+1]);
+            int firstStarIndices=sky.asterismIndices(asterism).get(0);
+            ctx.moveTo(coord[2*firstStarIndices],coord[2*firstStarIndices+1]);
+            boolean isLastIn=canvas.getBoundsInLocal().contains(coord[2*firstStarIndices],coord[2*firstStarIndices+1]);
 
             for (int i : sky.asterismIndices(asterism)){
 
@@ -74,8 +74,6 @@ public class SkyCanvasPainter {
         }
 
         for (int i = 0; i <sky.starsPosition().length/2 ; i++) {
-
-
 
             Point2D size=size(sky.stars().get(i).magnitude(),planeToCanvas);
 
@@ -103,6 +101,7 @@ public class SkyCanvasPainter {
             ctx.setFill(Color.LIGHTGRAY);
             Point2D size=size(sky.planets().get(i).magnitude(),planeToCanvas);
             ctx.fillOval(coord[2*i],coord[2*i+1],size.getX(),size.getY());
+            System.out.println(size.getX());
 
         }
     }
@@ -119,9 +118,6 @@ public class SkyCanvasPainter {
         double d=f*2*Math.tan(Angle.ofDeg(0.5/4));
         return planeToCanvas.deltaTransform(d,d);
     }
-
-
-
 
 }
 
