@@ -19,7 +19,7 @@ public class ObservedSky {
 
 
     private final List<Star> stars;
-    private final List<Double> starsPosition = new ArrayList<>();
+    private final double[] starsPosition;
 
     private final Sun sun;
     private final CartesianCoordinates sunPosition;
@@ -28,7 +28,7 @@ public class ObservedSky {
     private final CartesianCoordinates moonPosition;
 
     private final List<Planet> planets = new ArrayList<>();
-    private final List<Double> planetsPosition = new ArrayList<>();
+    private final double[] planetsPosition=new double[14];
 
 
     /**
@@ -52,12 +52,15 @@ public class ObservedSky {
 
         //Construct Star
         stars = new ArrayList<>(catalogue.stars());
+        starsPosition=new double[catalogue.stars().size()*2];
+        int i=0;
 
         for (Star s : catalogue.stars()) {
 
             CartesianCoordinates coord = projection.apply(ETH.apply(s.equatorialPos()));
-            starsPosition.add(coord.x());
-            starsPosition.add(coord.y());
+            starsPosition[i]=coord.x();
+            starsPosition[i+1]=coord.y();
+            i+=2;
 
             objects.add(s);
             objectsCoordinates.add(coord);
@@ -80,6 +83,7 @@ public class ObservedSky {
 
         //Construct Planet
 
+        i=0;
         for (PlanetModel planetModel : PlanetModel.ALL) {
 
             if (planetModel.ordinal() != PlanetModel.EARTH.ordinal()) {
@@ -87,8 +91,8 @@ public class ObservedSky {
                 Planet planet = planetModel.at(sinceJ2010, ETE);
                 planets.add(planet);
                 CartesianCoordinates coord = projection.apply(ETH.apply(planet.equatorialPos()));
-                planetsPosition.add(coord.x());
-                planetsPosition.add(coord.y());
+                planetsPosition[i]=coord.x();
+                planetsPosition[i+1]=coord.y();
                 objects.add(planet);
                 objectsCoordinates.add(coord);
             }
@@ -110,8 +114,8 @@ public class ObservedSky {
      *
      * @return double list with x,y cartesian coordinates
      */
-    public List<Double> starsPosition() {
-        return List.copyOf(starsPosition);
+    public double[] starsPosition() {
+        return starsPosition;
     }
 
     /**
@@ -164,8 +168,8 @@ public class ObservedSky {
      *
      * @return double list with x,y cartesian coordinates
      */
-    public List<Double> planetsPosition() {
-        return List.copyOf(planetsPosition);
+    public double[] planetsPosition() {
+        return planetsPosition;
     }
 
     /**
