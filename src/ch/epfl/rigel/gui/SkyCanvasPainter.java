@@ -8,9 +8,11 @@ import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Transform;
 
 /**
@@ -51,6 +53,8 @@ public class SkyCanvasPainter {
      * @param planeToCanvas transformation from stereographic to canvas
      */
     void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+
+        //TODO TransformDelta renvoie toujours des positifs pour x ? à vérifier car cela pourrait rendre Math.abs() superflu
 
         double[] coord = new double[sky.starsPosition().length];
         planeToCanvas.transform2DPoints(sky.starsPosition(), 0, coord, 0, sky.starsPosition().length / 2);
@@ -157,15 +161,37 @@ public class SkyCanvasPainter {
 
     }
 
+    /**
+     * Draws the horizon line and the octant names in French
+     * @param sky           the observed sky
+     * @param projection    the stereographic projection used
+     * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
+     */
     void drawHorizon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
-        CartesianCoordinates horizonCartesian = projection.circleCenterForParallel(HorizontalCoordinates.of(0, 0));
+        CartesianCoordinates horizonCartesian = projection.circleCenterForParallel(HorizontalCoordinates.of(1, 0));
         Point2D horizonCenter = planeToCanvas.transform(horizonCartesian.x(), horizonCartesian.y());
 
-        double horizonRadius = projection.circleRadiusForParallel(HorizontalCoordinates.of(0, 0));
+        double horizonRadiusCartesian = projection.circleRadiusForParallel(HorizontalCoordinates.of(1, 0));
+        double horizonRadius = planeToCanvas.deltaTransform(horizonRadiusCartesian, horizonRadiusCartesian).getX();
 
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
         ctx.strokeOval(horizonCenter.getX(), horizonCenter.getY(), horizonRadius, horizonRadius);
+
+        ctx.setFill(Color.RED);
+        ctx.setTextAlign(TextAlignment.CENTER);
+        ctx.setTextBaseline(VPos.BASELINE);
+
+        for (int i = 0; i < 8; i++) {
+            HorizontalCoordinates annotationCoordinates = HorizontalCoordinates.ofDeg(45 * i, -0.5);
+
+            String octantName = annotationCoordinates.azOctantName("N", "E", "S", "O");
+
+            CartesianCoordinates annotationCartesian = projection.apply(annotationCoordinates);
+
+            Point2D annotationCenter = planeToCanvas.transform(annotationCartesian.x(), annotationCartesian.y());
+            ctx.fillText(octantName, annotationCenter.getX(), annotationCenter.getY());
+        }
     }
 
     /**

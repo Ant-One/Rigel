@@ -49,8 +49,10 @@ public final class DrawSky extends Application {
                             ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
                     GeographicCoordinates where =
                             GeographicCoordinates.ofDeg(6.57, 46.52);
+                    /*HorizontalCoordinates projCenter =
+                            HorizontalCoordinates.ofDeg(22.5 * i, 90);*/
                     HorizontalCoordinates projCenter =
-                            HorizontalCoordinates.ofDeg(22.5 * i, 45);
+                            HorizontalCoordinates.ofDeg(0, -90 + 11.25*i);
                     StereographicProjection projection =
                             new StereographicProjection(projCenter);
                     ObservedSky sky =
@@ -70,7 +72,7 @@ public final class DrawSky extends Application {
                     painter.drawSun(sky, projection, planeToCanvas);
                     painter.drawMoon(sky, projection, planeToCanvas);
 
-                    //painter.drawHorizon(sky, projection, planeToCanvas);
+                    painter.drawHorizon(sky, projection, planeToCanvas);
 
                     WritableImage fxImage =
                             canvas.snapshot(null, null);
