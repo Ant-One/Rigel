@@ -2,6 +2,7 @@ package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.Asterism;
 import ch.epfl.rigel.astronomy.ObservedSky;
+import ch.epfl.rigel.coordinates.CartesianCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
@@ -11,7 +12,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Transform;
 
-
+/**
+ * Class used to draw the sky and the objects on it
+ * @author Antoine Moix (310052) and Adrien Rey (313388)
+ */
 public class SkyCanvasPainter {
 
     private final Canvas canvas;
@@ -107,6 +111,19 @@ public class SkyCanvasPainter {
     }
 
     /**
+     * Draw the Moon
+     * @param sky the observed sky
+     * @param projection the stereographic projection used
+     * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
+     */
+    void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
+        Point2D pointMoon = planeToCanvas.transform(sky.moonPosition().x(), sky.moonPosition().y());
+
+        ctx.setFill(Color.WHITE);
+        ctx.fillOval(pointMoon.getX(), pointMoon.getY(), sky.moon().angularSize(), sky.moon().angularSize());
+    }
+
+    /**
      * Compute size of object with 0 as angular size
      * @param magnitude magnitude of the objects
      * @param planeToCanvas the transform form the stereographicProjection to canvas
@@ -118,7 +135,5 @@ public class SkyCanvasPainter {
         double d=f*2*Math.tan(Angle.ofDeg(0.5/4));
         return planeToCanvas.deltaTransform(d,d);
     }
-
-
 }
 
