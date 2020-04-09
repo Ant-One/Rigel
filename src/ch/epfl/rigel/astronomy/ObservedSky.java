@@ -53,7 +53,7 @@ public class ObservedSky {
         //Construct Star
         stars = new ArrayList<>(catalogue.stars());
         starsPosition=new double[catalogue.stars().size()*2];
-        int i=0;
+        int i=0; //TODO c'est pas terrible
 
         for (Star s : catalogue.stars()) {
 
@@ -83,7 +83,7 @@ public class ObservedSky {
 
         //Construct Planet
 
-        i=0;
+        i=0; //TODO c'est pas terrible
         for (PlanetModel planetModel : PlanetModel.ALL) {
 
             if (planetModel.ordinal() != PlanetModel.EARTH.ordinal()) {
@@ -95,6 +95,7 @@ public class ObservedSky {
                 planetsPosition[i+1]=coord.y();
                 objects.add(planet);
                 objectsCoordinates.add(coord);
+                i+=2;
             }
         }
 
