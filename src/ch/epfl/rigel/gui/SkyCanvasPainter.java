@@ -178,7 +178,7 @@ public class SkyCanvasPainter {
     private Point2D size(double magnitude, Transform planeToCanvas, StereographicProjection projection) {
         double m = magnitudeInterval.clip(magnitude);
         double f = (99. - 17. * m) / 140.;
-        double d = f * 2 * projection.applyToAngle(Angle.ofDeg(0.5));
+        double d = f * projection.applyToAngle(Angle.ofDeg(0.5));
         return planeToCanvas.deltaTransform(d, d);
     }
 
