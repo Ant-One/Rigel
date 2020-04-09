@@ -3,6 +3,7 @@ package ch.epfl.rigel.gui;
 import ch.epfl.rigel.astronomy.Asterism;
 import ch.epfl.rigel.astronomy.ObservedSky;
 import ch.epfl.rigel.coordinates.CartesianCoordinates;
+import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
@@ -14,126 +15,172 @@ import javafx.scene.transform.Transform;
 
 /**
  * Class used to draw the sky and the objects on it
+ *
  * @author Antoine Moix (310052) and Adrien Rey (313388)
  */
 public class SkyCanvasPainter {
 
     private final Canvas canvas;
     private final GraphicsContext ctx;
-    private final ClosedInterval magnitudeInterval =ClosedInterval.of(-2,5);
+    private final ClosedInterval magnitudeInterval = ClosedInterval.of(-2, 5);
 
     /**
      * Basic constructor for the painter
+     *
      * @param canvas the canvas
      */
     public SkyCanvasPainter(Canvas canvas) {
         this.canvas = canvas;
-        ctx= canvas.getGraphicsContext2D();
+        ctx = canvas.getGraphicsContext2D();
     }
 
     /**
-     * Clean the canvas
+     * Cleans the canvas
      */
-    void clear(){
+    void clear() {
         ctx.setFill(Color.BLACK);
-        ctx.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+        ctx.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
 
-
     /**
-     * Draw all the stars with appropriate colors on the canvas
-     * @param sky the observed sky
-     * @param projection the stereographic projection
+     * Draws all the stars with appropriate colors on the canvas
+     *
+     * @param sky           the observed sky
+     * @param projection    the stereographic projection
      * @param planeToCanvas transformation from stereographic to canvas
      */
-    void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
+    void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
 
-        double[] coord= new double[sky.starsPosition().length];
-        planeToCanvas.transform2DPoints(sky.starsPosition(),0,coord,0,sky.starsPosition().length/2);
+        double[] coord = new double[sky.starsPosition().length];
+        planeToCanvas.transform2DPoints(sky.starsPosition(), 0, coord, 0, sky.starsPosition().length / 2);
 
         ctx.setStroke(Color.BLUE);
         for (Asterism asterism : sky.asterisms()) {
 
             ctx.beginPath();
             ctx.setLineWidth(1);
-            int firstStarIndices=sky.asterismIndices(asterism).get(0);
-            ctx.moveTo(coord[2*firstStarIndices],coord[2*firstStarIndices+1]);
-            boolean isLastIn=canvas.getBoundsInLocal().contains(coord[2*firstStarIndices],coord[2*firstStarIndices+1]);
-            for (int i : sky.asterismIndices(asterism)){
+            int firstStarIndices = sky.asterismIndices(asterism).get(0);
+            ctx.moveTo(coord[2 * firstStarIndices], coord[2 * firstStarIndices + 1]);
+            boolean isLastIn = canvas.getBoundsInLocal().contains(coord[2 * firstStarIndices], coord[2 * firstStarIndices + 1]);
+            for (int i : sky.asterismIndices(asterism)) {
 
-                boolean isActualIn=canvas.getBoundsInLocal().contains(coord[2*i],coord[2*i+1]);
-                if(isActualIn || isLastIn) {
+                boolean isActualIn = canvas.getBoundsInLocal().contains(coord[2 * i], coord[2 * i + 1]);
+                if (isActualIn || isLastIn) {
                     ctx.lineTo(coord[2 * i], coord[2 * i + 1]);
+                } else {
+                    ctx.moveTo(coord[2 * i], coord[2 * i + 1]);
                 }
-                else {
-                 ctx.moveTo(coord[2*i],coord[2*i+1]);
-                }
-                isLastIn=isActualIn;
+                isLastIn = isActualIn;
 
             }
             ctx.stroke();
 
 
-
         }
 
-        for (int i = 0; i <sky.starsPosition().length/2 ; i++) {
+        for (int i = 0; i < sky.starsPosition().length / 2; i++) {
 
-            Point2D size=size(sky.stars().get(i).magnitude(),planeToCanvas);
+            Point2D size = size(sky.stars().get(i).magnitude(), planeToCanvas, projection);
+            double diameter = Math.abs(size.getX());
 
             ctx.setFill(BlackBodyColor.colorForTemperature(sky.stars().get(i).colorTemperature()));
 
-            ctx.fillOval(coord[2*i]-size.getX()/2,coord[2*i+1]-size.getX()/2,size.getX(),size.getX());
+            ctx.fillOval(coord[2 * i] - size.getX() / 2, coord[2 * i + 1] - size.getX() / 2, diameter, diameter);
         }
 
 
     }
 
     /**
-     * Draw all the planets in gray on the canvas
-     * @param sky the observed sky
-     * @param projection the stereographic projection
+     * Draws all the planets in gray on the canvas
+     *
+     * @param sky           the observed sky
+     * @param projection    the stereographic projection
      * @param planeToCanvas transformation from stereographic to canvas
      */
-    void drawPlanets(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
+    void drawPlanets(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
 
-        double[] coord= new double[sky.planetsPosition().length];
-        planeToCanvas.transform2DPoints(sky.planetsPosition(),0,coord,0,sky.planetsPosition().length/2);
+        double[] coord = new double[sky.planetsPosition().length];
+        planeToCanvas.transform2DPoints(sky.planetsPosition(), 0, coord, 0, sky.planetsPosition().length / 2);
 
-        for (int i = 0; i <sky.planetsPosition().length/2 ; i++) {
+        for (int i = 0; i < sky.planetsPosition().length / 2; i++) {
 
             ctx.setFill(Color.LIGHTGRAY);
-            Point2D size=size(sky.planets().get(i).magnitude(),planeToCanvas);
-            ctx.fillOval(coord[2*i],coord[2*i+1],size.getX(),size.getY());
+            Point2D size = size(sky.planets().get(i).magnitude(), planeToCanvas, projection);
+            double diameter = Math.abs(size.getX());
+            ctx.fillOval(coord[2 * i] - diameter / 2, coord[2 * i + 1] - diameter / 2, diameter, diameter);
 
         }
     }
 
     /**
-     * Draw the Moon
-     * @param sky the observed sky
-     * @param projection the stereographic projection used
+     * Draws the Moon
+     *
+     * @param sky           the observed sky
+     * @param projection    the stereographic projection used
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
-    void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
-        Point2D pointMoon = planeToCanvas.transform(sky.moonPosition().x(), sky.moonPosition().y());
+    void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+        Point2D moonCenter = planeToCanvas.transform(sky.moonPosition().x(), sky.moonPosition().y());
+
+        double cartesianDiameter = sky.moon().angularSize();
+        Point2D diameterPoint = planeToCanvas.deltaTransform(cartesianDiameter, cartesianDiameter);
+        double diameter = Math.abs(diameterPoint.getX());
 
         ctx.setFill(Color.WHITE);
-        ctx.fillOval(pointMoon.getX(), pointMoon.getY(), sky.moon().angularSize(), sky.moon().angularSize());
+        ctx.fillOval(moonCenter.getX() - diameter / 2, moonCenter.getY() - diameter / 2, diameter, diameter);
     }
 
     /**
-     * Compute size of object with 0 as angular size
-     * @param magnitude magnitude of the objects
+     * Draws the Sun
+     *
+     * @param sky           the observed sky
+     * @param projection    the stereographic projection used
+     * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
+     */
+    void drawSun(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+        Point2D sunCenter = planeToCanvas.transform(sky.sunPosition().x(), sky.sunPosition().y());
+
+        double cartesianDiameter = projection.applyToAngle(Angle.ofDeg(0.5));
+        Point2D diameterPoint = planeToCanvas.deltaTransform(cartesianDiameter, cartesianDiameter);
+        double diameter = Math.abs(diameterPoint.getX());
+
+        ctx.setFill(Color.YELLOW.deriveColor(0, 1, 1, 0.25));
+        ctx.fillOval(sunCenter.getX() - (diameter * 2.2 / 2), sunCenter.getY() - (diameter * 2.2 / 2), diameter * 2.2, diameter * 2.2);
+
+        ctx.setFill(Color.YELLOW);
+        ctx.fillOval(sunCenter.getX() - ((diameter + 2) / 2), sunCenter.getY() - ((diameter + 2) / 2), diameter + 2, diameter + 2);
+
+        ctx.setFill(Color.WHITE);
+        ctx.fillOval(sunCenter.getX() - diameter / 2, sunCenter.getY() - diameter / 2, diameter, diameter);
+
+    }
+
+    void drawHorizon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+        CartesianCoordinates horizonCartesian = projection.circleCenterForParallel(HorizontalCoordinates.of(0, 0));
+        Point2D horizonCenter = planeToCanvas.transform(horizonCartesian.x(), horizonCartesian.y());
+
+        double horizonRadius = projection.circleRadiusForParallel(HorizontalCoordinates.of(0, 0));
+
+        ctx.setStroke(Color.RED);
+        ctx.setLineWidth(2);
+        ctx.strokeOval(horizonCenter.getX(), horizonCenter.getY(), horizonRadius, horizonRadius);
+    }
+
+    /**
+     * Computes the size of object with 0 as angular size
+     *
+     * @param magnitude     magnitude of the objects
      * @param planeToCanvas the transform form the stereographicProjection to canvas
      * @return the size to draw
      */
-    private Point2D size(double magnitude, Transform planeToCanvas){
-        double m=magnitudeInterval.clip(magnitude);
-        double f=(99.-17.*m)/140.;
-        double d=f*2*Math.tan(Angle.ofDeg(0.5/4));
-        return planeToCanvas.deltaTransform(d,d);
+    private Point2D size(double magnitude, Transform planeToCanvas, StereographicProjection projection) {
+        double m = magnitudeInterval.clip(magnitude);
+        double f = (99. - 17. * m) / 140.;
+        double d = f * 2 * projection.applyToAngle(Angle.ofDeg(0.5));
+        return planeToCanvas.deltaTransform(d, d);
     }
+
 }
 

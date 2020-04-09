@@ -42,37 +42,42 @@ public final class DrawSky extends Application {
             try (InputStream astStream = getClass().getResourceAsStream("/asterisms.txt")) {
                 catalogue = builder.loadFrom(astStream, AsterismLoader.INSTANCE).build();
 
-                ZonedDateTime when =
-                        ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
-                GeographicCoordinates where =
-                        GeographicCoordinates.ofDeg(6.57, 46.52);
-                HorizontalCoordinates projCenter =
-                        HorizontalCoordinates.ofDeg(180, 45);
-                StereographicProjection projection =
-                        new StereographicProjection(projCenter);
-                ObservedSky sky =
-                        new ObservedSky(when, where, projection, catalogue);
+                for (int i = 0; i < 16; i++) {
 
-                Canvas canvas =
-                        new Canvas(800, 600);
-                Transform planeToCanvas =
-                        Transform.affine(1300, 0, 0, -1300, 400, 300);
-                SkyCanvasPainter painter =
-                        new SkyCanvasPainter(canvas);
 
-                painter.clear();
-                painter.drawStars(sky, projection, planeToCanvas);
-                painter.drawPlanets(sky, projection, planeToCanvas);
+                    ZonedDateTime when =
+                            ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
+                    GeographicCoordinates where =
+                            GeographicCoordinates.ofDeg(6.57, 46.52);
+                    HorizontalCoordinates projCenter =
+                            HorizontalCoordinates.ofDeg(22.5 * i, -20);
+                    StereographicProjection projection =
+                            new StereographicProjection(projCenter);
+                    ObservedSky sky =
+                            new ObservedSky(when, where, projection, catalogue);
 
-                //painter.drawSun
+                    Canvas canvas =
+                            new Canvas(800, 600);
+                    Transform planeToCanvas =
+                            Transform.affine(1300, 0, 0, -1300, 400, 300);
+                    SkyCanvasPainter painter =
+                            new SkyCanvasPainter(canvas);
 
-                painter.drawMoon(sky, projection, planeToCanvas);
+                    painter.clear();
+                    painter.drawStars(sky, projection, planeToCanvas);
+                    painter.drawPlanets(sky, projection, planeToCanvas);
 
-                WritableImage fxImage =
-                        canvas.snapshot(null, null);
-                BufferedImage swingImage =
-                        SwingFXUtils.fromFXImage(fxImage, null);
-                ImageIO.write(swingImage, "png", new File("sky.png"));
+                    painter.drawSun(sky, projection, planeToCanvas);
+                    painter.drawMoon(sky, projection, planeToCanvas);
+
+                    //painter.drawHorizon(sky, projection, planeToCanvas);
+
+                    WritableImage fxImage =
+                            canvas.snapshot(null, null);
+                    BufferedImage swingImage =
+                            SwingFXUtils.fromFXImage(fxImage, null);
+                    ImageIO.write(swingImage, "png", new File("sky" + i + ".png"));
+                }
             }
         }
         Platform.exit();
