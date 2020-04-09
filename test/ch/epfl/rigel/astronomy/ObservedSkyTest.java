@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +67,7 @@ class ObservedSkyTest {
 
         ObservedSky os = new ObservedSky(zdt, gc, sp, sc);
 
-        //List<Double> stars = os.starsPosition();
+        double[] stars = os.starsPosition();
 
         EquatorialToHorizontalConversion ETH = new EquatorialToHorizontalConversion(zdt, gc);
         EclipticToEquatorialConversion ETE = new EclipticToEquatorialConversion(zdt);
@@ -83,11 +82,11 @@ class ObservedSkyTest {
         starsPosition.add(coord2.x());
         starsPosition.add(coord2.y());
 
-        /*assertEquals(starsPosition.get(0), stars.get(0));
-        assertEquals(starsPosition.get(1), stars.get(1));
-        assertEquals(starsPosition.get(2), stars.get(2));
-        assertEquals(starsPosition.get(3), stars.get(3));
-    */}
+        assertEquals(starsPosition.get(0), stars[0]);
+        assertEquals(starsPosition.get(1), stars[1]);
+        assertEquals(starsPosition.get(2), stars[2]);
+        assertEquals(starsPosition.get(3), stars[3]);
+    }
 
     @Test
     void sun() {
@@ -272,7 +271,7 @@ class ObservedSkyTest {
 
     @Test
     void planetsPosition() {
-        ZonedDateTime zdt = ZonedDateTime.of(
+       /* ZonedDateTime zdt = ZonedDateTime.of(
                 LocalDate.of(2003, Month.JULY, 27),
                 LocalTime.MIDNIGHT,
                 ZoneOffset.UTC);
@@ -297,22 +296,23 @@ class ObservedSkyTest {
         EclipticToEquatorialConversion ETE = new EclipticToEquatorialConversion(zdt);
         double sinceJ2010 = Epoch.J2010.daysUntil(zdt);
 
-        ArrayList<Double> planetsPosition = new ArrayList<>();
+        double[] planetsPosition = new double[14];
+        int planetIndex = 0;
+        for (int i = 0; i < PlanetModel.values().length; i+=2) {
 
-        for (PlanetModel planetModel : PlanetModel.ALL) {
+            if (PlanetModel.values()[i] != PlanetModel.EARTH) {
 
-            if (planetModel.ordinal() != PlanetModel.EARTH.ordinal()) {
-
-                Planet planet = planetModel.at(sinceJ2010, ETE);
+                Planet planet = PlanetModel.VENUS.at(sinceJ2010, ETE);
                 CartesianCoordinates coord = sp.apply(ETH.apply(planet.equatorialPos()));
-                planetsPosition.add(coord.x());
-                planetsPosition.add(coord.y());
+                planetsPosition[i] = (coord.x());
+                planetsPosition[i+1] = (coord.y());
             }
-
-            for (int i = 0; i < planetsPosition.size(); i++) {
-                //assertEquals(planetsPosition.get(i), os.planetsPosition().get(i));
+            ++planetIndex;
             }
+        for (int j = 0; j < planetsPosition.length; j++) {
+            assertEquals(planetsPosition[j], os.planetsPosition()[j]);
         }
+        */
     }
 
     @Test
