@@ -176,7 +176,7 @@ public class SkyCanvasPainter {
 
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
-        ctx.strokeOval(horizonCenter.getX(), horizonCenter.getY(), horizonRadius, horizonRadius);
+        ctx.strokeOval(horizonCenter.getX() - horizonRadius, horizonCenter.getY() - horizonRadius, horizonRadius * 2, horizonRadius * 2);
 
         ctx.setFill(Color.RED);
         ctx.setTextAlign(TextAlignment.CENTER);
