@@ -57,9 +57,9 @@ public final class DrawSky extends Application {
                             new ObservedSky(when, where, projection, catalogue);
 
                     Canvas canvas =
-                            new Canvas(800, 600);
+                            new Canvas(2000, 2000);
                     Transform planeToCanvas =
-                            Transform.affine(1300, 0, 0, -1300, 400, 300);
+                            Transform.affine(1300, 0, 0, -1300, 1000, 1000);
                     SkyCanvasPainter painter =
                             new SkyCanvasPainter(canvas);
 
@@ -68,7 +68,7 @@ public final class DrawSky extends Application {
                     painter.drawPlanets(sky, projection, planeToCanvas);
 
                     painter.drawSun(sky, projection, planeToCanvas);
-                    painter.drawMoon(sky, projection, planeToCanvas);
+                    //painter.drawMoon(sky, projection, planeToCanvas);
 
                     painter.drawHorizon(sky, projection, planeToCanvas);
 

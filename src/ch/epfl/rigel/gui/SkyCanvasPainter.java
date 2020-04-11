@@ -172,7 +172,8 @@ public class SkyCanvasPainter {
         Point2D horizonCenter = planeToCanvas.transform(horizonCartesian.x(), horizonCartesian.y());
 
         double horizonRadiusCartesian = projection.circleRadiusForParallel(HorizontalCoordinates.of(1, 0));
-        double horizonRadius = planeToCanvas.deltaTransform(horizonRadiusCartesian, horizonRadiusCartesian).getX();
+        double horizonRadius = Math.abs(planeToCanvas.deltaTransform(horizonRadiusCartesian, horizonRadiusCartesian).getX());
+
 
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
