@@ -181,7 +181,7 @@ public class SkyCanvasPainter {
 
         ctx.setFill(Color.RED);
         ctx.setTextAlign(TextAlignment.CENTER);
-        ctx.setTextBaseline(VPos.BASELINE);
+        ctx.setTextBaseline(VPos.TOP);
 
         for (int i = 0; i < 8; i++) {
             HorizontalCoordinates annotationCoordinates = HorizontalCoordinates.ofDeg(45 * i, -0.5);
