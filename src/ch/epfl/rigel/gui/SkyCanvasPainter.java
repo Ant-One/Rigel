@@ -177,8 +177,12 @@ public class SkyCanvasPainter {
 
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
-        ctx.strokeOval(horizonCenter.getX() - horizonRadius, horizonCenter.getY() - horizonRadius, horizonRadius * 2, horizonRadius * 2);
-
+        if(horizonRadius==Double.POSITIVE_INFINITY || horizonRadius==Double.NEGATIVE_INFINITY){
+            ctx.strokeLine(0,canvas.getHeight()/2,canvas.getWidth(),canvas.getHeight()/2);
+        }
+        else {
+            ctx.strokeOval(horizonCenter.getX() - horizonRadius, horizonCenter.getY() - horizonRadius, horizonRadius * 2, horizonRadius * 2);
+        }
         ctx.setFill(Color.RED);
         ctx.setTextAlign(TextAlignment.CENTER);
         ctx.setTextBaseline(VPos.TOP);
