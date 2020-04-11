@@ -50,7 +50,7 @@ public final class DrawSky extends Application {
                     GeographicCoordinates where =
                             GeographicCoordinates.ofDeg(6.57, 46.52);
                     HorizontalCoordinates projCenter =
-                            HorizontalCoordinates.ofDeg(22.5 * i, 0);
+                            HorizontalCoordinates.ofDeg(0, -90 + 11.25 * i);
                     StereographicProjection projection =
                             new StereographicProjection(projCenter);
                     ObservedSky sky =
