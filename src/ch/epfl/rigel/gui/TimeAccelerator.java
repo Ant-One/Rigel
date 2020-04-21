@@ -8,8 +8,12 @@ public interface TimeAccelerator {
 
     ZonedDateTime adjust(ZonedDateTime T0, long deltaTime);
 
-    static TimeAccelerator continuous(ZonedDateTime T0, long deltaTime, int alpha){
-        return ((T01, deltaTime1) -> T01.plus(alpha*deltaTime, ChronoUnit.NANOS));
+    static TimeAccelerator continuous(int alpha){
+        return ((T0, deltaTime) -> T0.plus(alpha*deltaTime, ChronoUnit.NANOS));
+    }
+
+    static  TimeAccelerator discrete(){
+        return null;
     }
 
 
