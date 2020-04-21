@@ -51,6 +51,7 @@ public final class Angle {
     public static double ofDMS(int deg, int min, double sec) {
         Preconditions.checkArgument(min >= 0 && min < 60);
         Preconditions.checkArgument(sec >= 0 && sec < 60);
+        Preconditions.checkArgument((deg>=0));
 
         double result = ofDeg(deg);
         result += ofDeg(min * DEGREES_PER_MINUTE);
