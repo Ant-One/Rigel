@@ -12,11 +12,17 @@ import java.time.ZonedDateTime;
  * JavaFX bean modelling a ZonedDateTime
  * @author Antoine Moix (310052)
  */
-public class DateTimeBean {
+public final class DateTimeBean {
 
     private ObjectProperty<LocalDate> date = null;
     private ObjectProperty<LocalTime> time = null;
     private ObjectProperty<ZoneId> zone = null;
+
+    public DateTimeBean(){
+        date = new SimpleObjectProperty<>();
+        time = new SimpleObjectProperty<>();
+        zone = new SimpleObjectProperty<>();
+    }
 
     /**
      * returns the date property
@@ -39,7 +45,7 @@ public class DateTimeBean {
      * @param date the date object to which the value of date property will be set
      */
     public void setDate(LocalDate date){
-        this.date = new SimpleObjectProperty<>(date);
+        this.date.set(date);
     }
 
     /**
@@ -63,7 +69,7 @@ public class DateTimeBean {
      * @param time the time object to which the value of date property will be set
      */
     public void setTime(LocalTime time){
-        this.time = new SimpleObjectProperty<>(time);
+        this.time.set(time);
     }
     /**
      * returns the zone property
@@ -84,7 +90,7 @@ public class DateTimeBean {
      * @param zone the time object to which the value of date property will be set
      */
     public void setZone(ZoneId zone){
-        this.zone = new SimpleObjectProperty<>(zone);
+        this.zone.set(zone);
     }
 
     /**

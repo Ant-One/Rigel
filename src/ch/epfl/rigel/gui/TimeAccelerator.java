@@ -4,9 +4,13 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Models a time accelerator
+ * @author Adrien Rey (313388)
+ */
 @FunctionalInterface
 public interface TimeAccelerator {
-    /** abstract fonction of an accelerator
+    /** abstract function of an accelerator
      * @param T0 Initial time
      * @param deltaTime spent time since the last tick
      * @return the adjusted time
