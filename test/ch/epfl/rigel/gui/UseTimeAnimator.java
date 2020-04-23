@@ -3,6 +3,7 @@ package ch.epfl.rigel.gui;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
 
@@ -31,4 +32,7 @@ public final class UseTimeAnimator extends Application {
         });
         timeAnimator.start();
     }
+
+
+
 }
