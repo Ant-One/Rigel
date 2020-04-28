@@ -15,7 +15,8 @@ final class UseCreateBinding {
         OLB.setLatDeg(30);
         OLB.setLonDeg(30);
         System.out.print(OLB.getCoordinates());
-
+        OLB.setLonDeg(50);
+        System.out.print(OLB.getCoordinates());
 
 
 

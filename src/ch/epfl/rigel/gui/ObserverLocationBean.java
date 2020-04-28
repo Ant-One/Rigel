@@ -21,8 +21,8 @@ public class ObserverLocationBean {
      * Basic constructor of the bean
      */
     public ObserverLocationBean() {
-        lonDeg=new SimpleObjectProperty<>();
-        latDeg=new SimpleObjectProperty<>();
+        lonDeg=new SimpleObjectProperty<>(0d);
+        latDeg=new SimpleObjectProperty<>(0d);
         coordinates=new SimpleObjectProperty<>();
         coordinatesBindings = Bindings.createObjectBinding(
                 () ->GeographicCoordinates.ofDeg(lonDeg.get(),latDeg.get()),
