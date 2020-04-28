@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Loader of asterisms
@@ -32,15 +33,14 @@ public enum AsterismLoader implements StarCatalogue.Loader {
 
                 ArrayList<Star> currentStars = new ArrayList<>();
 
+                HashMap<Integer,Star > starsHipparcos=new HashMap<>();
+                for (Star star : builder.stars()) {
+                    starsHipparcos.put(star.hipparcosId(),star);
+                }
 
                 for (String idString : values) {
                     int id = Integer.parseInt(idString);
-
-                    for (Star star : builder.stars()) {
-                        if (star.hipparcosId() == id) {
-                            currentStars.add(star);
-                        }
-                    }
+                    currentStars.add(starsHipparcos.get(id));
                 }
 
                 builder.addAsterism(new Asterism(currentStars));

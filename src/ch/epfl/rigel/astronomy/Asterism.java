@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Asterism {
 
-    private final List<Star> stars = new ArrayList<>();
+    private final List<Star> stars;
 
     /**
      * Construct an asterism with a list of stars
@@ -23,7 +23,7 @@ public class Asterism {
      */
     public Asterism(List<Star> stars) {
         Preconditions.checkArgument(!stars.isEmpty());
-        this.stars.addAll(stars);
+        this.stars=List.copyOf(stars);
     }
 
     /**

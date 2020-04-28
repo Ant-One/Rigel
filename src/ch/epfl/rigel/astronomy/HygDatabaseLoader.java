@@ -41,6 +41,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader {
                 String[] values = line.split(",");
 
                 int hipparcosID;
+
                 try {
                     hipparcosID = Integer.parseInt(values[Types.HIP.ordinal()]);
                 } catch (NumberFormatException e) {

@@ -14,8 +14,8 @@ import java.util.Locale;
  */
 public final class EclipticCoordinates extends SphericalCoordinates {
 
-    private static final RightOpenInterval longitudeInterval = RightOpenInterval.of(0, Angle.TAU);
-    private static final ClosedInterval latitudeInterval = ClosedInterval.symmetric(Angle.TAU / 2);
+    private static final RightOpenInterval LONGITUDE_INTERVAL = RightOpenInterval.of(0, Angle.TAU);
+    private static final ClosedInterval LATITUDE_INTERVAL = ClosedInterval.symmetric(Angle.TAU / 2);
 
 
     /**
@@ -39,8 +39,8 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      */
     public static EclipticCoordinates of(double lon, double lat) {
 
-        Preconditions.checkInInterval(longitudeInterval, lon);
-        Preconditions.checkInInterval(latitudeInterval, lat);
+        Preconditions.checkInInterval(LONGITUDE_INTERVAL, lon);
+        Preconditions.checkInInterval(LATITUDE_INTERVAL, lat);
         return new EclipticCoordinates(lon, lat);
 
     }
@@ -49,6 +49,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     /**
      * @return the longitude in radian
      */
+    @Override
     public double lon() {
         return super.lon();
     }
@@ -56,6 +57,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     /**
      * @return the longitude in deg
      */
+    @Override
     public double lonDeg() {
         return super.lonDeg();
     }
@@ -64,6 +66,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     /**
      * @return the latitude in radian
      */
+    @Override
     public double lat() {
 
         return super.lat();
@@ -72,7 +75,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     /**
      * @return the latitude in deg
      */
-
+    @Override
     public double latDeg() {
         return super.latDeg();
     }

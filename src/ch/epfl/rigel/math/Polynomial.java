@@ -73,7 +73,9 @@ public final class Polynomial {
                 }
             }
         }
-        str.append(polynomial[polynomial.length - 1]);
+        if(polynomial[polynomial.length-1]!=0) {
+            str.append(polynomial[polynomial.length - 1]);
+        }
         return str.toString();
     }
 

@@ -26,15 +26,21 @@ public final class StarCatalogue {
         this.stars = new ArrayList<>(stars);
         ArrayList<Asterism> workAsterisms = new ArrayList<>(asterisms);
 
+        HashMap<Star,Integer> starsIndex=new HashMap<>();
+        for (int i = 0; i <stars.size() ; i++) {
+            starsIndex.put(stars.get(i),i);
+        }
+
+
+
         catalogueMap = new HashMap<>();
 
         for (Asterism aste : workAsterisms) {
             List<Integer> indexes = new ArrayList<>();
 
             for (Star star : aste.stars()) {
-                int index = stars.indexOf(star);
-                if (index >= 0) {
-                    indexes.add(index);
+                if (starsIndex.containsKey(star)) {
+                    indexes.add(starsIndex.get(star));
                 } else {
                     throw new IllegalArgumentException();
                 }

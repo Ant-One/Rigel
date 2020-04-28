@@ -59,6 +59,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @param altDeg the altitude angle in degrees
      * @return the HorizontalCoordinates object created
      */
+
     public static HorizontalCoordinates ofDeg(double azDeg, double altDeg) {
         return HorizontalCoordinates.of(Angle.ofDeg(azDeg), Angle.ofDeg(altDeg));
     }

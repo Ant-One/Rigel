@@ -13,7 +13,8 @@ import ch.epfl.rigel.math.RightOpenInterval;
 public enum MoonModel implements CelestialObjectModel<Moon> {
     MOON;
 
-    private final static double l0 = Angle.ofDeg(91.929336), P0 = Angle.ofDeg(130.143076), N0 = Angle.ofDeg(291.682547), i = Angle.ofDeg(5.145396), e = 0.0549;
+    private final static double l0 = Angle.ofDeg(91.929336), P0 = Angle.ofDeg(130.143076), N0 = Angle.ofDeg(291.682547), I = Angle.ofDeg(5.145396), E = 0.0549;
+
 
     /**
      * Computes the position of a Moon object at the specified coordinates in space and time
@@ -43,9 +44,9 @@ public enum MoonModel implements CelestialObjectModel<Moon> {
 
         double N = N0 - Angle.ofDeg(0.0529539) * daysSinceJ2010;
         double Nbis = N - Angle.ofDeg(0.16) * Math.sin(sun.meanAnomaly());
-        double lon = Math.atan2(Math.sin(l2bis - Nbis) * Math.cos(i),
+        double lon = Math.atan2(Math.sin(l2bis - Nbis) * Math.cos(I),
                 Math.cos(l2bis - Nbis)) + Nbis;
-        double lat = Math.asin(Math.sin(l2bis - Nbis) * Math.sin(i));
+        double lat = Math.asin(Math.sin(l2bis - Nbis) * Math.sin(I));
 
         EclipticCoordinates coordinates = EclipticCoordinates.of(Angle.normalizePositive(lon), RightOpenInterval.symmetric(Angle.TAU / 2).reduce(lat));
 
@@ -55,7 +56,7 @@ public enum MoonModel implements CelestialObjectModel<Moon> {
 
         //Angular Size
 
-        double rho = (1 - e * e) / (1 + e * Math.cos(Mmbis + Ec));
+        double rho = (1 - E * E) / (1 + E * Math.cos(Mmbis + Ec));
         double theta = Angle.ofDeg(0.5181) / rho;
 
         return new Moon(eclipticToEquatorialConversion.apply(coordinates), (float) theta, 0, (float) F);

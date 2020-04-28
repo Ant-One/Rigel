@@ -29,11 +29,9 @@ public abstract class CelestialObject {
     CelestialObject(String name, EquatorialCoordinates equatorialPos, float angularSize, float magnitude) {
 
         Preconditions.checkArgument(angularSize >= 0);
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(equatorialPos);
 
-        this.name = name;
-        this.equatorialPos = equatorialPos;
+        this.name =Objects.requireNonNull(name);
+        this.equatorialPos = Objects.requireNonNull(equatorialPos);
         this.angularSize = angularSize;
         this.magnitude = magnitude;
     }

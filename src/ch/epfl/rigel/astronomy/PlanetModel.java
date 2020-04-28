@@ -46,7 +46,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     private final double angularSize;
     private final double magnitude;
 
-    public static List<PlanetModel> ALL = Arrays.asList(PlanetModel.values());
+    public final static List<PlanetModel> ALL = List.of(PlanetModel.values()) ;
 
     /**
      * construct a PlanetModel according to the specified data

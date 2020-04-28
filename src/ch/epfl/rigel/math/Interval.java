@@ -68,7 +68,7 @@ public abstract class Interval {
      * @throws UnsupportedOperationException when used
      */
     @Override
-    public boolean equals(Object obj) {
+    final public boolean equals(Object obj) {
         throw new UnsupportedOperationException();
     }
 }

@@ -14,8 +14,8 @@ import java.util.Locale;
  */
 public final class GeographicCoordinates extends SphericalCoordinates {
 
-    private static final RightOpenInterval longitudeInterval = RightOpenInterval.symmetric(360);
-    private static final ClosedInterval latitudeInterval = ClosedInterval.symmetric(180);
+    private static final RightOpenInterval LONGITUDE_INTERVAL = RightOpenInterval.symmetric(360);
+    private static final ClosedInterval LATITUDE_INTERVAL = ClosedInterval.symmetric(180);
 
 
     /**
@@ -50,7 +50,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      * @param lonDeg longitude in deg
      */
     public static boolean isValidLonDeg(double lonDeg) {
-        return longitudeInterval.contains(lonDeg);
+        return LONGITUDE_INTERVAL.contains(lonDeg);
     }
 
     /**
@@ -59,12 +59,13 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      * @param latDeg latitude in deg
      */
     public static boolean isValidLatDeg(double latDeg) {
-        return latitudeInterval.contains(latDeg);
+        return LATITUDE_INTERVAL.contains(latDeg);
     }
 
     /**
      * @return the latitude in radian
      */
+    @Override
     public double lat() {
 
         return super.lat();
@@ -73,7 +74,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     /**
      * @return the latitude in deg
      */
-
+    @Override
     public double latDeg() {
         return super.latDeg();
     }
@@ -81,6 +82,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     /**
      * @return the longitude in radian
      */
+    @Override
     public double lon() {
         return super.lon();
     }
@@ -88,6 +90,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     /**
      * @return the longitude in deg
      */
+    @Override
     public double lonDeg() {
         return super.lonDeg();
     }

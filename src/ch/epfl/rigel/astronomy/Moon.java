@@ -15,8 +15,8 @@ public final class Moon extends CelestialObject {
 
     private final float phase;
 
-    private static final ClosedInterval intervalPhase = ClosedInterval.of(0, 1);
-    private static final String moonName = "Lune";
+    private static final ClosedInterval INTERVAL_PHASE = ClosedInterval.of(0, 1);
+    private static final String MOON_NAME = "Lune";
 
     /**
      * Construct a Moon object
@@ -28,9 +28,9 @@ public final class Moon extends CelestialObject {
      * @throws IllegalArgumentException if angularSize is negative or phase is not in [0;1]
      */
     public Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
-        super(moonName, equatorialPos, angularSize, magnitude);
+        super(MOON_NAME, equatorialPos, angularSize, magnitude);
 
-        Preconditions.checkInInterval(intervalPhase, phase);
+        Preconditions.checkInInterval(INTERVAL_PHASE, phase);
         this.phase = phase;
     }
 

@@ -12,8 +12,8 @@ import java.util.Objects;
  */
 public final class Sun extends CelestialObject {
 
-    private static final String sunName = "Soleil";
-    private static final float sunMagnitude = -26.7f;
+    private static final String SUN_NAME = "Soleil";
+    private static final float SUN_MAGNITUDE = -26.7f;
 
     private final float meanAnomaly;
     private final EclipticCoordinates eclipticPos;
@@ -28,7 +28,7 @@ public final class Sun extends CelestialObject {
      */
 
     public Sun(EclipticCoordinates eclipticPos, EquatorialCoordinates equatorialPos, float angularSize, float meanAnomaly) {
-        super(sunName, equatorialPos, angularSize, sunMagnitude);
+        super(SUN_NAME, equatorialPos, angularSize, SUN_MAGNITUDE);
 
         Objects.requireNonNull(eclipticPos);
 

@@ -16,12 +16,12 @@ public enum Epoch {
             LocalTime.MIDNIGHT,
             ZoneOffset.UTC));
 
-    private static final double DAYS_PER_MILLIS = (double) 1 / (ChronoUnit.DAYS.getDuration().toMillis());
-    private static final double CENTURIES_PER_MILLIS = (double) 1 / (ChronoUnit.DAYS.getDuration().toMillis() * 36525);
-    private final ZonedDateTime beginning;
+    private static final double DAYS_PER_MILLIS = 1d / (ChronoUnit.DAYS.getDuration().toMillis());
+    private static final double CENTURIES_PER_MILLIS = 1d / (ChronoUnit.DAYS.getDuration().toMillis() * 36525);
+    private final ZonedDateTime BEGINNING;
 
     Epoch(ZonedDateTime beginning) {
-        this.beginning = beginning;
+        this.BEGINNING = beginning;
     }
 
     /**
@@ -32,7 +32,7 @@ public enum Epoch {
      * @return a non-integer number of days remaining
      */
     public double daysUntil(ZonedDateTime when) {
-        return beginning.until(when, ChronoUnit.MILLIS) * DAYS_PER_MILLIS;
+        return BEGINNING.until(when, ChronoUnit.MILLIS) * DAYS_PER_MILLIS;
     }
 
     /**
@@ -43,6 +43,6 @@ public enum Epoch {
      * @return a non-integer number of julian centuries remaining
      */
     public double julianCenturiesUntil(ZonedDateTime when) {
-        return beginning.until(when, ChronoUnit.MILLIS) * CENTURIES_PER_MILLIS;
+        return BEGINNING.until(when, ChronoUnit.MILLIS) * CENTURIES_PER_MILLIS;
     }
 }

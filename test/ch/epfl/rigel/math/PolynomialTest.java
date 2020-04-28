@@ -78,8 +78,8 @@ class PolynomialTest {
         assertEquals("3.0x-2.5", polynomial4.toString());
         var polynomial5 = Polynomial.of(-1, -7, 10);
         assertEquals("-x^2-7.0x+10.0", polynomial5.toString());
-        var polynomial6 = Polynomial.of(-2, 4, 6);
-        assertEquals("-2.0x^2+4.0x+6.0", polynomial6.toString());
+        var polynomial6 = Polynomial.of(-2, 4, 0);
+        assertEquals("-2.0x^2+4.0x", polynomial6.toString());
         var polynomial7 = Polynomial.of(1, -6, 0, -10);
         assertEquals("x^3-6.0x^2-10.0", polynomial7.toString());
         var polynomial8 = Polynomial.of(-2, 6, 2, -6);

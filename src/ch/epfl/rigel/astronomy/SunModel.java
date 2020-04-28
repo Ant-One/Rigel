@@ -11,8 +11,8 @@ import ch.epfl.rigel.math.Angle;
  */
 public enum SunModel implements CelestialObjectModel<Sun> {
     SUN;
-    private final static double epsylon = Angle.ofDeg(279.557208), w = Angle.ofDeg(283.112438), e = 0.016705, thetaZero = 0.533128;
-
+    private final static double EPSYLON = Angle.ofDeg(279.557208), W = Angle.ofDeg(283.112438), E = 0.016705, THETA_ZERO = 0.533128,C=Angle.TAU / 365.242191;
+    private  final static double E2=E*E;
 
     /**
      * Method to simulate the next position of the Sun
@@ -23,12 +23,12 @@ public enum SunModel implements CelestialObjectModel<Sun> {
      */
     @Override
     public Sun at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
-        double M = Angle.normalizePositive((Angle.TAU / 365.242191) * daysSinceJ2010 + epsylon - w);
-        double v = M + 2 * e * Math.sin(M);
-        double lambda = Angle.normalizePositive(v + w);
+        double M = Angle.normalizePositive(C * daysSinceJ2010 + EPSYLON - W);
+        double v = M + 2 * E * Math.sin(M);
+        double lambda = Angle.normalizePositive(v + W);
         EclipticCoordinates coordinates = EclipticCoordinates.of(Angle.normalizePositive(lambda), 0); //no need to reduce, lat = 0 anyways
 
-        double theta = Angle.ofDeg(thetaZero * ((1 + e * Math.cos(v)) / (1 - e * e)));
+        double theta = Angle.ofDeg(THETA_ZERO * ((1 + E * Math.cos(v)) / (1 - E2)));
 
         return new Sun(coordinates, eclipticToEquatorialConversion.apply(coordinates), (float) theta, (float) M);
     }

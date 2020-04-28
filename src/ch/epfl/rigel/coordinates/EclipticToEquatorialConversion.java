@@ -2,6 +2,7 @@ package ch.epfl.rigel.coordinates;
 
 import ch.epfl.rigel.astronomy.Epoch;
 import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.Polynomial;
 
 import java.time.ZonedDateTime;
 import java.util.function.Function;
@@ -17,6 +18,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
 
     private final double sinEpsilon;
     private final double cosEpsilon;
+    private  final Polynomial epsilonPolynomial=Polynomial.of(0.00181,-0.0006, -46.815,0);
 
 
     /**
@@ -28,7 +30,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         double T = Epoch.J2000.julianCenturiesUntil(when);
 
 
-        double epsilon = (0.00181 * T * T * T - 0.0006 * T * T - 46.815 * T) / 3600.f + (Angle.toDeg(Angle.ofDMS(23, 26, 21.45))); //Formula from the book
+        double epsilon = (epsilonPolynomial.at(T)) / 3600.f + (Angle.toDeg(Angle.ofDMS(23, 26, 21.45))); //Formula from the book
         sinEpsilon = Math.sin(Angle.ofDeg(epsilon));
         cosEpsilon = Math.cos(Angle.ofDeg(epsilon));
     }
@@ -56,7 +58,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      * @throws UnsupportedOperationException when used
      */
     @Override
-    final public int hashCode() {
+    public int hashCode() {
         throw new UnsupportedOperationException();
     }
 

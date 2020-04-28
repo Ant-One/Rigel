@@ -9,7 +9,7 @@ import java.util.function.Function;
  *
  * @author Adrien Rey (313388)
  */
-public class StereographicProjection implements Function<HorizontalCoordinates, CartesianCoordinates> {
+public final class StereographicProjection implements Function<HorizontalCoordinates, CartesianCoordinates> {
 
     private final HorizontalCoordinates center;
     private final double sinPhi, cosPhi;
@@ -65,6 +65,7 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
      * @param azAlt the point to project
      * @return the projection of the point
      */
+    @Override
     public CartesianCoordinates apply(HorizontalCoordinates azAlt) {
         double sinOtherPhi = Math.sin(azAlt.alt());
         double cosOtherPhi = Math.cos(azAlt.alt());
@@ -89,8 +90,9 @@ public class StereographicProjection implements Function<HorizontalCoordinates, 
     public HorizontalCoordinates inverseApply(CartesianCoordinates xy) {
 
         double rho = Math.sqrt(xy.x() * xy.x() + xy.y() * xy.y());
-        double sinC = 2 * rho / (rho * rho + 1);
-        double cosC = (1 - rho * rho) / (rho * rho + 1);
+        double rho2=rho*rho;
+        double sinC = 2 * rho / (rho2 + 1);
+        double cosC = (1 - rho2) / (rho2 + 1);
         boolean origin= xy.y()==0 && xy.x()==0;
 
         double lambda =origin ? center.az() : Math.atan2(xy.x() * sinC, rho * cosPhi * cosC - xy.y() * sinPhi * sinC) + center.az();

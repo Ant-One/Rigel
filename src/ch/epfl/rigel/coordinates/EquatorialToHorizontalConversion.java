@@ -71,7 +71,7 @@ public class EquatorialToHorizontalConversion implements Function<EquatorialCoor
      * @throws UnsupportedOperationException when used
      */
     @Override
-    final public int hashCode() {
+    public int hashCode() {
         throw new UnsupportedOperationException();
     }
 

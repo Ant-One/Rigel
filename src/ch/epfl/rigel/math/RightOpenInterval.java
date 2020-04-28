@@ -67,7 +67,7 @@ public class RightOpenInterval extends Interval {
      *
      * @return floorMod
      */
-    private double floorMod(double x, double y) {
+    private static double floorMod(double x, double y) {
         return x - y * Math.floor(x / y);
     }
 
