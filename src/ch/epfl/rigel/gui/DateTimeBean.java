@@ -18,6 +18,9 @@ public final class DateTimeBean {
     private ObjectProperty<LocalTime> time = null;
     private ObjectProperty<ZoneId> zone = null;
 
+    /**
+     * Basic constructor of the bean
+     */
     public DateTimeBean(){
         date = new SimpleObjectProperty<>();
         time = new SimpleObjectProperty<>();
