@@ -3,8 +3,13 @@ package ch.epfl.rigel.gui;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
+/**
+ * JavaFX Bean of viewing parameters (Zoom and direction)
+ * @author Adrien Rey (313388)
+ */
 public class ViewingParametersBean {
+
+
 
     private ObjectProperty<Double> fieldOfViewDeg=null;
     private ObjectProperty<HorizontalCoordinates> center=null;
