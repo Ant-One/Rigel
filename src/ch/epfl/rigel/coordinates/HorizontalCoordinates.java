@@ -21,12 +21,6 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
     private static final RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(0, Angle.TAU);
     private static final ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(-Angle.TAU / 4.0, Angle.TAU / 4.0);
 
-    private static final ClosedInterval NORTH_INTERVAL_1 = ClosedInterval.of(0, 3 * Angle.TAU / 16.0);
-    private static final ClosedInterval EAST_INTERVAL = ClosedInterval.of(Angle.TAU / 16.0, 7 * Angle.TAU / 16.0);
-    private static final ClosedInterval SOUTH_INTERVAL = ClosedInterval.of(5 * Angle.TAU / 16.0, 11 * Angle.TAU / 16.0);
-    private static final ClosedInterval WEST_INTERVAL = ClosedInterval.of(9 * Angle.TAU / 16.0, 15 * Angle.TAU / 16.0);
-    private static final ClosedInterval NORTH_INTERVAL_2 = ClosedInterval.of(13 * Angle.TAU / 16.0, Angle.TAU);
-
     /**
      * Private constructor, only used by the HorizontalCoordinates of() method
      *
@@ -94,20 +88,29 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * according to the strings passed as argument for respectively North, East, South, West
      */
     public String azOctantName(String n, String e, String s, String w) {
-        double normalizedAz = Angle.normalizePositive(az());
-        String result = "";
-        if (NORTH_INTERVAL_1.contains(normalizedAz) || NORTH_INTERVAL_2.contains(normalizedAz)) {
-            result += n;
-        } else if (SOUTH_INTERVAL.contains(normalizedAz)) {
-            result += s;
-        }
 
-        if (EAST_INTERVAL.contains(normalizedAz)) {
-            result += e;
-        } else if (WEST_INTERVAL.contains(normalizedAz)) {
-            result += w;
+        int normalizedAz = (int) Math.round((Angle.normalizePositive(az())/(Angle.TAU/8)));
+
+        switch (normalizedAz){
+            default:
+            case 0 :
+            case 8 :
+                return n;
+            case 1 :
+                return n + e;
+            case 2 :
+                return e;
+            case 3 :
+                return s + e;
+            case 4 :
+                return s;
+            case 5 :
+                return s + w;
+            case 6 :
+                return w;
+            case 7 :
+                return n + w;
         }
-        return result;
     }
 
     /**
