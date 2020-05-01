@@ -9,8 +9,6 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class ViewingParametersBean {
 
-
-
     private ObjectProperty<Double> fieldOfViewDeg=null;
     private ObjectProperty<HorizontalCoordinates> center=null;
 
@@ -32,19 +30,19 @@ public class ViewingParametersBean {
      * return the field of view
      * @return the field of view
      */
-    public double getFieldOfView(){return fieldOfViewDeg.get(); }
+    public double getFieldOfViewDeg(){return fieldOfViewDeg.get(); }
 
     /**
      * set the field of view
      * @param fieldOfView the new field of view
      */
-    public void setFieldOfView(double fieldOfView){ this.fieldOfViewDeg.set(fieldOfView);}
+    public void setFieldOfViewDeg(double fieldOfView){ this.fieldOfViewDeg.set(fieldOfView);}
 
     /**
      * return the center property
      * @return the center property
      */
-    public ObjectProperty<Double> getCenterProperty(){ return fieldOfViewDeg; }
+    public ObjectProperty<HorizontalCoordinates> getCenterProperty(){ return center; }
 
     /**
      * return the center in horizontal coordinates
