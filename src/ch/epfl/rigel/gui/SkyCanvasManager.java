@@ -18,7 +18,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.transform.Transform;
 
-
+//TODO annotate
 
 public class SkyCanvasManager {
 
