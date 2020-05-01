@@ -29,7 +29,7 @@ public final class UseSkyCanvasManager extends Application {
                     .build();
 
             ZonedDateTime when =
-                    ZonedDateTime.parse("2020-02-17T12:15:00+01:00");
+                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
             DateTimeBean dateTimeBean = new DateTimeBean();
             dateTimeBean.setZonedDateTime(when);
 
@@ -54,21 +54,18 @@ public final class UseSkyCanvasManager extends Application {
                     (p, o, n) -> {if (n != null) System.out.println(n);});
 
             Canvas sky = canvasManager.canvas();
-            //BorderPane root = new BorderPane(sky);
+            BorderPane root = new BorderPane(sky);
 
-            primaryStage.setScene(new Scene(new BorderPane(sky)));
-            primaryStage.show();
+            sky.widthProperty().bind(root.widthProperty());
+            sky.heightProperty().bind(root.heightProperty());
 
-            /*sky.widthProperty().bind(root.widthProperty());
-            sky.heightProperty().bind(root.heightProperty());*/
-
-            /*primaryStage.setMinWidth(800);
+            primaryStage.setMinWidth(800);
             primaryStage.setMinHeight(600);
 
             primaryStage.setY(100);
 
             primaryStage.setScene(new Scene(root));
-            primaryStage.show();*/
+            primaryStage.show();
 
             sky.requestFocus();
         }

@@ -19,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.transform.Transform;
 
 
+
 public class SkyCanvasManager {
 
     public ObservableDoubleValue mouseAzDeg;
@@ -32,7 +33,7 @@ public class SkyCanvasManager {
     private ObservableObjectValue<StereographicProjection> projection;
     private ObservableObjectValue<Transform> planeToCanvas;
     private ObservableObjectValue<ObservedSky> observedSky;
-    private ObjectProperty<CartesianCoordinates> mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0, 0));
+    private ObjectProperty<CartesianCoordinates> mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(1, 5));
     private ObservableObjectValue<HorizontalCoordinates> mouseHorizontalPosition;
     private ObservableObjectValue<CartesianCoordinates> mouseCartesianPosition;
 
@@ -60,17 +61,20 @@ public class SkyCanvasManager {
 
         setKeyboardEvents();
         setMouseEvents();
-
-        paint();
     }
 
 
     private void createBindings() {
         projection = Bindings.createObjectBinding(() -> new StereographicProjection(viewBean.getCenter()), viewBean.getCenterProperty());
 
-        dilatationFactor = Bindings.createDoubleBinding(() -> canvas.getWidth()/(projection.get()
-                .applyToAngle(Angle.ofDeg(viewBean.getFieldOfViewDeg()))),
-                viewBean.getFieldOfViewDegProperty());
+            dilatationFactor = Bindings.createDoubleBinding(() -> {
+                //Quick hack to not compute the dilatation factor if the width is equals to 0
+                if(canvas.getWidth() != 0) {
+                    return canvas.getWidth() / (projection.get().applyToAngle(Angle.ofDeg(viewBean.getFieldOfViewDeg())));
+                }
+                return 1300d;
+                },
+                    viewBean.getFieldOfViewDegProperty(), canvas.widthProperty());
 
         planeToCanvas = Bindings.createObjectBinding(() -> Transform.affine(dilatationFactor.get(), 0, 0, -dilatationFactor.get(),
                 400, 300), dilatationFactor);
@@ -81,11 +85,10 @@ public class SkyCanvasManager {
 
         mouseCartesianPosition = Bindings.createObjectBinding(() -> {
                     Point2D mouseTransformedPosition = planeToCanvas.get().inverseTransform(mousePosition.get().x(), mousePosition.get().y());
-                    return CartesianCoordinates.of(Angle.normalizePositive(mouseTransformedPosition.getX()), mouseTransformedPosition.getY()); },
+                    return CartesianCoordinates.of(mouseTransformedPosition.getX(), mouseTransformedPosition.getY()); },
                 mousePosition, planeToCanvas);
 
-        mouseHorizontalPosition = Bindings.createObjectBinding(() -> projection.get().inverseApply(mouseCartesianPosition.get()),
-                mouseCartesianPosition, projection);
+       mouseHorizontalPosition = Bindings.createObjectBinding(() -> projection.get().inverseApply(mouseCartesianPosition.get()), mouseCartesianPosition, projection);
 
         mouseAzDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
         mouseAltDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
@@ -97,7 +100,12 @@ public class SkyCanvasManager {
     private void createListeners() {
         observedSky.addListener((o, oV, nV) -> paint());
 
-        planeToCanvas.addListener((o, oV, nV) -> paint());
+        planeToCanvas.addListener((o, oV, nV) -> {
+            paint();
+        });
+
+        canvas.heightProperty().addListener((o, oV, nV) -> paint());
+        //A change in the width triggers a recomputation of the dilatation factor and thus a paint()
     }
 
     private void setMouseEvents() {
