@@ -81,12 +81,4 @@ public class ObserverLocationBean {
      * @param coordinates the new geographic coordinates
      */
     public void setCoordinates(GeographicCoordinates coordinates){this.coordinates.set(coordinates);}
-
-
-
-
-
-
-
-
 }
