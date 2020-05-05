@@ -32,7 +32,7 @@ public final class UseSkyCanvasManager extends Application {
                         .build();
 
                 ZonedDateTime when =
-                        ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
+                        ZonedDateTime.now();
                 DateTimeBean dateTimeBean = new DateTimeBean();
                 dateTimeBean.setZonedDateTime(when);
 
