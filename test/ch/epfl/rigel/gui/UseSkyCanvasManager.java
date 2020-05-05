@@ -1,5 +1,6 @@
 package ch.epfl.rigel.gui;
 
+import ch.epfl.rigel.astronomy.AsterismLoader;
 import ch.epfl.rigel.astronomy.HygDatabaseLoader;
 import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
@@ -24,50 +25,57 @@ public final class UseSkyCanvasManager extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try (InputStream hs = resourceStream("/hygdata_v3.csv")) {
-            StarCatalogue catalogue = new StarCatalogue.Builder()
-                    .loadFrom(hs, HygDatabaseLoader.INSTANCE)
-                    .build();
+            try (InputStream as = resourceStream("/asterisms.txt")) {
 
-            ZonedDateTime when =
-                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
-            DateTimeBean dateTimeBean = new DateTimeBean();
-            dateTimeBean.setZonedDateTime(when);
+                StarCatalogue catalogue = new StarCatalogue.Builder()
+                        .loadFrom(hs, HygDatabaseLoader.INSTANCE).loadFrom(as, AsterismLoader.INSTANCE)
+                        .build();
 
-            ObserverLocationBean observerLocationBean =
-                    new ObserverLocationBean();
-            observerLocationBean.setCoordinates(
-                    GeographicCoordinates.ofDeg(6.57, 46.52));
+                ZonedDateTime when =
+                        ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
+                DateTimeBean dateTimeBean = new DateTimeBean();
+                dateTimeBean.setZonedDateTime(when);
 
-            ViewingParametersBean viewingParametersBean =
-                    new ViewingParametersBean();
-            viewingParametersBean.setCenter(
-                    HorizontalCoordinates.ofDeg(180, 42));
-            viewingParametersBean.setFieldOfViewDeg(70);
+                ObserverLocationBean observerLocationBean =
+                        new ObserverLocationBean();
+                observerLocationBean.setCoordinates(
+                        GeographicCoordinates.ofDeg(6.57, 46.52));
 
-            SkyCanvasManager canvasManager = new SkyCanvasManager(
-                    catalogue,
-                    dateTimeBean,
-                    observerLocationBean,
-                    viewingParametersBean);
+                ViewingParametersBean viewingParametersBean =
+                        new ViewingParametersBean();
+                viewingParametersBean.setCenter(
+                        HorizontalCoordinates.ofDeg(180, 42));
+                viewingParametersBean.setFieldOfViewDeg(70);
 
-            canvasManager.objectUnderMouseProperty().addListener(
-                    (p, o, n) -> {if (n != null) System.out.println(n);});
+                SkyCanvasManager canvasManager = new SkyCanvasManager(
+                        catalogue,
+                        dateTimeBean,
+                        observerLocationBean,
+                        viewingParametersBean);
 
-            Canvas sky = canvasManager.canvas();
-            BorderPane root = new BorderPane(sky);
+                canvasManager.objectUnderMouseProperty().addListener(
+                        (p, o, n) -> {
+                            if (n != null) System.out.println(n);
+                        });
 
-            sky.widthProperty().bind(root.widthProperty());
-            sky.heightProperty().bind(root.heightProperty());
+                Canvas sky = canvasManager.canvas();
+                BorderPane root = new BorderPane(sky);
 
-            primaryStage.setMinWidth(800);
-            primaryStage.setMinHeight(600);
+                sky.widthProperty().bind(root.widthProperty());
+                sky.heightProperty().bind(root.heightProperty());
 
-            primaryStage.setY(100);
+                primaryStage.setMinWidth(800);
+                primaryStage.setMinHeight(600);
 
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
+                primaryStage.setY(100);
+                primaryStage.setTitle("Rigel");
 
-            sky.requestFocus();
+
+                primaryStage.setScene(new Scene(root));
+                primaryStage.show();
+
+                sky.requestFocus();
+            }
         }
     }
 }

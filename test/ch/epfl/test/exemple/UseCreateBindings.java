@@ -1,5 +1,6 @@
 package ch.epfl.test.exemple;
 
+import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.gui.ObserverLocationBean;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
