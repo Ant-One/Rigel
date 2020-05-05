@@ -81,7 +81,7 @@ public class SkyCanvasManager {
 
 
         observedSky = Bindings.createObjectBinding(() -> new ObservedSky(timeBean.getZonedDateTime(), locationBean.getCoordinates(), projection.get(), catalogue),
-                locationBean.coordinatesBindingsProperty(), timeBean.timeProperty(), timeBean.dateProperty(), projection);
+                locationBean.coordinatesBindingsProperty(), timeBean.timeProperty(), timeBean.dateProperty(), timeBean.zoneProperty(), projection);
 
         mouseCartesianPosition = Bindings.createObjectBinding(() -> {
                     Point2D mouseTransformedPosition = planeToCanvas.get().inverseTransform(mousePosition.get().x(), mousePosition.get().y());
