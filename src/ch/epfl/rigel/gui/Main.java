@@ -154,6 +154,7 @@ public class Main extends Application {
 
         heureTF.disableProperty().bind(timeAnimator.runningProperty());
         dateTimeBean.timeProperty().bindBidirectional(timeFormatter.valueProperty());
+
         //ZONE
         ComboBox<ZoneId> zoneIdComboBox=new ComboBox<>();
         ArrayList<String> zoneIds =new ArrayList<>(ZoneId.getAvailableZoneIds());
@@ -163,6 +164,7 @@ public class Main extends Application {
         }
         zoneIdComboBox.getItems().addAll(zoneID2);
         zoneIdComboBox.setValue(ZoneId.systemDefault());
+        zoneIdComboBox.disableProperty().bind(timeAnimator.runningProperty());
 
         dateTimeBean.zoneProperty().bindBidirectional(zoneIdComboBox.valueProperty());
         HBox observationTime=new HBox(date,datePicker,heure,heureTF,zoneIdComboBox);
@@ -184,9 +186,11 @@ public class Main extends Application {
         List<NamedTimeAccelerator> acceleratorList =Arrays.asList(NamedTimeAccelerator.values());
         timeAcceleratorChoiceBox.setItems(FXCollections.observableList(acceleratorList));
         timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
+        timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
 
         ObjectProperty<String> timeAcceleratorBinding= new SimpleObjectProperty<>();
         timeAcceleratorBinding.addListener((v,o,n)->timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator()));
+        timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
         timeAcceleratorBinding.bind(Bindings.select(timeAcceleratorChoiceBox.valueProperty(),"name"));
 
         Font fontAwesome = null;
@@ -205,6 +209,7 @@ public class Main extends Application {
             dateTimeBean.setTime(LocalTime.now());
             dateTimeBean.setDate(LocalDate.now());
         });
+        resetButton.disableProperty().bind(timeAnimator.runningProperty());
 
         ToggleButton playButton =new ToggleButton("\uf04b");
         playButton.setFont(fontAwesome);
