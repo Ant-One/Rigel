@@ -188,12 +188,20 @@ public class Main extends Application {
         timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
 
 
-        ObjectProperty<String> timeAcceleratorBinding= new SimpleObjectProperty<>();
-        timeAcceleratorBinding.bind(Bindings.select(timeAcceleratorChoiceBox.valueProperty(),"name"));
-        timeAcceleratorBinding.addListener((v,o,n)->timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator()));
+        //ObjectProperty<String> timeAcceleratorBinding= new SimpleObjectProperty<>();
+
+        /*timeAcceleratorBinding.addListener((o,v,n)->{
+            timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator());
+        });
+
+        timeAcceleratorBinding.bind(Bindings.select(timeAcceleratorChoiceBox.getValue(),"name"));*/
+
+        timeAcceleratorChoiceBox.valueProperty().addListener((o,v,n) -> {
+            timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n.getName()).getAccelerator());
+        });
 
         timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
-        timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
+        //timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
 
 
 
@@ -217,7 +225,7 @@ public class Main extends Application {
 
         ToggleButton playButton =new ToggleButton("\uf04b");
         playButton.setFont(fontAwesome);
-        playButton.setOnAction(e -> {
+        playButton.setOnAction((e) -> {
 
             playButton.setText(playButton.getText().equals("\uf04b") ? "\uf04c" : "\uf04b");
             if (timeAnimator.isRunning()) {
