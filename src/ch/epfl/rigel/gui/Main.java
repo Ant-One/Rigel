@@ -186,12 +186,13 @@ public class Main extends Application {
         List<NamedTimeAccelerator> acceleratorList =Arrays.asList(NamedTimeAccelerator.values());
         timeAcceleratorChoiceBox.setItems(FXCollections.observableList(acceleratorList));
         timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
-        timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
 
         ObjectProperty<String> timeAcceleratorBinding= new SimpleObjectProperty<>();
-        timeAcceleratorBinding.addListener((v,o,n)->timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator()));
-        timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
         timeAcceleratorBinding.bind(Bindings.select(timeAcceleratorChoiceBox.valueProperty(),"name"));
+        timeAcceleratorBinding.addListener((v,o,n)->timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator()));
+
+        timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
+
 
         Font fontAwesome = null;
         try (InputStream fontStream = getClass()
