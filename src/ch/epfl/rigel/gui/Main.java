@@ -187,11 +187,14 @@ public class Main extends Application {
         timeAcceleratorChoiceBox.setItems(FXCollections.observableList(acceleratorList));
         timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
 
+
         ObjectProperty<String> timeAcceleratorBinding= new SimpleObjectProperty<>();
         timeAcceleratorBinding.bind(Bindings.select(timeAcceleratorChoiceBox.valueProperty(),"name"));
         timeAcceleratorBinding.addListener((v,o,n)->timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator()));
 
         timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
+        timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
+
 
 
         Font fontAwesome = null;
