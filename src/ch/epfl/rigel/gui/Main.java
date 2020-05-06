@@ -31,11 +31,18 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class Main extends Application {
+    /**
+     * Main Application
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
+    /**
+     * Start the application and call all functions needed to construct the visual
+     */
     public void start(Stage stage) throws Exception {
 
 
@@ -83,8 +90,11 @@ public class Main extends Application {
 
 
     /**
-     * Compute all the part of the control Bar
-     * @return the control Bar (Horizontal Box)-
+    ( * Compute the controlBar
+     * @param location ObserverLocationBean
+     * @param dateTimeBean DateTimeBean
+     * @param timeAnimator Time Animator
+     * @return the controlBar (Horizontal bar)
      */
     private HBox controlBar(ObserverLocationBean location,DateTimeBean dateTimeBean,TimeAnimator timeAnimator){
         HBox controlBar=new HBox(observerPosition(location), observationTime(dateTimeBean,timeAnimator), timeAcceleration(timeAnimator,dateTimeBean));
@@ -93,6 +103,11 @@ public class Main extends Application {
         return controlBar;
     }
 
+    /**
+     *  Compute the part of the controlBar about the observer position
+     * @param locationBean ObbserverLocationBean
+     * @return Hbox of the observer position parameters
+     */
     private HBox observerPosition(ObserverLocationBean locationBean){
 
         Label longitude=new Label("Longitude (°) :");
@@ -107,8 +122,12 @@ public class Main extends Application {
     }
 
 
-
-
+    /**
+     * Compute the part of the controlBar about the observation time
+     * @param dateTimeBean dateTimeBean
+     * @param timeAnimator TimeAnimator
+     * @return Hbox of the time parameters
+     */
     private  HBox observationTime(DateTimeBean dateTimeBean,TimeAnimator timeAnimator){
         Label date=new Label("Date :");
         Label heure=new Label("Heure :");
@@ -131,7 +150,7 @@ public class Main extends Application {
         timeFormatter.setValue(LocalTime.now());
         heureTF.setTextFormatter(timeFormatter);
 
-        timeAnimator.runningProperty().addListener((v,o,n)-> System.out.print(n));
+
 
         heureTF.disableProperty().bind(timeAnimator.runningProperty());
         dateTimeBean.timeProperty().bindBidirectional(timeFormatter.valueProperty());
@@ -152,6 +171,13 @@ public class Main extends Application {
 
         return observationTime;
     }
+
+    /**
+     * Compute the part of the control bar about the time Accelerator
+     * @param timeAnimator TimeAnimator
+     * @param dateTimeBean DateTimeBean
+     * @return the Time Animator parameters (HBox)
+     */
     private HBox timeAcceleration(TimeAnimator timeAnimator, DateTimeBean dateTimeBean){
 
         ChoiceBox<NamedTimeAccelerator> timeAcceleratorChoiceBox=new ChoiceBox<>();
@@ -194,7 +220,6 @@ public class Main extends Application {
 
         });
 
-        timeAnimator.runningProperty().addListener((v,o,n)-> System.out.print(n));
 
 
         HBox timeAcceleration=new HBox(timeAcceleratorChoiceBox,resetButton,playButton);
