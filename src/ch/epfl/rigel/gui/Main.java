@@ -12,6 +12,8 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
@@ -38,19 +40,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
+
+/**
+ * Main class of Rigel program
+ * @author Adrien Rey (313388), Antoine Moix (310052)
+ */
 public class Main extends Application {
     /**
      * Main Application
-     * @param args
+     * @param args provided arguments at launch
      */
     public static void main(String[] args) {
         launch(args);
     }
 
-    @Override
     /**
-     * Start the application and call all functions needed to construct the visual
+     * Starts the application and call all functions needed to construct the visual
      */
+    @Override
     public void start(Stage stage) {
 
 
@@ -282,14 +289,13 @@ public class Main extends Application {
     }
 
 
-
-
-    /*private Pane sky(StarCatalogue starCatalogue, DateTimeBean dateTimeBean, ObserverLocationBean observerLocationBean,
-                     ViewingParametersBean viewingParametersBean){
-        SkyCanvasManager skyManager = new SkyCanvasManager(starCatalogue, dateTimeBean, observerLocationBean, viewingParametersBean);
-        return new Pane(skyManager.canvas());
-    }*/
-
+    /**
+     * Method used to create the infoBar at the bottom containing the FoV settings, the closest object under the mouse
+     * and the coordinates of the mouse pointer
+     * @param skyCanvasManager the SkyCanvasManager object
+     * @param viewingParametersBean  the ViewingParameterBean containing the viewing settings
+     * @return a BorderPane object containing the data aforementioned
+     */
     private BorderPane infoBar(SkyCanvasManager skyCanvasManager, ViewingParametersBean viewingParametersBean){
         BorderPane infoPane = new BorderPane();
         infoPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
@@ -298,18 +304,11 @@ public class Main extends Application {
         Text closestObjectText = new Text();
         Text azAltText = new Text();
 
-        viewingParametersBean.getFieldOfViewDegProperty().addListener((o, oV, nV) -> {
-            fovText.setText("Champ de vue : " + Math.round(nV) + "°");
-        });
+        fovText.textProperty().bind(Bindings.format("Champ de vue : %.1f°", viewingParametersBean.getFieldOfViewDegProperty()));
 
         skyCanvasManager.objectUnderMouseProperty().addListener((o, oV, nV) -> closestObjectText.setText(nV.info()));
 
-        DecimalFormat df = new DecimalFormat("#.#");
-
-        ObservableStringValue azAltString = Bindings.createStringBinding(() -> "Azimut : " + df.format(skyCanvasManager.mouseAzDeg.get()) + "°" + ", hauteur : " + df.format(skyCanvasManager.mouseAltDeg.get()) + "°",
-                skyCanvasManager.mouseAzDeg, skyCanvasManager.mouseAltDeg);
-
-        azAltText.textProperty().bind(azAltString);
+        azAltText.textProperty().bind(Bindings.format("Azimuth : %.1f°, hauteur : %.1f°", skyCanvasManager.mouseAzDeg, skyCanvasManager.mouseAltDeg));
 
         infoPane.setLeft(fovText);
         infoPane.setCenter(closestObjectText);
