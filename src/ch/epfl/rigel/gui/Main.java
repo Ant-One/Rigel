@@ -1,5 +1,9 @@
 package ch.epfl.rigel.gui;
 
+import ch.epfl.rigel.astronomy.AsterismLoader;
+import ch.epfl.rigel.astronomy.HygDatabaseLoader;
+import ch.epfl.rigel.astronomy.Star;
+import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
@@ -9,6 +13,7 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableObjectValue;
+import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,12 +21,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
+import javax.swing.text.View;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -43,7 +51,7 @@ public class Main extends Application {
     /**
      * Start the application and call all functions needed to construct the visual
      */
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
 
         //all the Bean needed
@@ -64,6 +72,20 @@ public class Main extends Application {
                 HorizontalCoordinates.ofDeg(180.000000000001, 15));
         viewingParametersBean.setFieldOfViewDeg(70);
 
+        //Loading the stars and asterisms from files, and creating the catalogue
+
+        StarCatalogue starCatalogue = null;
+        try {
+            starCatalogue = loadStarsAndAsterims();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Creation of the SkyCanvasManager
+        SkyCanvasManager skyManager = new SkyCanvasManager(starCatalogue, dateTimeBean, observerLocationBean, viewingParametersBean);
+        Pane skyPane = new Pane(skyManager.canvas());
+
+
         //TimeAnimator
 
         TimeAnimator timeAnimator=new TimeAnimator(dateTimeBean);
@@ -73,8 +95,8 @@ public class Main extends Application {
         BorderPane root=new BorderPane();
 
         root.setTop(controlBar(observerLocationBean,dateTimeBean,timeAnimator));
-        root.setCenter(sky());
-        root.setBottom(infoBar());
+        root.setCenter(skyPane);
+        root.setBottom(infoBar(skyManager, viewingParametersBean));
 
 
         stage.setMinHeight(600);
@@ -84,10 +106,25 @@ public class Main extends Application {
         stage.setScene(new Scene(root));
         stage.show();
 
-
-
+        skyManager.canvas().widthProperty().bind(skyPane.widthProperty());
+        skyManager.canvas().heightProperty().bind(skyPane.heightProperty());
+        skyManager.canvas().requestFocus();
     }
 
+    private StarCatalogue loadStarsAndAsterims() throws IOException {
+        try (InputStream hygData = resourceStream("/hygdata_v3.csv")) {
+            try (InputStream asterismsData = resourceStream("/asterisms.txt")) {
+
+                return new StarCatalogue.Builder()
+                        .loadFrom(hygData, HygDatabaseLoader.INSTANCE).loadFrom(asterismsData, AsterismLoader.INSTANCE)
+                        .build();
+            }
+        }
+    }
+
+    private InputStream resourceStream(String resourceName) {
+        return getClass().getResourceAsStream(resourceName);
+    }
 
     /**
     ( * Compute the controlBar
@@ -247,21 +284,39 @@ public class Main extends Application {
 
 
 
-    private Pane sky(){
-    return null;
+    /*private Pane sky(StarCatalogue starCatalogue, DateTimeBean dateTimeBean, ObserverLocationBean observerLocationBean,
+                     ViewingParametersBean viewingParametersBean){
+        SkyCanvasManager skyManager = new SkyCanvasManager(starCatalogue, dateTimeBean, observerLocationBean, viewingParametersBean);
+        return new Pane(skyManager.canvas());
+    }*/
+
+    private BorderPane infoBar(SkyCanvasManager skyCanvasManager, ViewingParametersBean viewingParametersBean){
+        BorderPane infoPane = new BorderPane();
+        infoPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
+
+        Text fovText = new Text("Champ de vue : " + viewingParametersBean.getFieldOfViewDeg() + "°");
+        Text closestObjectText = new Text();
+        Text azAltText = new Text();
+
+        viewingParametersBean.getFieldOfViewDegProperty().addListener((o, oV, nV) -> {
+            fovText.setText("Champ de vue : " + Math.round(nV) + "°");
+        });
+
+        skyCanvasManager.objectUnderMouseProperty().addListener((o, oV, nV) -> closestObjectText.setText(nV.info()));
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        ObservableStringValue azAltString = Bindings.createStringBinding(() -> "Azimut : " + df.format(skyCanvasManager.mouseAzDeg.get()) + "°" + ", hauteur : " + df.format(skyCanvasManager.mouseAltDeg.get()) + "°",
+                skyCanvasManager.mouseAzDeg, skyCanvasManager.mouseAltDeg);
+
+        azAltText.textProperty().bind(azAltString);
+
+        infoPane.setLeft(fovText);
+        infoPane.setCenter(closestObjectText);
+        infoPane.setRight(azAltText);
+
+        return infoPane;
     }
-
-    private BorderPane infoBar(){
-        return null;
-    }
-
-
-
-
-
-
-
-
 
 
     /**
