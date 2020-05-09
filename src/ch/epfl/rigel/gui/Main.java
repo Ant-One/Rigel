@@ -121,7 +121,7 @@ public class Main extends Application {
     /**
      * loas stars and asterism for ressources
      * @return the StarCatalogue
-     * @throws IOException
+     * @throws IOException if the data files are not found
      */
     private StarCatalogue loadStarsAndAsterims() throws IOException {
         try (InputStream hygData = resourceStream("/hygdata_v3.csv")) {
@@ -277,7 +277,7 @@ public class Main extends Application {
         });
         resetButton.disableProperty().bind(timeAnimator.runningProperty());
 
-        ToggleButton playButton =new ToggleButton("\uf04b");
+        ToggleButton playButton = new ToggleButton("\uf04b");
         playButton.setFont(fontAwesome);
         playButton.setOnAction((e) -> {
 

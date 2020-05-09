@@ -1,0 +1,4 @@
+- Planètes trop grandes ?
+- Horizon penché à droite
+- Canvas qui ne request pas le focus et du coup les touches du clavier ne marche plus à moins de cliquer sur le canvas
+- Object closest to ne devrait pas s'afficher s'il n'y en a pas
