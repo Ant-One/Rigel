@@ -92,7 +92,7 @@ public class SkyCanvasPainter {
 
             ctx.fillOval(coord[2 * i] - size.getX() / 2, coord[2 * i + 1] - size.getX() / 2, diameter, diameter);
         }
-    }
+      }
 
     /**
      * Draws all the planets in gray on the canvas

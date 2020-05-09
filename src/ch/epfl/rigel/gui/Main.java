@@ -118,6 +118,11 @@ public class Main extends Application {
         skyManager.canvas().requestFocus();
     }
 
+    /**
+     * loas stars and asterism for ressources
+     * @return the StarCatalogue
+     * @throws IOException
+     */
     private StarCatalogue loadStarsAndAsterims() throws IOException {
         try (InputStream hygData = resourceStream("/hygdata_v3.csv")) {
             try (InputStream asterismsData = resourceStream("/asterisms.txt")) {
@@ -129,6 +134,11 @@ public class Main extends Application {
         }
     }
 
+    /**
+     *  return the Input Stream of a named file
+     * @param resourceName the name of the file
+     * @return the Input stream
+     */
     private InputStream resourceStream(String resourceName) {
         return getClass().getResourceAsStream(resourceName);
     }

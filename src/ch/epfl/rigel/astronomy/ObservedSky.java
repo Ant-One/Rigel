@@ -107,7 +107,8 @@ public class ObservedSky {
      * @return the list of the stars
      */
     public List<Star> stars() {
-        return List.copyOf(stars);
+        return Collections.unmodifiableList(stars);
+        //Here stars position return just the list and not a copy of the list, Otherwise the complexity of drawStars goes up to O(n^2) rather than O(n) wich make the animation laggy
     }
 
     /**
