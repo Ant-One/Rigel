@@ -111,6 +111,9 @@ public class Main extends Application {
         stage.setMinWidth(800);
         stage.setTitle("Rigel");
 
+        stage.setHeight(900);
+        stage.setWidth(1440);
+
         stage.setScene(new Scene(root));
         stage.show();
 
@@ -291,7 +294,6 @@ public class Main extends Application {
             }
 
         });
-
 
 
         HBox timeAcceleration=new HBox(timeAcceleratorChoiceBox,resetButton,playButton);
