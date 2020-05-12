@@ -92,7 +92,7 @@ public class Main extends Application {
         //Creation of the SkyCanvasManager
         SkyCanvasManager skyManager = new SkyCanvasManager(starCatalogue, dateTimeBean, observerLocationBean, viewingParametersBean);
         Canvas sky = skyManager.canvas();
-        Pane skyPane = new Pane(skyManager.canvas());
+        Pane skyPane = new Pane(sky);
 
         //TimeAnimator
 
@@ -106,8 +106,6 @@ public class Main extends Application {
         root.setCenter(skyPane);
         root.setBottom(infoBar(skyManager, viewingParametersBean));
 
-        sky.widthProperty().bind(skyPane.widthProperty());
-        sky.heightProperty().bind(skyPane.heightProperty());
 
         stage.setMinHeight(600);
         stage.setMinWidth(800);
@@ -116,7 +114,9 @@ public class Main extends Application {
         stage.setScene(new Scene(root));
         stage.show();
 
-        skyManager.canvas().requestFocus();
+        sky.widthProperty().bind(skyPane.widthProperty());
+        sky.heightProperty().bind(skyPane.heightProperty());
+        sky.requestFocus();
     }
 
     /**
