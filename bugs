@@ -11,6 +11,7 @@
     OK controller si la distance est assez petite
 
 - Temps pour jours qui change les heures
+    enft c bon, ct lheure divers
 
 - Obligé d'ajouter les secondes, sinon le temps ne change pas. Hour picker JFX ?
     On peut rien changer
