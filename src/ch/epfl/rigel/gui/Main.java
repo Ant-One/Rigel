@@ -366,14 +366,13 @@ public class Main extends Application {
                 new TextFormatter<>(stringConverter, 0, Filter);
 
 
+        ObservableObjectValue<Double> lonBindings = Bindings.createObjectBinding(() -> TextFormatter.valueProperty().getValue().doubleValue(), TextFormatter.valueProperty());
         if(islon) {
-            ObservableObjectValue<Double> lonBindings = Bindings.createObjectBinding(() -> TextFormatter.valueProperty().getValue().doubleValue(), TextFormatter.valueProperty());
             lonBindings.addListener((o, oV, nV) -> location.setLonDeg(nV));
             TextFormatter.setValue(6.57);
         }
         else{
-            ObservableObjectValue<Double> latBindings = Bindings.createObjectBinding(() -> TextFormatter.valueProperty().getValue().doubleValue(), TextFormatter.valueProperty());
-            latBindings.addListener((o, oV, nV) -> location.setLatDeg(nV));
+            lonBindings.addListener((o, oV, nV) -> location.setLatDeg(nV));
             TextFormatter.setValue(46.52);
         }
         TextField TextField =
