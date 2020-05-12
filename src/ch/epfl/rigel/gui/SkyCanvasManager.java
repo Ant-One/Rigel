@@ -92,7 +92,7 @@ public class SkyCanvasManager {
                     viewBean.getFieldOfViewDegProperty(), canvas.widthProperty());
 
         planeToCanvas = Bindings.createObjectBinding(() -> Transform.affine(dilatationFactor.get(), 0, 0, -dilatationFactor.get(),
-                400, 300), dilatationFactor);
+                canvas.getWidth()/2, canvas.getHeight()/2), dilatationFactor, canvas.widthProperty(), canvas.heightProperty());
 
 
         observedSky = Bindings.createObjectBinding(() -> new ObservedSky(timeBean.getZonedDateTime(), locationBean.getCoordinates(), projection.get(), catalogue),
