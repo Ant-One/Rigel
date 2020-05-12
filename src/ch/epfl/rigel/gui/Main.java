@@ -244,22 +244,12 @@ public class Main extends Application {
         List<NamedTimeAccelerator> acceleratorList =Arrays.asList(NamedTimeAccelerator.values());
         timeAcceleratorChoiceBox.setItems(FXCollections.observableList(acceleratorList));
 
-
-        //ObjectProperty<String> timeAcceleratorBinding= new SimpleObjectProperty<>();
-
-        /*timeAcceleratorBinding.addListener((o,v,n)->{
-            timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n).getAccelerator());
-        });
-
-        timeAcceleratorBinding.bind(Bindings.select(timeAcceleratorChoiceBox.getValue(),"name"));*/
-
         timeAcceleratorChoiceBox.valueProperty().addListener((o,v,n) -> {
             timeAnimator.setAccelerator(NamedTimeAccelerator.ofString(n.getName()).getAccelerator());
         });
         timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
 
         timeAcceleratorChoiceBox.disableProperty().bind(timeAnimator.runningProperty());
-        //timeAcceleratorChoiceBox.setValue(NamedTimeAccelerator.TIMES_1);
 
 
 
