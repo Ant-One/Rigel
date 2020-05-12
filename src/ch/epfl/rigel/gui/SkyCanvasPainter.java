@@ -92,7 +92,7 @@ public class SkyCanvasPainter {
 
             ctx.fillOval(coord[2 * i] - size.getX() / 2, coord[2 * i + 1] - size.getX() / 2, diameter, diameter);
         }
-      }
+    }
 
     /**
      * Draws all the planets in gray on the canvas
@@ -118,12 +118,10 @@ public class SkyCanvasPainter {
 
     /**
      * Draws the Moon
-     *
-     * @param sky           the observed sky
-     * @param projection    the stereographic projection used
+     *  @param sky           the observed sky
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
-    void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+    void drawMoon(ObservedSky sky, Transform planeToCanvas) {
         Point2D moonCenter = planeToCanvas.transform(sky.moonPosition().x(), sky.moonPosition().y());
 
         double cartesianDiameter = sky.moon().angularSize();
@@ -161,11 +159,10 @@ public class SkyCanvasPainter {
 
     /**
      * Draws the horizon line and the octant names in French
-     * @param sky           the observed sky
-     * @param projection    the stereographic projection used
+     *  @param projection    the stereographic projection used
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
-    void drawHorizon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+    void drawHorizon(StereographicProjection projection, Transform planeToCanvas) {
         CartesianCoordinates horizonCartesian = projection.circleCenterForParallel(HorizontalCoordinates.of(1, 0));
         Point2D horizonCenter = planeToCanvas.transform(horizonCartesian.x(), horizonCartesian.y());
 
@@ -175,10 +172,9 @@ public class SkyCanvasPainter {
 
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
-        if(horizonRadius==Double.POSITIVE_INFINITY || horizonRadius==Double.NEGATIVE_INFINITY){
-            ctx.strokeLine(0,canvas.getHeight()/2,canvas.getWidth(),canvas.getHeight()/2);
-        }
-        else {
+        if (horizonRadius == Double.POSITIVE_INFINITY || horizonRadius == Double.NEGATIVE_INFINITY) {
+            ctx.strokeLine(0, canvas.getHeight() / 2, canvas.getWidth(), canvas.getHeight() / 2);
+        } else {
             ctx.strokeOval(horizonCenter.getX() - horizonRadius, horizonCenter.getY() - horizonRadius, horizonRadius * 2, horizonRadius * 2);
         }
         ctx.setFill(Color.RED);

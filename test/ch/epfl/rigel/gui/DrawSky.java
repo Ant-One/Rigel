@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.time.ZonedDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public final class DrawSky extends Application {
     public static void main(String[] args) { launch(args); }
 
@@ -70,7 +68,7 @@ public final class DrawSky extends Application {
                     painter.drawSun(sky, projection, planeToCanvas);
                     //painter.drawMoon(sky, projection, planeToCanvas);
 
-                    painter.drawHorizon(sky, projection, planeToCanvas);
+                    painter.drawHorizon(projection, planeToCanvas);
 
                     WritableImage fxImage =
                             canvas.snapshot(null, null);
