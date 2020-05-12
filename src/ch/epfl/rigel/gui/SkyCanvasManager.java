@@ -108,7 +108,7 @@ public class SkyCanvasManager {
         mouseAzDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
         mouseAltDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
 
-        objectUnderMouse = Bindings.createObjectBinding(() -> observedSky.get().objectClosestTo(mouseCartesianPosition.get(), 10), mouseCartesianPosition);
+        objectUnderMouse = Bindings.createObjectBinding(() -> observedSky.get().objectClosestTo(mouseCartesianPosition.get(), 0.01), mouseCartesianPosition);
 
     }
 

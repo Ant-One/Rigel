@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -90,8 +91,8 @@ public class Main extends Application {
 
         //Creation of the SkyCanvasManager
         SkyCanvasManager skyManager = new SkyCanvasManager(starCatalogue, dateTimeBean, observerLocationBean, viewingParametersBean);
+        Canvas sky = skyManager.canvas();
         Pane skyPane = new Pane(skyManager.canvas());
-
 
         //TimeAnimator
 
@@ -105,6 +106,8 @@ public class Main extends Application {
         root.setCenter(skyPane);
         root.setBottom(infoBar(skyManager, viewingParametersBean));
 
+        sky.widthProperty().bind(skyPane.widthProperty());
+        sky.heightProperty().bind(skyPane.heightProperty());
 
         stage.setMinHeight(600);
         stage.setMinWidth(800);
@@ -113,8 +116,6 @@ public class Main extends Application {
         stage.setScene(new Scene(root));
         stage.show();
 
-        skyManager.canvas().widthProperty().bind(skyPane.widthProperty());
-        skyManager.canvas().heightProperty().bind(skyPane.heightProperty());
         skyManager.canvas().requestFocus();
     }
 
@@ -316,7 +317,14 @@ public class Main extends Application {
 
         fovText.textProperty().bind(Bindings.format("Champ de vue : %.1f°", viewingParametersBean.getFieldOfViewDegProperty()));
 
-        skyCanvasManager.objectUnderMouseProperty().addListener((o, oV, nV) -> closestObjectText.setText(nV.info()));
+        skyCanvasManager.objectUnderMouseProperty().addListener((o, oV, nV) -> {
+            if(nV!=null){
+                closestObjectText.setText(nV.info());
+            }
+            else {
+                closestObjectText.setText("");
+            }
+        });
 
         azAltText.textProperty().bind(Bindings.format("Azimuth : %.1f°, hauteur : %.1f°", skyCanvasManager.mouseAzDeg, skyCanvasManager.mouseAltDeg));
 
