@@ -54,8 +54,6 @@ public class SkyCanvasPainter {
      */
     void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
 
-        //TODO TransformDelta renvoie toujours des positifs pour x ? à vérifier car cela pourrait rendre Math.abs() superflu
-
         double[] coord = new double[sky.starsPosition().length];
         planeToCanvas.transform2DPoints(sky.starsPosition(), 0, coord, 0, sky.starsPosition().length / 2);
 
@@ -86,7 +84,7 @@ public class SkyCanvasPainter {
         for (int i = 0; i < sky.starsPosition().length / 2; i++) {
 
             Point2D size = size(sky.stars().get(i).magnitude(), planeToCanvas, projection);
-            double diameter = Math.abs(size.getX());
+            double diameter = size.getX();
 
             ctx.setFill(BlackBodyColor.colorForTemperature(sky.stars().get(i).colorTemperature()));
 
@@ -110,7 +108,7 @@ public class SkyCanvasPainter {
 
             ctx.setFill(Color.LIGHTGRAY);
             Point2D size = size(sky.planets().get(i).magnitude(), planeToCanvas, projection);
-            double diameter = Math.abs(size.getX());
+            double diameter = size.getX();
             ctx.fillOval(coord[2 * i] - diameter / 2, coord[2 * i + 1] - diameter / 2, diameter, diameter);
 
         }
@@ -118,7 +116,8 @@ public class SkyCanvasPainter {
 
     /**
      * Draws the Moon
-     *  @param sky           the observed sky
+     *
+     * @param sky           the observed sky
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
     void drawMoon(ObservedSky sky, Transform planeToCanvas) {
@@ -126,7 +125,7 @@ public class SkyCanvasPainter {
 
         double cartesianDiameter = sky.moon().angularSize();
         Point2D diameterPoint = planeToCanvas.deltaTransform(cartesianDiameter, cartesianDiameter);
-        double diameter = Math.abs(diameterPoint.getX());
+        double diameter = diameterPoint.getX();
 
         ctx.setFill(Color.WHITE);
         ctx.fillOval(moonCenter.getX() - diameter / 2, moonCenter.getY() - diameter / 2, diameter, diameter);
@@ -144,7 +143,7 @@ public class SkyCanvasPainter {
 
         double cartesianDiameter = projection.applyToAngle(Angle.ofDeg(0.5));
         Point2D diameterPoint = planeToCanvas.deltaTransform(cartesianDiameter, cartesianDiameter);
-        double diameter = Math.abs(diameterPoint.getX());
+        double diameter = diameterPoint.getX();
 
         ctx.setFill(Color.YELLOW.deriveColor(0, 1, 1, 0.25));
         ctx.fillOval(sunCenter.getX() - (diameter * 2.2 / 2), sunCenter.getY() - (diameter * 2.2 / 2), diameter * 2.2, diameter * 2.2);
@@ -159,7 +158,8 @@ public class SkyCanvasPainter {
 
     /**
      * Draws the horizon line and the octant names in French
-     *  @param projection    the stereographic projection used
+     *
+     * @param projection    the stereographic projection used
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
     void drawHorizon(StereographicProjection projection, Transform planeToCanvas) {
@@ -167,7 +167,7 @@ public class SkyCanvasPainter {
         Point2D horizonCenter = planeToCanvas.transform(horizonCartesian.x(), horizonCartesian.y());
 
         double horizonRadiusCartesian = projection.circleRadiusForParallel(HorizontalCoordinates.of(1, 0));
-        double horizonRadius = Math.abs(planeToCanvas.deltaTransform(horizonRadiusCartesian, horizonRadiusCartesian).getX());
+        double horizonRadius = planeToCanvas.deltaTransform(horizonRadiusCartesian, horizonRadiusCartesian).getX();
 
 
         ctx.setStroke(Color.RED);
