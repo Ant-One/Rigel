@@ -47,16 +47,17 @@ public class SkyCanvasManager {
     private ViewingParametersBean viewBean;
 
     private static final RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(0, Angle.TAU);
-    private static final ClosedInterval ELEVATION_INTERVAL = ClosedInterval.of(Angle.ofDeg(5), Angle.TAU/4);
+    private static final ClosedInterval ELEVATION_INTERVAL = ClosedInterval.of(Angle.ofDeg(5), Angle.TAU / 4);
     private static final ClosedInterval FIELD_OF_VIEW_INTERVAL = ClosedInterval.of(Angle.ofDeg(30), Angle.ofDeg(150));
 
     /**
      * Constructs an object that creates and manages a canvas on which the simulation is done.
      * Monitors the changes in the simulation parameters (time, location, speed of simulation, ...)
-     * @param catalogue the stars and asterisms catalogue used
-     * @param timeBean a bean modelling a date and time to be used on the simulation
+     *
+     * @param catalogue    the stars and asterisms catalogue used
+     * @param timeBean     a bean modelling a date and time to be used on the simulation
      * @param locationBean a bean modelling the location of the observer during the simulation
-     * @param viewBean a bean containing the parameters for the simulation (field of view and center of projection)
+     * @param viewBean     a bean containing the parameters for the simulation (field of view and center of projection)
      */
     public SkyCanvasManager(StarCatalogue catalogue, DateTimeBean timeBean, ObserverLocationBean locationBean, ViewingParametersBean viewBean) {
 
@@ -82,17 +83,17 @@ public class SkyCanvasManager {
     private void createBindings() {
         projection = Bindings.createObjectBinding(() -> new StereographicProjection(viewBean.getCenter()), viewBean.getCenterProperty());
 
-            dilatationFactor = Bindings.createDoubleBinding(() -> {
-                //Quick hack to not compute the dilatation factor if the width is equals to 0
-                if(canvas.getWidth() != 0) {
-                    return canvas.getWidth() / (projection.get().applyToAngle(Angle.ofDeg(viewBean.getFieldOfViewDeg())));
-                }
-                return 1300d;
+        dilatationFactor = Bindings.createDoubleBinding(() -> {
+                    //Quick hack to not compute the dilatation factor if the width is equals to 0
+                    if (canvas.getWidth() != 0) {
+                        return canvas.getWidth() / (projection.get().applyToAngle(Angle.ofDeg(viewBean.getFieldOfViewDeg())));
+                    }
+                    return 1300d;
                 },
-                    viewBean.getFieldOfViewDegProperty(), canvas.widthProperty());
+                viewBean.getFieldOfViewDegProperty(), canvas.widthProperty());
 
         planeToCanvas = Bindings.createObjectBinding(() -> Transform.affine(dilatationFactor.get(), 0, 0, -dilatationFactor.get(),
-                canvas.getWidth()/2, canvas.getHeight()/2), dilatationFactor, canvas.widthProperty(), canvas.heightProperty());
+                canvas.getWidth() / 2, canvas.getHeight() / 2), dilatationFactor, canvas.widthProperty(), canvas.heightProperty());
 
 
         observedSky = Bindings.createObjectBinding(() -> new ObservedSky(timeBean.getZonedDateTime(), locationBean.getCoordinates(), projection.get(), catalogue),
@@ -100,10 +101,11 @@ public class SkyCanvasManager {
 
         mouseCartesianPosition = Bindings.createObjectBinding(() -> {
                     Point2D mouseTransformedPosition = planeToCanvas.get().inverseTransform(mousePosition.get().x(), mousePosition.get().y());
-                    return CartesianCoordinates.of(mouseTransformedPosition.getX(), mouseTransformedPosition.getY()); },
+                    return CartesianCoordinates.of(mouseTransformedPosition.getX(), mouseTransformedPosition.getY());
+                },
                 mousePosition, planeToCanvas);
 
-       mouseHorizontalPosition = Bindings.createObjectBinding(() -> projection.get().inverseApply(mouseCartesianPosition.get()), mouseCartesianPosition, projection);
+        mouseHorizontalPosition = Bindings.createObjectBinding(() -> projection.get().inverseApply(mouseCartesianPosition.get()), mouseCartesianPosition, projection);
 
         mouseAzDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
         mouseAltDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
@@ -118,9 +120,7 @@ public class SkyCanvasManager {
     private void createListeners() {
         observedSky.addListener((o, oV, nV) -> paint());
 
-        planeToCanvas.addListener((o, oV, nV) -> {
-            paint();
-        });
+        planeToCanvas.addListener((o, oV, nV) -> paint());
 
         canvas.heightProperty().addListener((o, oV, nV) -> paint());
         //A change in the width triggers a recomputation of the dilatation factor and thus a paint()
@@ -142,7 +142,7 @@ public class SkyCanvasManager {
             double newFoV = Angle.ofDeg(Math.abs(event.getDeltaX()) > Math.abs(event.getDeltaY())
                     ? event.getDeltaX() + currentFoV
                     : event.getDeltaY() + currentFoV);
-        viewBean.setFieldOfViewDeg(Angle.toDeg(FIELD_OF_VIEW_INTERVAL.clip(newFoV)));
+            viewBean.setFieldOfViewDeg(Angle.toDeg(FIELD_OF_VIEW_INTERVAL.clip(newFoV)));
         });
 
 
@@ -159,7 +159,7 @@ public class SkyCanvasManager {
             switch (event.getCode()) {
                 case LEFT:
                     next = AZIMUTH_INTERVAL.reduce(Angle.ofDeg(currentCenter.azDeg() - 10));
-                    if(next == Angle.TAU){
+                    if (next == Angle.TAU) {
                         next = 0;
                     }
                     viewBean.setCenter(HorizontalCoordinates.ofDeg(Angle.toDeg(next), currentCenter.altDeg()));
@@ -167,7 +167,7 @@ public class SkyCanvasManager {
                     break;
                 case RIGHT:
                     next = AZIMUTH_INTERVAL.reduce(Angle.ofDeg(currentCenter.azDeg() + 10));
-                    if(next == Angle.TAU){
+                    if (next == Angle.TAU) {
                         next = 0;
                     }
                     viewBean.setCenter(HorizontalCoordinates.ofDeg(Angle.toDeg(next), currentCenter.altDeg()));
@@ -201,6 +201,7 @@ public class SkyCanvasManager {
 
     /**
      * Returns the instance of CelestialObject closest to the the mouse cursor
+     *
      * @return the instance of CelestialObject closest to the the mouse cursor
      */
     public ObservableObjectValue<CelestialObject> objectUnderMouseProperty() {
@@ -209,6 +210,7 @@ public class SkyCanvasManager {
 
     /**
      * Returns the canvas used
+     *
      * @return the canvas used
      */
     public Canvas canvas() {
