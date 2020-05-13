@@ -7,12 +7,13 @@ import java.time.ZonedDateTime;
 
 /**
  * Class modelling a time animator using a time accelerator. Is used to compute the time with a factor of acceleration
+ *
  * @author Antoine Moix (310052)
  */
 public final class TimeAnimator extends AnimationTimer {
 
-    private ObjectProperty<TimeAccelerator> accelerator = null;
-    private BooleanProperty running = new SimpleBooleanProperty(false);
+    private ObjectProperty<TimeAccelerator> accelerator;
+    private BooleanProperty running;
 
     private ZonedDateTime initialStart;
     private long nanosSinceLaunch;
@@ -22,11 +23,13 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Constructor of the TimeAnimator object
+     *
      * @param dtb the moment from which the time will be accelerated
      */
-    public TimeAnimator(DateTimeBean dtb){
+    public TimeAnimator(DateTimeBean dtb) {
         this.dtb = dtb;
-        accelerator = new SimpleObjectProperty<>();
+        accelerator = new SimpleObjectProperty<>(null);
+        running = new SimpleBooleanProperty(false);
     }
 
     /**
@@ -51,21 +54,23 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Override of AnimationTimer.handle()
-     * Computes the accelerted time
+     * Computes the accelerated time
+     *
      * @param l time in nanoseconds of the moment the method is called
      */
     @Override
     public void handle(long l) {
-        if(isInitialRun){
+        if (isInitialRun) {
             isInitialRun = false;
             nanosSinceLaunch = l;
         }
 
-        dtb.setZonedDateTime(getAccelerator().adjust(initialStart, l-nanosSinceLaunch));
+        dtb.setZonedDateTime(getAccelerator().adjust(initialStart, l - nanosSinceLaunch));
     }
 
     /**
      * Returns the accelerator property
+     *
      * @return the accelerator property
      */
     public ObjectProperty<TimeAccelerator> acceleratorProperty() {
@@ -74,6 +79,7 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Returns the accelerator value
+     *
      * @return the accelerator value
      */
     public TimeAccelerator getAccelerator() {
@@ -82,6 +88,7 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Sets the accelerator property value
+     *
      * @param accelerator the value to which the accelerator property value is to be set to
      */
     public void setAccelerator(TimeAccelerator accelerator) {
@@ -90,6 +97,7 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Returns the BooleanProperty running, indicating if the timer is running. The property should be read-only
+     *
      * @return the BooleanProperty running
      */
     public ReadOnlyBooleanProperty runningProperty() {
@@ -98,6 +106,7 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Returns the value of the BooleanProperty running
+     *
      * @return the value of the BooleanProperty running
      */
     public boolean isRunning() {
@@ -106,6 +115,7 @@ public final class TimeAnimator extends AnimationTimer {
 
     /**
      * Sets the value of the BooleanProperty running
+     *
      * @param running the value to which the running property value is to be set to
      */
     public void setRunning(boolean running) {
