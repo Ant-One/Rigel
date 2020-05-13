@@ -8,6 +8,7 @@ import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -176,11 +177,6 @@ public class Main extends Application {
 
         HBox observerPosition = new HBox(longitude, longitudeTF, latitude, latitudeTF);
         observerPosition.setStyle("-fx-spacing: inherit; -fx-alignment: baseline-left;");
-
-        locationBean.lonDegProperty().bindBidirectional((Property<Number>) longitudeTF.getTextFormatter().valueProperty());
-        locationBean.latDegProperty().bindBidirectional((Property<Number>) latitudeTF.getTextFormatter().valueProperty());
-
-
 
         return observerPosition;
     }
@@ -359,13 +355,11 @@ public class Main extends Application {
         TextFormatter<Number> TextFormatter =
                 new TextFormatter<>(stringConverter, 0, Filter);
 
-
-        ObservableObjectValue<Double> lonBindings = Bindings.createObjectBinding(() -> TextFormatter.valueProperty().getValue().doubleValue(), TextFormatter.valueProperty());
         if (islon) {
-            lonBindings.addListener((o, oV, nV) -> location.setLonDeg(nV));
+            TextFormatter.valueProperty().bindBidirectional(location.lonDegProperty());
             TextFormatter.setValue(6.57);
         } else {
-            lonBindings.addListener((o, oV, nV) -> location.setLatDeg(nV));
+            TextFormatter.valueProperty().bindBidirectional(location.latDegProperty());
             TextFormatter.setValue(46.52);
         }
         TextField TextField =
