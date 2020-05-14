@@ -40,7 +40,7 @@ public final class Preconditions {
         if (interval.contains(value)) {
             return value;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("The value "+ value + "isn't in the interval "+ interval.toString());
         }
 
     }

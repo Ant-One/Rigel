@@ -7,9 +7,6 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -43,6 +40,20 @@ import java.util.function.UnaryOperator;
  * @author Adrien Rey (313388), Antoine Moix (310052)
  */
 public class Main extends Application {
+
+    private final double INIT_LOCATION_LONG =6.57;
+    private final double INIT_LOCATION_LAT =46.52;
+
+    private final  double INIT_VIEW_AZ =180.000000000001;
+    private final double INIT_VIEW_ALT =15;
+    private final double INIT_VIEW_FIELD=100;
+
+    private final double MIN_HEIGHT=600;
+    private final double MIN_WIDTH=800;
+
+    private final double INIT_HEIGHT =720;
+    private final double INIT_WIDTH =1240;
+
     /**
      * Main Application
      *
@@ -69,13 +80,13 @@ public class Main extends Application {
         ObserverLocationBean observerLocationBean =
                 new ObserverLocationBean();
         observerLocationBean.setCoordinates(
-                GeographicCoordinates.ofDeg(6.57, 46.52));
+                GeographicCoordinates.ofDeg(INIT_LOCATION_LONG, INIT_LOCATION_LAT));
 
         ViewingParametersBean viewingParametersBean =
                 new ViewingParametersBean();
         viewingParametersBean.setCenter(
-                HorizontalCoordinates.ofDeg(180.000000000001, 15));
-        viewingParametersBean.setFieldOfViewDeg(70);
+                HorizontalCoordinates.ofDeg(INIT_VIEW_AZ, INIT_VIEW_ALT));
+        viewingParametersBean.setFieldOfViewDeg(INIT_VIEW_FIELD);
 
         //Loading the stars and asterisms from files, and creating the catalogue
 
@@ -104,12 +115,12 @@ public class Main extends Application {
         root.setBottom(infoBar(skyManager, viewingParametersBean));
 
 
-        stage.setMinHeight(600);
-        stage.setMinWidth(800);
+        stage.setMinHeight(MIN_HEIGHT);
+        stage.setMinWidth(MIN_WIDTH);
         stage.setTitle("Rigel");
 
-        stage.setHeight(900);
-        stage.setWidth(1440);
+        stage.setHeight(INIT_HEIGHT);
+        stage.setWidth(INIT_WIDTH);
 
         stage.setScene(new Scene(root));
         stage.show();
@@ -262,8 +273,10 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
+        String back="\uf0e2",play="\uf04b",pause="\uf04c";
 
-        Button resetButton = new Button("\uf0e2");
+
+        Button resetButton = new Button(back);
         resetButton.setFont(fontAwesome);
         resetButton.setOnAction(e -> {
             dateTimeBean.setTime(LocalTime.now());
@@ -271,11 +284,11 @@ public class Main extends Application {
         });
         resetButton.disableProperty().bind(timeAnimator.runningProperty());
 
-        ToggleButton playButton = new ToggleButton("\uf04b");
+        ToggleButton playButton = new ToggleButton(play);
         playButton.setFont(fontAwesome);
         playButton.setOnAction((e) -> {
 
-            playButton.setText(playButton.getText().equals("\uf04b") ? "\uf04c" : "\uf04b");
+            playButton.setText(playButton.getText().equals(play) ? pause : play);
             if (timeAnimator.isRunning()) {
                 timeAnimator.stop();
             } else {
@@ -357,10 +370,10 @@ public class Main extends Application {
 
         if (islon) {
             TextFormatter.valueProperty().bindBidirectional(location.lonDegProperty());
-            TextFormatter.setValue(6.57);
+            TextFormatter.setValue(INIT_LOCATION_LONG);
         } else {
             TextFormatter.valueProperty().bindBidirectional(location.latDegProperty());
-            TextFormatter.setValue(46.52);
+            TextFormatter.setValue(INIT_LOCATION_LAT);
         }
         TextField TextField =
                 new TextField();

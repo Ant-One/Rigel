@@ -161,9 +161,7 @@ public class ObservedSky {
      *
      * @return List of the seven Planets
      */
-    public List<Planet> planets() {
-        return List.copyOf(planets);
-    }
+    public List<Planet> planets() { return Collections.unmodifiableList(planets); }
 
     /**
      * Planets position
