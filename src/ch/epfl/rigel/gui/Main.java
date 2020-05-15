@@ -41,18 +41,18 @@ import java.util.function.UnaryOperator;
  */
 public class Main extends Application {
 
-    private final double INIT_LOCATION_LONG =6.57;
-    private final double INIT_LOCATION_LAT =46.52;
+    private final double INIT_LOCATION_LONG = 6.57;
+    private final double INIT_LOCATION_LAT = 46.52;
 
-    private final  double INIT_VIEW_AZ =180.000000000001;
-    private final double INIT_VIEW_ALT =15;
-    private final double INIT_VIEW_FIELD=100;
+    private final double INIT_VIEW_AZ = 180.000000000001;
+    private final double INIT_VIEW_ALT = 15;
+    private final double INIT_VIEW_FIELD = 100;
 
-    private final double MIN_HEIGHT=600;
-    private final double MIN_WIDTH=800;
+    private final double MIN_HEIGHT = 600;
+    private final double MIN_WIDTH = 800;
 
-    private final double INIT_HEIGHT =720;
-    private final double INIT_WIDTH =1240;
+    private final double INIT_HEIGHT = 720;
+    private final double INIT_WIDTH = 1240;
 
     /**
      * Main Application
@@ -273,7 +273,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        String back="\uf0e2",play="\uf04b",pause="\uf04c";
+        String back = "\uf0e2", play = "\uf04b", pause = "\uf04c";
 
 
         Button resetButton = new Button(back);
