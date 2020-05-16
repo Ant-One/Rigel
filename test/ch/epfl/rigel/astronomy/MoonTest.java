@@ -11,13 +11,13 @@ class MoonTest {
     @Test
     void constructorThrowExceptionName(){
         assertThrows(IllegalArgumentException.class,() -> {
-            new Moon(EquatorialCoordinates.of(1,1),8.f,0.2f,1.0001f) ;
+            new Moon(EquatorialCoordinates.of(1,1),8.f,0.2f,1.0001f,0) ;
         });
     }
 
     @Test
     void info() {
-        assertEquals("Lune (37.5%)",new Moon(EquatorialCoordinates.of(1,1),8.f,0.2f,0.3752f).info()) ;
+        assertEquals("Lune (37.5%)",new Moon(EquatorialCoordinates.of(1,1),8.f,0.2f,0.3752f,0).info()) ;
 
 
     }
