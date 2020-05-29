@@ -8,7 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-/**loader for the HygData file
+/**
+ * loader for the HygData file
  *
  * @author Antoine Moix (310052)
  */
@@ -41,12 +42,12 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader {
                 String[] values = line.split(",");
 
                 int hipparcosID;
-
-                try {
-                    hipparcosID = Integer.parseInt(values[Types.HIP.ordinal()]);
-                } catch (NumberFormatException e) {
+                if (values[Types.HIP.ordinal()].isBlank()) {
                     hipparcosID = 0;
+                } else {
+                    hipparcosID = Integer.parseInt(values[Types.HIP.ordinal()]);
                 }
+
 
                 String name = values[Types.PROPER.ordinal()];
                 String bayer = values[Types.BAYER.ordinal()];
@@ -61,17 +62,17 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader {
                 double decRad = Double.parseDouble(values[Types.DECRAD.ordinal()]);
 
                 double magnitude;
-                try {
-                    magnitude = Double.parseDouble(values[Types.MAG.ordinal()]);
-                } catch (NumberFormatException e) {
+                if (values[Types.MAG.ordinal()].isBlank()) {
                     magnitude = 0;
+                } else {
+                    magnitude = Double.parseDouble(values[Types.MAG.ordinal()]);
                 }
 
                 double colorIndex;
-                try {
-                    colorIndex = Double.parseDouble(values[Types.CI.ordinal()]);
-                } catch (NumberFormatException e) {
+                if (values[Types.CI.ordinal()].isBlank()) {
                     colorIndex = 0;
+                } else {
+                    colorIndex = Double.parseDouble(values[Types.CI.ordinal()]);
                 }
 
                 Star currentStar = new Star(hipparcosID, name, EquatorialCoordinates.of(raRad, decRad), (float) magnitude, (float) colorIndex);
