@@ -14,6 +14,7 @@ import java.util.Locale;
 public final class Moon extends CelestialObject {
 
     private final float phase;
+    private  final double brightLimb;
 
     private static final ClosedInterval INTERVAL_PHASE = ClosedInterval.of(0, 1);
     private static final String MOON_NAME = "Lune";
@@ -24,15 +25,36 @@ public final class Moon extends CelestialObject {
      * @param equatorialPos non-null EquatorialCoordinates ; coordinates of the moon object
      * @param angularSize   size of the object
      * @param magnitude     magnitude of the object. Cannot be negative
+     * @param phase         phase of the moon
+     * @param brightLimb    brightLimb angle in radian
      * @throws NullPointerException     if equatorialPos or name non-defined
      * @throws IllegalArgumentException if angularSize is negative or phase is not in [0;1]
      */
-    public Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
+    public Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase, double brightLimb) {
         super(MOON_NAME, equatorialPos, angularSize, magnitude);
 
         Preconditions.checkInInterval(INTERVAL_PHASE, phase);
         this.phase = phase;
+        this.brightLimb=brightLimb;
     }
+
+    /**
+     * the phase of the moon
+     * @return the phase in %
+     */
+    public float getPhase() {
+        return phase;
+    }
+
+    /**
+     * the bright limb angle
+     * @return the bright limb angle
+     */
+    public double getBrightLimb(){
+        return brightLimb;
+    }
+
+
 
     /**
      * Returns the name of the Moon and its phase in percents in a String

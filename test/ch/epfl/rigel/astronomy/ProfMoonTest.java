@@ -10,7 +10,7 @@ public class ProfMoonTest {
     @Test
     void moonConstructorFailsWhenEquatorialPositionIsNull() {
         assertThrows(NullPointerException.class, () -> {
-            new Moon(null, 0, 0, 0);
+            new Moon(null, 0, 0, 0,0);
         });
     }
 
@@ -18,7 +18,7 @@ public class ProfMoonTest {
     void moonConstructorFailsWhenAngularSizeIsNegative() {
         assertThrows(IllegalArgumentException.class, () -> {
             var equ = EquatorialCoordinates.of(0, 0);
-            new Moon(equ, -0.1f, 0, 0);
+            new Moon(equ, -0.1f, 0, 0,0);
         });
     }
 
@@ -26,18 +26,18 @@ public class ProfMoonTest {
     void moonConstructorFailsWhenPhaseIsInvalid() {
         assertThrows(IllegalArgumentException.class, () -> {
             var equ = EquatorialCoordinates.of(0, 0);
-            new Moon(equ, 0f, 0, -0.00001f);
+            new Moon(equ, 0f, 0, -0.00001f,0);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             var equ = EquatorialCoordinates.of(0, 0);
-            new Moon(equ, 0f, 0, +1.00001f);
+            new Moon(equ, 0f, 0, +1.00001f,0);
         });
     }
 
     @Test
     void moonNameIsCorrect() {
         var equ = EquatorialCoordinates.of(0, 0);
-        var s = new Moon(equ, 0, 0, 0);
+        var s = new Moon(equ, 0, 0, 0,0);
         assertEquals("Lune", s.name());
     }
 
@@ -47,7 +47,7 @@ public class ProfMoonTest {
         for (int i = 0; i < TestRandomizer.RANDOM_ITERATIONS; i++) {
             var equ = EquatorialCoordinates.of(0, 0);
             var angularSize = (float) rng.nextDouble(0, Math.PI);
-            var m = new Moon(equ, angularSize, 0, 0);
+            var m = new Moon(equ, angularSize, 0, 0,0);
             assertEquals(angularSize, m.angularSize());
         }
     }
@@ -58,7 +58,7 @@ public class ProfMoonTest {
         for (int i = 0; i < TestRandomizer.RANDOM_ITERATIONS; i++) {
             var equ = EquatorialCoordinates.of(0, 0);
             var magnitude = (float) rng.nextDouble(-30, 30);
-            var m = new Moon(equ, 0, magnitude, 0);
+            var m = new Moon(equ, 0, magnitude, 0,0);
             assertEquals(magnitude, m.magnitude());
         }
     }
@@ -70,7 +70,7 @@ public class ProfMoonTest {
             var ra = rng.nextDouble(0, 2d * Math.PI);
             var dec = rng.nextDouble(-Math.PI / 2d, Math.PI / 2d);
             var equ = EquatorialCoordinates.of(ra, dec);
-            var m = new Moon(equ, 0, 0, 0);
+            var m = new Moon(equ, 0, 0, 0,0);
             assertEquals(ra, m.equatorialPos().ra());
             assertEquals(dec, m.equatorialPos().dec());
         }
@@ -79,8 +79,8 @@ public class ProfMoonTest {
     @Test
     void moonInfoIncludesPhase() {
         var equ = EquatorialCoordinates.of(0, 0);
-        var m1 = new Moon(equ, 0, 0, 0.1f);
-        var m2 = new Moon(equ, 0, 0, 0.9f);
+        var m1 = new Moon(equ, 0, 0, 0.1f,0);
+        var m2 = new Moon(equ, 0, 0, 0.9f,0);
         assertEquals(m1.name(), m2.name());
         assertNotEquals(m1.info(), m2.info());
     }
@@ -89,7 +89,7 @@ public class ProfMoonTest {
     void moonHashCodeIsInheritedFromObject() {
         for (int i = 0; i < TestRandomizer.RANDOM_ITERATIONS; i++) {
             var equ = EquatorialCoordinates.of(0, 0);
-            var m = new Moon(equ, 0, 0, 0);
+            var m = new Moon(equ, 0, 0, 0,0);
             assertEquals(System.identityHashCode(m), m.hashCode());
         }
     }
@@ -99,7 +99,7 @@ public class ProfMoonTest {
         var prevMoon = (Moon)null;
         for (int i = 0; i < TestRandomizer.RANDOM_ITERATIONS; i++) {
             var equ = EquatorialCoordinates.of(0, 0);
-            var m = new Moon(equ, 0, 0, 0);
+            var m = new Moon(equ, 0, 0, 0,0);
             assertEquals(m, m);
             assertNotEquals(m, prevMoon);
             prevMoon = m;

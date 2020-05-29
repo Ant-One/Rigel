@@ -2,6 +2,7 @@ package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
+import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.RightOpenInterval;
 
@@ -48,8 +49,8 @@ public enum MoonModel implements CelestialObjectModel<Moon> {
                 Math.cos(l2bis - Nbis)) + Nbis;
         double lat = Math.asin(Math.sin(l2bis - Nbis) * Math.sin(I));
 
-        EclipticCoordinates coordinates = EclipticCoordinates.of(Angle.normalizePositive(lon), RightOpenInterval.symmetric(Angle.TAU / 2).reduce(lat));
-
+        EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(Angle.normalizePositive(lon), RightOpenInterval.symmetric(Angle.TAU / 2).reduce(lat));
+        EquatorialCoordinates coordinates =eclipticToEquatorialConversion.apply(eclipticCoordinates);
         //Phase
 
         double F = (1 - Math.cos(l2bis - sun.eclipticPos().lon())) / 2;
@@ -59,7 +60,21 @@ public enum MoonModel implements CelestialObjectModel<Moon> {
         double rho = (1 - E * E) / (1 + E * Math.cos(Mmbis + Ec));
         double theta = Angle.ofDeg(0.5181) / rho;
 
-        return new Moon(eclipticToEquatorialConversion.apply(coordinates), (float) theta, 0, (float) F);
+        //Bright Limb angle
+
+        double sunDec =sun.equatorialPos().dec();
+        double sunRa = sun.equatorialPos().ra();
+        double moonDec =coordinates.dec();
+        double moonRa =coordinates.ra();
+
+        double y= Math.cos(sunDec)*Math.sin(sunRa-moonRa);
+        double x=Math.cos(moonDec)*Math.sin(sunDec) -Math.sin(moonDec)*Math.cos(sunDec)*Math.cos(sunRa-moonRa);
+
+        double brightLimb = Math.atan2(x,y);
+
+
+
+        return new Moon(coordinates, (float) theta, 0, (float) F, brightLimb);
 
     }
 }

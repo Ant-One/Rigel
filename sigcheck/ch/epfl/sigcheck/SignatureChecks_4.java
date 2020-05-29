@@ -57,7 +57,7 @@ final class SignatureChecks_4 {
         Moon m;
         EquatorialCoordinates e = null;
         float f = 0f;
-        m = new Moon(e, f, f, f);
+        m = new Moon(e, f, f, f,f);
         c = m;
     }
 

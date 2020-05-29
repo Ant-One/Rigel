@@ -120,15 +120,41 @@ public class SkyCanvasPainter {
      * @param sky           the observed sky
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
-    void drawMoon(ObservedSky sky, Transform planeToCanvas) {
+    void drawMoon(ObservedSky sky,StereographicProjection projection, Transform planeToCanvas) {
         Point2D moonCenter = planeToCanvas.transform(sky.moonPosition().x(), sky.moonPosition().y());
 
         double cartesianDiameter = sky.moon().angularSize();
         Point2D diameterPoint = planeToCanvas.deltaTransform(cartesianDiameter, cartesianDiameter);
         double diameter = diameterPoint.getX();
+        double radius =diameter/2;
 
         ctx.setFill(Color.WHITE);
+        ctx.fillOval(moonCenter.getX() - radius, moonCenter.getY() - radius, diameter, diameter);
+
+
+        double azimuth=projection.inverseApply(sky.moonPosition()).azDeg();
+        double angle=azimuth-Angle.toDeg(sky.moon().getBrightLimb());
+        double r = Math.abs(sky.moon().getPhase()-0.5)*2;
+
+
+        ctx.translate(moonCenter.getX(), moonCenter.getY());
+        ctx.rotate(angle);
+
+        ctx.setFill(Color.BLACK);
+        ctx.fillRect(-radius,-radius, diameter, diameter/2);
+
+        ctx.setFill(sky.moon().getPhase() > 0.5 ? Color.WHITE : Color.BLACK);
+        ctx.fillOval(-radius, - r*radius, diameter, r*diameter);
+
+
+        ctx.rotate(-angle);
+        ctx.translate(-moonCenter.getX(),-moonCenter.getY());
+
+
+
+        ctx.setFill(Color.web("#ffffff",0.3));
         ctx.fillOval(moonCenter.getX() - diameter / 2, moonCenter.getY() - diameter / 2, diameter, diameter);
+
     }
 
     /**
