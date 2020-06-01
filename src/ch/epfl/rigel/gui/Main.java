@@ -9,13 +9,9 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -30,7 +26,6 @@ import javafx.util.converter.NumberStringConverter;
 
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -354,6 +349,7 @@ public class Main extends Application {
 
     /**
      * Creates the checkboxes for drawing or not the different elements of the canvas
+     *
      * @return a VBox object containing the checkboxes
      */
     private VBox checkBoxes(SkyCanvasManager skymanager) {
