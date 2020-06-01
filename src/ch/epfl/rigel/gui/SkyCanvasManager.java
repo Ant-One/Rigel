@@ -50,6 +50,12 @@ public class SkyCanvasManager {
     private static final ClosedInterval ELEVATION_INTERVAL = ClosedInterval.of(Angle.ofDeg(5), Angle.TAU / 4);
     private static final ClosedInterval FIELD_OF_VIEW_INTERVAL = ClosedInterval.of(Angle.ofDeg(30), Angle.ofDeg(150));
 
+    private boolean drawStars;
+    private boolean drawPlanets;
+    private boolean drawSun;
+    private boolean drawMoon;
+    private boolean drawHorizon;
+
     /**
      * Constructs an object that creates and manages a canvas on which the simulation is done.
      * Monitors the changes in the simulation parameters (time, location, speed of simulation, ...)
@@ -68,6 +74,12 @@ public class SkyCanvasManager {
 
         canvas = new Canvas(800, 600);
         painter = new SkyCanvasPainter(canvas);
+
+        drawStars = true;
+        drawPlanets = true;
+        drawSun = true;
+        drawMoon = true;
+        drawHorizon = true;
 
         //Methods to tidy up the code a bit
         createBindings();
@@ -192,11 +204,61 @@ public class SkyCanvasManager {
      */
     private void paint() {
         painter.clear();
-        painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawHorizon(projection.get(), planeToCanvas.get());
+        if(drawStars)
+            painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());
+        if(drawPlanets)
+            painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
+        if(drawMoon)
+            painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
+        if(drawSun)
+            painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
+        if(drawHorizon)
+            painter.drawHorizon(projection.get(), planeToCanvas.get());
+    }
+
+    /**
+     * sets drawsStars
+     * @param drawStars if the stars should be drawn or not
+     */
+    public void setDrawStars(boolean drawStars) {
+        this.drawStars = drawStars;
+        paint();
+    }
+
+    /**
+     * sets drawPlanets
+     * @param drawPlanets if the planet should be drawn or not
+     */
+    public void setDrawPlanets(boolean drawPlanets) {
+        this.drawPlanets = drawPlanets;
+        paint();
+    }
+
+    /**
+     * sets drawSun
+     * @param drawSun if the Sun should be drawn or not
+     */
+    public void setDrawSun(boolean drawSun) {
+        this.drawSun = drawSun;
+        paint();
+    }
+
+    /**
+     * sets drawMoon
+     * @param drawMoon if the Moon should be drawn or not
+     */
+    public void setDrawMoon(boolean drawMoon) {
+        this.drawMoon = drawMoon;
+        paint();
+    }
+
+    /**
+     * sets drawHorizon
+     * @param drawHorizon if the horizon should be drawn or not
+     */
+    public void setDrawHorizon(boolean drawHorizon) {
+        this.drawHorizon = drawHorizon;
+        paint();
     }
 
     /**

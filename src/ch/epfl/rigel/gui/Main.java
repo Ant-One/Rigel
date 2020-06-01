@@ -9,13 +9,18 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -25,6 +30,7 @@ import javafx.util.converter.NumberStringConverter;
 
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -120,6 +126,7 @@ public class Main extends Application {
         root.setTop(controlBar(observerLocationBean, dateTimeBean, timeAnimator, stage, sky));
         root.setCenter(skyPane);
         root.setBottom(infoBar(skyManager, viewingParametersBean));
+        root.setRight(checkBoxes(skyManager));
 
 
         stage.setMinHeight(MIN_HEIGHT);
@@ -136,6 +143,7 @@ public class Main extends Application {
         sky.heightProperty().bind(skyPane.heightProperty());
         sky.requestFocus();
     }
+
 
     /**
      * loads stars and asterisms for resources
@@ -165,7 +173,7 @@ public class Main extends Application {
     }
 
     /**
-     * ( * Compute the controlBar
+     * ( * Computes the controlBar
      *
      * @param location     ObserverLocationBean
      * @param dateTimeBean DateTimeBean
@@ -341,6 +349,42 @@ public class Main extends Application {
         HBox timeAcceleration = new HBox(timeAcceleratorChoiceBox, resetButton, playButton);
         timeAcceleration.setStyle("-fx-spacing: inherit;\n");
         return timeAcceleration;
+    }
+
+
+    /**
+     * Creates the checkboxes for drawing or not the different elements of the canvas
+     * @return a VBox object containing the checkboxes
+     */
+    private VBox checkBoxes(SkyCanvasManager skymanager) {
+        CheckBox checkStars = new CheckBox("Afficher les étoiles");
+        CheckBox checkPlanets = new CheckBox("Afficher les planètes");
+        CheckBox checkMoon = new CheckBox("Afficher la Lune");
+        CheckBox checkSun = new CheckBox("Afficher le Soleil");
+        CheckBox checkHorizon = new CheckBox("Afficher l'horizon");
+
+        checkStars.setSelected(true);
+        checkPlanets.setSelected(true);
+        checkMoon.setSelected(true);
+        checkSun.setSelected(true);
+        checkHorizon.setSelected(true);
+
+        checkStars.setStyle("-fx-padding: 5");
+        checkPlanets.setStyle("-fx-padding: 5");
+        checkMoon.setStyle("-fx-padding: 5");
+        checkSun.setStyle("-fx-padding: 5");
+        checkHorizon.setStyle("-fx-padding: 5");
+
+        checkStars.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawStars(checkStars.isSelected()));
+        checkPlanets.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawPlanets(checkPlanets.isSelected()));
+        checkMoon.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawMoon(checkMoon.isSelected()));
+        checkSun.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawSun(checkSun.isSelected()));
+        checkHorizon.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawHorizon(checkHorizon.isSelected()));
+
+        VBox checkBoxes = new VBox(checkStars, checkPlanets, checkMoon, checkSun, checkHorizon);
+        checkBoxes.setStyle("-fx-padding: 10");
+
+        return checkBoxes;
     }
 
 
