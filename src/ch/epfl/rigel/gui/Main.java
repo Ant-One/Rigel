@@ -196,14 +196,16 @@ public class Main extends Application {
             fileChooser.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
             File savedFile = fileChooser.showSaveDialog(stage);
 
-            WritableImage fxImage =
-                    sky.snapshot(null, null);
-            BufferedImage swingImage =
-                    SwingFXUtils.fromFXImage(fxImage, null);
-            try {
-                ImageIO.write(swingImage, "png", savedFile);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if(savedFile != null){
+                WritableImage fxImage =
+                        sky.snapshot(null, null);
+                BufferedImage swingImage =
+                        SwingFXUtils.fromFXImage(fxImage, null);
+                try {
+                    ImageIO.write(swingImage, "png", savedFile);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
 
         });
