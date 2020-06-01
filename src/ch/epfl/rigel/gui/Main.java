@@ -356,30 +356,34 @@ public class Main extends Application {
      */
     private VBox checkBoxes(SkyCanvasManager skymanager) {
         CheckBox checkStars = new CheckBox("Afficher les étoiles");
+        CheckBox checkAsterisms = new CheckBox("Afficher les constellations");
         CheckBox checkPlanets = new CheckBox("Afficher les planètes");
         CheckBox checkMoon = new CheckBox("Afficher la Lune");
         CheckBox checkSun = new CheckBox("Afficher le Soleil");
         CheckBox checkHorizon = new CheckBox("Afficher l'horizon");
 
         checkStars.setSelected(true);
+        checkAsterisms.setSelected(true);
         checkPlanets.setSelected(true);
         checkMoon.setSelected(true);
         checkSun.setSelected(true);
         checkHorizon.setSelected(true);
 
         checkStars.setStyle("-fx-padding: 5");
+        checkAsterisms.setStyle("-fx-padding: 5");
         checkPlanets.setStyle("-fx-padding: 5");
         checkMoon.setStyle("-fx-padding: 5");
         checkSun.setStyle("-fx-padding: 5");
         checkHorizon.setStyle("-fx-padding: 5");
 
         checkStars.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawStars(checkStars.isSelected()));
+        checkAsterisms.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawAsterisms(checkAsterisms.isSelected()));
         checkPlanets.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawPlanets(checkPlanets.isSelected()));
         checkMoon.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawMoon(checkMoon.isSelected()));
         checkSun.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawSun(checkSun.isSelected()));
         checkHorizon.selectedProperty().addListener((o, oV, nV) -> skymanager.setDrawHorizon(checkHorizon.isSelected()));
 
-        VBox checkBoxes = new VBox(checkStars, checkPlanets, checkMoon, checkSun, checkHorizon);
+        VBox checkBoxes = new VBox(checkStars, checkAsterisms, checkPlanets, checkMoon, checkSun, checkHorizon);
         checkBoxes.setStyle("-fx-padding: 10");
 
         return checkBoxes;

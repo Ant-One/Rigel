@@ -57,30 +57,6 @@ public class SkyCanvasPainter {
         double[] coord = new double[sky.starsPosition().length];
         planeToCanvas.transform2DPoints(sky.starsPosition(), 0, coord, 0, sky.starsPosition().length / 2);
 
-        ctx.setStroke(Color.BLUE);
-        for (Asterism asterism : sky.asterisms()) {
-
-            ctx.beginPath();
-            ctx.setLineWidth(1);
-            int firstStarIndices = sky.asterismIndices(asterism).get(0);
-            ctx.moveTo(coord[2 * firstStarIndices], coord[2 * firstStarIndices + 1]);
-            boolean isLastIn = canvas.getBoundsInLocal().contains(coord[2 * firstStarIndices], coord[2 * firstStarIndices + 1]);
-            for (int i : sky.asterismIndices(asterism)) {
-
-                boolean isActualIn = canvas.getBoundsInLocal().contains(coord[2 * i], coord[2 * i + 1]);
-                if (isActualIn || isLastIn) {
-                    ctx.lineTo(coord[2 * i], coord[2 * i + 1]);
-                } else {
-                    ctx.moveTo(coord[2 * i], coord[2 * i + 1]);
-                }
-                isLastIn = isActualIn;
-
-            }
-            ctx.stroke();
-
-
-        }
-
         for (int i = 0; i < sky.starsPosition().length / 2; i++) {
 
             Point2D size = size(sky.stars().get(i).magnitude(), planeToCanvas, projection);
@@ -89,6 +65,42 @@ public class SkyCanvasPainter {
             ctx.setFill(BlackBodyColor.colorForTemperature(sky.stars().get(i).colorTemperature()));
 
             ctx.fillOval(coord[2 * i] - size.getX() / 2, coord[2 * i + 1] - size.getX() / 2, diameter, diameter);
+        }
+    }
+
+    /**
+     * Draws all the asterisms with appropriate colors on the canvas
+     *
+     * @param sky           the observed sky
+     * @param projection    the stereographic projection
+     * @param planeToCanvas transformation from stereographic to canvas
+     */
+    void drawAsterisms(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas) {
+
+        double[] coord = new double[sky.starsPosition().length];
+        planeToCanvas.transform2DPoints(sky.starsPosition(), 0, coord, 0, sky.starsPosition().length / 2);
+
+        ctx.setStroke(Color.BLUE);
+            for (Asterism asterism : sky.asterisms()) {
+
+                ctx.beginPath();
+                ctx.setLineWidth(1);
+                int firstStarIndices = sky.asterismIndices(asterism).get(0);
+                ctx.moveTo(coord[2 * firstStarIndices], coord[2 * firstStarIndices + 1]);
+                boolean isLastIn = canvas.getBoundsInLocal().contains(coord[2 * firstStarIndices], coord[2 * firstStarIndices + 1]);
+                for (int i : sky.asterismIndices(asterism)) {
+
+                    boolean isActualIn = canvas.getBoundsInLocal().contains(coord[2 * i], coord[2 * i + 1]);
+                    if (isActualIn || isLastIn) {
+                        ctx.lineTo(coord[2 * i], coord[2 * i + 1]);
+                    } else {
+                        ctx.moveTo(coord[2 * i], coord[2 * i + 1]);
+                    }
+                    isLastIn = isActualIn;
+
+                }
+                ctx.stroke();
+
         }
     }
 

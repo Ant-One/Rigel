@@ -51,6 +51,7 @@ public class SkyCanvasManager {
     private static final ClosedInterval FIELD_OF_VIEW_INTERVAL = ClosedInterval.of(Angle.ofDeg(30), Angle.ofDeg(150));
 
     private boolean drawStars;
+    private boolean drawAsterisms;
     private boolean drawPlanets;
     private boolean drawSun;
     private boolean drawMoon;
@@ -76,6 +77,7 @@ public class SkyCanvasManager {
         painter = new SkyCanvasPainter(canvas);
 
         drawStars = true;
+        drawAsterisms = true;
         drawPlanets = true;
         drawSun = true;
         drawMoon = true;
@@ -204,6 +206,8 @@ public class SkyCanvasManager {
      */
     private void paint() {
         painter.clear();
+        if (drawAsterisms)
+            painter.drawAsterisms(observedSky.get(), projection.get(), planeToCanvas.get());
         if (drawStars)
             painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());
         if (drawPlanets)
@@ -223,6 +227,16 @@ public class SkyCanvasManager {
      */
     public void setDrawStars(boolean drawStars) {
         this.drawStars = drawStars;
+        paint();
+    }
+
+    /**
+     * sets drawsAsterisms
+     *
+     * @param drawAsterisms if the stars should be drawn or not
+     */
+    public void setDrawAsterisms(boolean drawAsterisms) {
+        this.drawAsterisms = drawAsterisms;
         paint();
     }
 
