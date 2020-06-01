@@ -8,18 +8,25 @@ import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
+import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileSystemView;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -52,7 +59,7 @@ public class Main extends Application {
     private final double MIN_WIDTH = 800;
 
     private final double INIT_HEIGHT = 720;
-    private final double INIT_WIDTH = 1240;
+    private final double INIT_WIDTH = 1280;
 
     /**
      * Main Application
@@ -110,7 +117,7 @@ public class Main extends Application {
 
         BorderPane root = new BorderPane();
 
-        root.setTop(controlBar(observerLocationBean, dateTimeBean, timeAnimator));
+        root.setTop(controlBar(observerLocationBean, dateTimeBean, timeAnimator, stage, sky));
         root.setCenter(skyPane);
         root.setBottom(infoBar(skyManager, viewingParametersBean));
 
@@ -165,8 +172,41 @@ public class Main extends Application {
      * @param timeAnimator Time Animator
      * @return the controlBar (Horizontal bar)
      */
-    private HBox controlBar(ObserverLocationBean location, DateTimeBean dateTimeBean, TimeAnimator timeAnimator) {
-        HBox controlBar = new HBox(observerPosition(location), observationTime(dateTimeBean, timeAnimator), timeAcceleration(timeAnimator, dateTimeBean));
+    private HBox controlBar(ObserverLocationBean location, DateTimeBean dateTimeBean, TimeAnimator timeAnimator, Stage stage, Canvas sky) {
+
+        String save = "\uf0c7";
+        Font fontAwesome = null;
+        try (InputStream fontStream = getClass()
+                .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf")) {
+            fontAwesome = Font.loadFont(fontStream, 15);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Button saveButton = new Button(save);
+        saveButton.setFont(fontAwesome);
+        saveButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Enregistrer image");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image", "*.png"));
+            fileChooser.setInitialFileName("sky.png");
+            fileChooser.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
+            File savedFile = fileChooser.showSaveDialog(stage);
+
+            WritableImage fxImage =
+                    sky.snapshot(null, null);
+            BufferedImage swingImage =
+                    SwingFXUtils.fromFXImage(fxImage, null);
+            try {
+                ImageIO.write(swingImage, "png", savedFile);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        });
+
+
+        HBox controlBar = new HBox(observerPosition(location), observationTime(dateTimeBean, timeAnimator), timeAcceleration(timeAnimator, dateTimeBean), saveButton);
 
         controlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
         return controlBar;
