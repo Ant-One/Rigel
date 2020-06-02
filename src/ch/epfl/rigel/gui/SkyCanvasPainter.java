@@ -127,9 +127,10 @@ public class SkyCanvasPainter {
     }
 
     /**
-     * Draws the Moon
+     * Draws the Moon (Bonus realistic drawing of the moon)
      *
      * @param sky           the observed sky
+     * @param projection    the stereographic projection
      * @param planeToCanvas transformation from stereographic plane to the plane used in the canvas
      */
     void drawMoon(ObservedSky sky,StereographicProjection projection, Transform planeToCanvas) {

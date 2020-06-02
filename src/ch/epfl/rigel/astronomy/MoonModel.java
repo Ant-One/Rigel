@@ -18,7 +18,7 @@ public enum MoonModel implements CelestialObjectModel<Moon> {
 
 
     /**
-     * Computes the position of a Moon object at the specified coordinates in space and time
+     * Computes the position, the phase, and bright limb angle of a Moon object at the specified coordinates in space and time
      *
      * @param daysSinceJ2010                 number of days after J2010
      * @param eclipticToEquatorialConversion conversion to convert ecliptic coordinates to equatorial ones
