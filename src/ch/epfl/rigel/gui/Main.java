@@ -210,6 +210,8 @@ public class Main extends Application {
 
         });
 
+        saveButton.disableProperty().bind(timeAnimator.runningProperty());
+
 
         HBox controlBar = new HBox(observerPosition(location), observationTime(dateTimeBean, timeAnimator), timeAcceleration(timeAnimator, dateTimeBean), saveButton);
 
@@ -341,6 +343,8 @@ public class Main extends Application {
             }
 
         });
+
+
 
 
         HBox timeAcceleration = new HBox(timeAcceleratorChoiceBox, resetButton, playButton);
